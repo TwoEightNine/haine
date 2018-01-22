@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">#fff0f0</item>
+
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <item name="android:textColorHint">@color/textLightSecondary</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textColorHint">@color/textLightSecondary</item>
+    </style>
+
+    <style name="AppTheme.ToolBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="homeAsUpIndicator">@drawable/ic_back</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+
+    <style name="ActionBarStyle" parent="@style/Theme.AppCompat.Light">
+        <item name="android:titleTextStyle">@style/ActionBarStyle.Title</item>
+        <item name="titleTextStyle">@style/ActionBarStyle.Title</item>
+        <item name="android:subtitleTextStyle">@style/ActionBarStyle.Subtitle</item>
+        <item name="subtitleTextStyle">@style/ActionBarStyle.Subtitle</item>
+    </style>
+
+    <style name="ActionBarStyle.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ActionBarStyle.Subtitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>

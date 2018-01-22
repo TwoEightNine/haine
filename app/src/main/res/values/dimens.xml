@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="login_name_size">28sp</dimen>
+    <dimen name="login_input_width">260dp</dimen>
+
+    <dimen name="button_radius">5dp</dimen>
+
+</resources>

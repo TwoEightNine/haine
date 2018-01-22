@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlItemContainer">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:id="@+id/civPhoto"
+            app:civ_border_color="#fff"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:id="@+id/tvTitle"
+            android:textColor="@color/textDark"
+            android:singleLine="true"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_alignTop="@+id/civPhoto"
+            android:layout_toEndOf="@+id/civPhoto"
+            android:layout_toRightOf="@+id/civPhoto"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/tvBody"
+            android:layout_below="@+id/tvTitle"
+            android:layout_alignStart="@+id/tvTitle"
+            android:layout_alignLeft="@+id/tvTitle"
+            android:layout_marginTop="4dp"
+            android:textSize="13sp"
+            android:textColor="@color/textDarkSecondary"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_toStartOf="@+id/ivUnreadDotOut"
+            android:layout_toLeftOf="@+id/ivUnreadDotOut" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Small Text"
+            android:id="@+id/tvDate"
+            android:layout_alignBottom="@+id/tvTitle"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="12sp"
+            android:textSize="12sp"
+            android:textColor="@color/textDarkSecondary"
+            android:singleLine="true"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

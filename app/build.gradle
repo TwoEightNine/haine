@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+def appCompat = "26.1.0"
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "global.msnthrp.messenger"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation "com.android.support:appcompat-v7:$appCompat"
+    implementation "com.android.support:design:$appCompat"
+    implementation "com.android.support:recyclerview-v7:$appCompat"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    provided "javax.annotation:jsr250-api:$jsrVersion"
+
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
+    implementation "com.github.orangegangsters:swipy:$swipyVersion"
+    implementation "com.miguelcatalan:materialsearchview:$materialSearchViewVersion"
+    testImplementation "junit:junit:$junitVersion"
+//    implementation "com.github.QuadFlask:colorpicker:$colorpickerVersion"
+//    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+}
+
+kapt {
+    generateStubs = true
+}
+
+repositories {
+    mavenCentral()
+}
