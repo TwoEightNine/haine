@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
 import android.os.Handler
+import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,10 +18,15 @@ import io.reactivex.schedulers.Schedulers
  * Created by msnthrp on 22/01/18.
  */
 
-fun <T> applySchedulers() = { single: Single<T> -> single
+fun <T> applySchedulersSingle() = { single: Single<T> -> single
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
         }
+
+fun <T> applySchedulersFlowable() = { flowable: Flowable<T> -> flowable
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
 
 fun restartApp(context: Context, title: String) {
         showToast(context, title)

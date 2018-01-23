@@ -91,6 +91,7 @@ class DialogsActivity : BaseActivity(), DialogsView {
     }
 
     override fun onDialogLoaded(dialogs: ArrayList<Message>) {
+        adapter.clear()
         adapter.addAll(dialogs)
     }
 }

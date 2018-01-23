@@ -6,6 +6,7 @@ import global.msnthrp.messenger.extensions.subscribeSmart
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.profile.User
 import global.msnthrp.messenger.utils.time
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by msnthrp on 22/01/18.
@@ -26,6 +27,8 @@ class ChatPresenter(view: ChatView,
     fun loadDialogs() {
         view.onShowLoading()
         api.getMessages(user.id)
+                .delay(5L, TimeUnit.SECONDS)
+                .repeat()
                 .subscribeSmart({
                     view.onHideLoading()
                     view.onMessagesLoaded(it.reversed() as ArrayList<Message>)

@@ -86,7 +86,16 @@ class ChatActivity : BaseActivity(), ChatView {
     }
 
     override fun onMessagesLoaded(messages: ArrayList<Message>) {
-        adapter.addAll(messages)
+        var added = 0
+        messages.forEach {
+            if (it !in adapter.items) {
+                adapter.add(it)
+                added++
+            }
+        }
+        if (added > 0) {
+            scrollToBottom()
+        }
     }
 
     override fun onMessageSent(message: Message) {
