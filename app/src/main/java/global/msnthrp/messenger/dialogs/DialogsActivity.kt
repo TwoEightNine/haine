@@ -19,6 +19,7 @@ import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.search.SearchActivity
 import global.msnthrp.messenger.settings.SettingsActivity
 import global.msnthrp.messenger.storage.Session
+import global.msnthrp.messenger.utils.ApiUtils
 import global.msnthrp.messenger.utils.showToast
 import javax.inject.Inject
 
@@ -32,6 +33,8 @@ class DialogsActivity : BaseActivity(), DialogsView {
     lateinit var api: ApiService
     @Inject
     lateinit var session: Session
+    @Inject
+    lateinit var apiUtils: ApiUtils
 
     private val toolbar: Toolbar by view(R.id.toolbar)
     private val recyclerView: RecyclerView by view(R.id.recyclerView)
@@ -58,6 +61,8 @@ class DialogsActivity : BaseActivity(), DialogsView {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
         presenter.loadDialogs()
+
+        apiUtils.updateStickers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

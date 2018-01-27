@@ -27,7 +27,11 @@ data class Message(
 
         @SerializedName("peer_id")
         @Expose
-        val peerId: Int
+        val peerId: Int,
+
+        @SerializedName("sticker_id")
+        @Expose
+        val stickerId: Int?
 ) {
         var user: User? = null
 }

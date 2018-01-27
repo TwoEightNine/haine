@@ -5,7 +5,6 @@ import global.msnthrp.messenger.extensions.subscribeSmart
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.profile.User
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by msnthrp on 22/01/18.
@@ -16,8 +15,6 @@ class DialogsPresenter(api: ApiService,
     fun loadDialogs() {
         view.onShowLoading()
         api.getDialogs()
-                .delay(5L, TimeUnit.SECONDS)
-                .repeat()
                 .subscribeSmart({ response ->
                     view.onHideLoading()
                     val messages = response.messages

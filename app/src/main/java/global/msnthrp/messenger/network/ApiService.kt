@@ -3,6 +3,7 @@ package global.msnthrp.messenger.network
 import global.msnthrp.messenger.dialogs.DialogResponse
 import global.msnthrp.messenger.dialogs.Message
 import global.msnthrp.messenger.login.LoginResponse
+import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.network.model.BaseResponse
 import global.msnthrp.messenger.profile.User
 import io.reactivex.Single
@@ -43,4 +44,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/user/photo")
     fun updatePhoto(@Field("photo") photo: String): Single<BaseResponse<Int>>
+
+    @GET("/stickers")
+    fun getStickers(): Single<BaseResponse<List<Sticker>>>
 }

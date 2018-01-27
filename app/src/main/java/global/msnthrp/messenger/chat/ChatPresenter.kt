@@ -18,9 +18,9 @@ class ChatPresenter(view: ChatView,
     fun sendMessage(text: String) {
         api.sendMessage(text, user.id)
                 .subscribeSmart({
-                    view.onMessageSent(Message(it, text, time(), true, user.id))
+                    view.onMessageSent(Message(it, text, time(), true, user.id, null))
                 }, defaultError {
-                    view.onMessageSent(Message(0, text, 0, false, 0))
+                    view.onMessageSent(Message(0, text, 0, false, 0, null))
                 })
     }
 

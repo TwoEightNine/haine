@@ -7,7 +7,7 @@ import android.util.Log
  */
 object Lg {
 
-    val APP_TAG = "appLife"
+    val APP_TAG = "haine"
 
     fun i(s: String) {
         Log.i(APP_TAG, s)

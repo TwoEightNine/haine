@@ -4,8 +4,10 @@ import dagger.Module
 import dagger.Provides
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.BuildConfig
+import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.storage.Session
+import global.msnthrp.messenger.utils.ApiUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -62,6 +64,10 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideApiUtils(apiService: ApiService, dbHelper: DbHelper): ApiUtils = ApiUtils(apiService, dbHelper)
 
     inner class AuthInterceptor(private val session: Session) : Interceptor {
 
