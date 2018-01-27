@@ -11,12 +11,16 @@ import global.msnthrp.messenger.base.BaseAdapter
 import global.msnthrp.messenger.dialogs.Message
 import global.msnthrp.messenger.extensions.loadUrl
 import global.msnthrp.messenger.extensions.view
+import global.msnthrp.messenger.utils.ApiUtils
 import global.msnthrp.messenger.utils.getTime
 
 /**
  * Created by msnthrp on 22/01/18.
  */
-class ChatAdapter(context: Context) : BaseAdapter<Message, ChatAdapter.ChatViewHolder>(context) {
+class ChatAdapter(context: Context,
+                  apiUtils: ApiUtils) : BaseAdapter<Message, ChatAdapter.ChatViewHolder>(context) {
+
+    private val stickers = apiUtils.getStickers()
 
     override fun onCreateViewHolder(parent: ViewGroup?,
                                     viewType: Int): ChatViewHolder {
@@ -34,7 +38,7 @@ class ChatAdapter(context: Context) : BaseAdapter<Message, ChatAdapter.ChatViewH
         holder.tvBody.text = message.body
         holder.tvDate.text = getTime(message.date, true)
         if (message.stickerId != null) {
-            holder.ivSticker.loadUrl(context, "https://i.pinimg.com/originals/a5/c6/bc/a5c6bc769cc1128bf82c172358d92621.png")
+            holder.ivSticker.loadUrl(context, stickers.find { it.id == message.stickerId }?.url)
         }
     }
 

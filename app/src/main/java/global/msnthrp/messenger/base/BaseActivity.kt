@@ -1,15 +1,20 @@
 package global.msnthrp.messenger.base
 
+import android.annotation.SuppressLint
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import io.reactivex.disposables.CompositeDisposable
 
 /**
  * Created by msnthrp on 22/01/18.
  */
 
+@SuppressLint("Registered")
 open class BaseActivity() : AppCompatActivity() {
+
+    protected val compositeDisposable = CompositeDisposable()
 
     fun initToolbar(toolbar: Toolbar?, postInit: (ActionBar) -> Unit = {}) {
         if (toolbar == null) return
@@ -28,4 +33,9 @@ open class BaseActivity() : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    override fun onDestroy() {
+        compositeDisposable.dispose()
+        super.onDestroy()
+    }
 }

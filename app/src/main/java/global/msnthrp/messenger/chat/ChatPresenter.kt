@@ -3,6 +3,7 @@ package global.msnthrp.messenger.chat
 import global.msnthrp.messenger.base.BasePresenter
 import global.msnthrp.messenger.dialogs.Message
 import global.msnthrp.messenger.extensions.subscribeSmart
+import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.profile.User
 import global.msnthrp.messenger.utils.time
@@ -16,6 +17,8 @@ class ChatPresenter(view: ChatView,
                     private val user: User) : BasePresenter<ChatView>(view, api) {
 
     fun sendMessage(text: String) {
+        if (text.isBlank()) return
+
         api.sendMessage(text, user.id)
                 .subscribeSmart({
                     view.onMessageSent(Message(it, text, time(), true, user.id, null))
@@ -24,11 +27,16 @@ class ChatPresenter(view: ChatView,
                 })
     }
 
+    fun sendSticker(sticker: Sticker) {
+        api.sendSticker(sticker.id, user.id)
+                .subscribeSmart({
+                    view.onMessageSent(Message(it, "", time(), true, user.id, sticker.id))
+                }, defaultError())
+    }
+
     fun loadDialogs() {
         view.onShowLoading()
         api.getMessages(user.id)
-                .delay(5L, TimeUnit.SECONDS)
-                .repeat()
                 .subscribeSmart({
                     view.onHideLoading()
                     view.onMessagesLoaded(it.reversed() as ArrayList<Message>)

@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 
 abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder>(protected var context: Context) : RecyclerView.Adapter<VH>() {
 
-    open val items: MutableList<T> = mutableListOf()
+    open val items: ArrayList<T> = arrayListOf()
 
     protected var inflater = LayoutInflater.from(context)
 
@@ -25,7 +25,7 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder>(protected var contex
         add(item, items.size)
     }
 
-    @JvmOverloads fun addAll(items: MutableList<T>, pos: Int = this.items.size) {
+    @JvmOverloads fun addAll(items: List<T>, pos: Int = this.items.size) {
         val size = items.size
         this.items.addAll(pos, items)
         notifyItemRangeInserted(pos, size)
@@ -68,19 +68,14 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder>(protected var contex
 
     //multiselect
 
-    var multiSelectRaw: MutableList<Int> = mutableListOf()
+    var multiSelectRaw: ArrayList<T> = arrayListOf()
         protected set
 
-    val multiSelect: String
-        get() = multiSelectRaw
-                .map { it.toString() }
-                .joinToString(separator = ",")
-
-    fun multiSelect(id: Int) {
-        if (multiSelectRaw.contains(id)) {
-            removeFromMultiSelect(id)
+    fun multiSelect(item: T) {
+        if (multiSelectRaw.contains(item)) {
+            removeFromMultiSelect(item)
         } else {
-            addToMultiSelect(id)
+            addToMultiSelect(item)
         }
         if (multiListener != null) {
             notifyMultiSelect()
@@ -103,12 +98,12 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder>(protected var contex
         notifyDataSetChanged()
     }
 
-    private fun addToMultiSelect(id: Int) {
-        multiSelectRaw.add(id)
+    private fun addToMultiSelect(item: T) {
+        multiSelectRaw.add(item)
     }
 
-    private fun removeFromMultiSelect(id: Int) {
-        multiSelectRaw.remove(id)
+    private fun removeFromMultiSelect(item: T) {
+        multiSelectRaw.remove(item)
     }
 
     interface OnMultiSelected {

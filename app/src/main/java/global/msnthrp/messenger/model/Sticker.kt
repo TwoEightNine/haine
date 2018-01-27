@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable
  */
 @DatabaseTable(tableName = "sticker")
 data class Sticker(
-        @DatabaseField
+        @DatabaseField(id = true)
         @SerializedName("id")
         @Expose
         val id: Int,

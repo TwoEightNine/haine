@@ -6,6 +6,8 @@ import global.msnthrp.messenger.App
 import global.msnthrp.messenger.BuildConfig
 import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.network.ApiService
+import global.msnthrp.messenger.storage.Lg
+import global.msnthrp.messenger.storage.Prefs
 import global.msnthrp.messenger.storage.Session
 import global.msnthrp.messenger.utils.ApiUtils
 import okhttp3.Interceptor
@@ -67,7 +69,9 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiUtils(apiService: ApiService, dbHelper: DbHelper): ApiUtils = ApiUtils(apiService, dbHelper)
+    fun provideApiUtils(apiService: ApiService,
+                        dbHelper: DbHelper,
+                        prefs: Prefs): ApiUtils = ApiUtils(apiService, dbHelper, prefs)
 
     inner class AuthInterceptor(private val session: Session) : Interceptor {
 
@@ -83,6 +87,7 @@ class NetworkModule {
                     .url(url)
                     .addHeader(authToken, session.token)
                     .build()
+//            Lg.i("header = ${request.headers().get(authToken)}")
             return chain.proceed(request)
         }
     }

@@ -19,10 +19,10 @@ class Session @Inject constructor(private val context: Context) {
         set(value) = prefs.edit().putInt(UID, value).apply()
 
     companion object {
-        val PREF_NAME = "sessionPrefs"
+        const val PREF_NAME = "sessionPrefs"
 
-        val TOKEN = "token"
-        val UID = "userId"
+        const val TOKEN = "token"
+        const val UID = "userId"
     }
 
 }

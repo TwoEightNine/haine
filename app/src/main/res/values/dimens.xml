@@ -6,4 +6,6 @@
 
     <dimen name="button_radius">5dp</dimen>
 
+    <dimen name="chat_bottom_height">400dp</dimen>
+
 </resources>

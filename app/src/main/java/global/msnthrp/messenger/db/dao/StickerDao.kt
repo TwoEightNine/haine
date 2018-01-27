@@ -12,8 +12,8 @@ class StickerDao(connectionSource: ConnectionSource,
 
     fun getAll() = queryForAll().sortedByDescending { it.id }
 
-    fun create(stickers: List<Sticker>) {
-        stickers.forEach { create(it) }
+    fun createOrUpdate(stickers: List<Sticker>) {
+        stickers.forEach { createOrUpdate(it) }
     }
 
 }

@@ -1,57 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/alterWhite"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/rlFooter"
-        android:layout_marginTop="?actionBarSize" />
-
     <RelativeLayout
-        android:id="@+id/rlFooter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/alterWhite"
-        android:elevation="12dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="6dp"
-            android:src="@drawable/ic_send" />
+        <include layout="@layout/toolbar" />
 
-        <EditText
-            android:id="@+id/etInput"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/rlFooter"
+            android:layout_marginTop="?actionBarSize" />
+
+        <RelativeLayout
+            android:id="@+id/rlFooter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/ivSend"
-            android:background="@null"
-            android:hint="@string/write_message"
-            android:maxLines="4"
-            android:minHeight="44dp"
-            android:padding="10dp"
-            android:textColor="@color/textDark"
-            android:textColorHint="@color/textDarkSecondary"
-            android:textSize="14sp" />
+            android:layout_alignParentBottom="true"
+            android:background="@color/alterWhite"
+            android:elevation="12dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="6dp"
+                android:src="@drawable/ic_send" />
+
+            <ImageView
+                android:id="@+id/ivSticker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="6dp"
+                android:src="@drawable/ic_image"/>
+
+            <EditText
+                android:id="@+id/etInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/ivSend"
+                android:layout_toRightOf="@+id/ivSticker"
+                android:background="@null"
+                android:hint="@string/write_message"
+                android:maxLines="4"
+                android:minHeight="44dp"
+                android:padding="10dp"
+                android:textColor="@color/textDark"
+                android:textColorHint="@color/textDarkSecondary"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+    <RelativeLayout
+        android:id="@+id/rlBottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/chat_bottom_height"
+        android:elevation="14dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="00dp"
+        android:background="@color/alterWhite"
+        app:layout_behavior="global.msnthrp.messenger.utils.UserLockBottomSheetBehavior">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlHideBottom"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/stickers"
+                android:textColor="@color/textLight" />
+
+            <ImageView
+                android:layout_margin="6dp"
+                android:id="@+id/ivClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_close" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/flContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlHideBottom" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

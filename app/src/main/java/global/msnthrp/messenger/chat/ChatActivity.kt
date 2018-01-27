@@ -7,9 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
+import android.widget.*
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseActivity
@@ -17,6 +15,8 @@ import global.msnthrp.messenger.dialogs.Message
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.utils.ApiUtils
+import global.msnthrp.messenger.utils.BottomSheetController
 import global.msnthrp.messenger.utils.getTime
 import global.msnthrp.messenger.utils.showToast
 import javax.inject.Inject
@@ -28,16 +28,22 @@ class ChatActivity : BaseActivity(), ChatView {
 
     @Inject
     lateinit var api: ApiService
+    @Inject
+    lateinit var apiUtils: ApiUtils
 
     private val toolbar: Toolbar by view(R.id.toolbar)
     private val recyclerView: RecyclerView by view(R.id.recyclerView)
     private val etInput: EditText by view(R.id.etInput)
     private val ivSend: ImageView by view(R.id.ivSend)
     private val progressBar: ProgressBar by view(R.id.progressBar)
+    private val rlBottom: RelativeLayout by view(R.id.rlBottom)
+    private val rlHideBottom: RelativeLayout by view(R.id.rlHideBottom)
+    private val ivSticker: ImageView by view(R.id.ivSticker)
 
     private lateinit var user: User
-    private val presenter: ChatPresenter by lazy { ChatPresenter(this, api, user) }
-    private val adapter: ChatAdapter by lazy { ChatAdapter(this) }
+    private val presenter by lazy { ChatPresenter(this, api, user) }
+    private val adapter by lazy { ChatAdapter(this, apiUtils) }
+    private val bottomSheet by lazy { BottomSheetController(rlBottom, rlHideBottom) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,15 +55,14 @@ class ChatActivity : BaseActivity(), ChatView {
             it.title = user.name
             it.subtitle = getTime(user.lastSeen, true)
         }
-        ivSend.setOnClickListener {
-            presenter.sendMessage(etInput.text.toString())
-            etInput.setText("")
-        }
-        val llm = LinearLayoutManager(this)
-        llm.stackFromEnd = true
-        recyclerView.layoutManager = llm
-        recyclerView.adapter = adapter
+        initViews()
+        initStickers()
         presenter.loadDialogs()
+
+        compositeDisposable.add(ChatBus.subscribeSticker {
+            presenter.sendSticker(it)
+            bottomSheet.close()
+        })
     }
 
     private fun obtainArgs() {
@@ -69,8 +74,22 @@ class ChatActivity : BaseActivity(), ChatView {
         }
     }
 
-    private fun scrollToBottom() {
-        recyclerView.scrollToPosition(adapter.itemCount - 1)
+    private fun initViews() {
+        ivSend.setOnClickListener {
+            presenter.sendMessage(etInput.text.toString())
+            etInput.setText("")
+        }
+        ivSticker.setOnClickListener { bottomSheet.open() }
+        val llm = LinearLayoutManager(this)
+        llm.stackFromEnd = true
+        recyclerView.layoutManager = llm
+        recyclerView.adapter = adapter
+    }
+
+    private fun initStickers() {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.flContainer, StickersFragment())
+                .commit()
     }
 
     override fun onShowLoading() {
@@ -86,29 +105,17 @@ class ChatActivity : BaseActivity(), ChatView {
     }
 
     override fun onMessagesLoaded(messages: ArrayList<Message>) {
-        var added = 0
-        messages.forEach {
-            if (it !in adapter.items) {
-                adapter.add(it)
-                added++
-            }
-        }
-        if (added > 0) {
-            scrollToBottom()
-        }
+        adapter.addAll(messages)
     }
 
     override fun onMessageSent(message: Message) {
         if (message.id == 0) {
             etInput.setText(message.body)
-        } else {
-            adapter.add(message)
-            scrollToBottom()
         }
     }
 
     companion object {
-        val USER = "user"
+        const val USER = "user"
 
         fun launch(context: Context, user: User) {
             val intent = Intent(context, ChatActivity::class.java)

@@ -4,20 +4,23 @@ import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.extensions.subscribeSmart
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.storage.Lg
-import java.util.concurrent.TimeUnit
+import global.msnthrp.messenger.storage.Prefs
 import javax.inject.Inject
 
 /**
  * Created by msnthrp on 27/01/18.
  */
 class ApiUtils @Inject constructor(private val api: ApiService,
-                                   private val dbHelper: DbHelper) {
+                                   private val dbHelper: DbHelper,
+                                   private val prefs: Prefs) {
 
     fun updateStickers() {
+        Lg.i("res = ${getStickers()}")
+        if (!prefs.needToUpdateStickers()) return
+
         api.getStickers()
-                .delay(5L, TimeUnit.SECONDS)
                 .subscribeSmart({
-                    dbHelper.db.stickerDao.create(it)
+                    dbHelper.db.stickerDao.createOrUpdate(it)
                 }, {
                     Lg.wtf("error obtaining stickers: $it")
                 })
