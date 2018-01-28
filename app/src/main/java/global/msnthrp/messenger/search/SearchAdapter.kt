@@ -15,7 +15,8 @@ import global.msnthrp.messenger.model.User
 /**
  * Created by msnthrp on 22/01/18.
  */
-class SearchAdapter(context: Context) : BaseAdapter<User, SearchAdapter.SearchViewHolder>(context) {
+class SearchAdapter(context: Context,
+                    private val onClick: (User) -> Unit = {}) : BaseAdapter<User, SearchAdapter.SearchViewHolder>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup?,
                                     viewType: Int) = SearchViewHolder(inflater.inflate(R.layout.item_search, null))
@@ -34,7 +35,7 @@ class SearchAdapter(context: Context) : BaseAdapter<User, SearchAdapter.SearchVi
         val civPhoto: CircleImageView by view(R.id.civPhoto)
 
         init {
-
+            view.setOnClickListener { onClick.invoke(items[adapterPosition]) }
         }
 
     }

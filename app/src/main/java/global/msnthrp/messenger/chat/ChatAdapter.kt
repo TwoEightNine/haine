@@ -39,14 +39,16 @@ class ChatAdapter(context: Context,
         holder.tvDate.text = getTime(message.date, true)
         if (message.stickerId != null) {
             holder.ivSticker.loadUrl(context, stickers.find { it.id == message.stickerId }?.url)
+        } else {
+            holder.ivSticker.visibility = View.GONE
         }
     }
 
     override fun getItemViewType(position: Int) = if (items[position].out) TYPE_OUT else TYPE_IN
 
     companion object {
-        val TYPE_OUT = 1753
-        val TYPE_IN = 17053
+        const val TYPE_OUT = 1753
+        const val TYPE_IN = 17053
     }
 
     inner class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {

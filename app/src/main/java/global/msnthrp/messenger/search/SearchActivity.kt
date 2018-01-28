@@ -10,6 +10,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseActivity
+import global.msnthrp.messenger.chat.ChatActivity
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
@@ -30,7 +31,7 @@ class SearchActivity : BaseActivity(), SearchView {
     private val progressBar: ProgressBar by view(R.id.progressBar)
 
     private val presenter: SearchPresenter by lazy { SearchPresenter(this, api) }
-    private val adapter: SearchAdapter by lazy { SearchAdapter(this) }
+    private val adapter: SearchAdapter by lazy { SearchAdapter(this, ::onUserClicked) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +69,11 @@ class SearchActivity : BaseActivity(), SearchView {
     override fun onUsersLoaded(users: ArrayList<User>) {
         adapter.clear()
         adapter.addAll(users)
+    }
+
+    private fun onUserClicked(user: User) {
+//        finish()
+        ChatActivity.launch(this, user)
     }
 
     private inner class SearchTextListener(private val queryCallback: (String) -> Unit) : MaterialSearchView.OnQueryTextListener {
