@@ -22,6 +22,10 @@ class Session @Inject constructor(private val context: Context) {
         get() = prefs.getInt(LAST_MESSAGE, 0)
         set(value) = prefs.edit().putInt(LAST_MESSAGE, value).apply()
 
+    fun reset() {
+        prefs.edit().clear().apply()
+    }
+
     companion object {
         const val PREF_NAME = "sessionPrefs"
 

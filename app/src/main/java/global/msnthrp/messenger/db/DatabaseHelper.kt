@@ -27,11 +27,17 @@ class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(context,
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, conn: ConnectionSource?, oldVersion: Int, newVersion: Int) {
+        dropAll()
+        // TODO realise migration
+    }
 
+    fun dropAll() {
+        TableUtils.dropTable<Sticker, Int>(getConnectionSource(), Sticker::class.java, true)
+        TableUtils.createTable(getConnectionSource(), Sticker::class.java)
     }
 
     companion object {
-        val DB_NAME = "global.db"
-        val DB_VERSION = 1
+        const val DB_NAME = "global.db"
+        const val DB_VERSION = 1
     }
 }

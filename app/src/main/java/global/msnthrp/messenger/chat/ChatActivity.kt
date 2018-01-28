@@ -12,6 +12,7 @@ import global.msnthrp.messenger.App
 import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseActivity
 import global.msnthrp.messenger.chat.stickers.StickersFragment
+import global.msnthrp.messenger.extensions.isAtEnd
 import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
@@ -64,6 +65,7 @@ class ChatActivity : BaseActivity(), ChatView {
             presenter.sendSticker(it)
             bottomSheet.close()
         })
+        compositeDisposable.add(ChatBus.subscribeMessage(::onMessagesAdded))
     }
 
     private fun obtainArgs() {
@@ -113,6 +115,16 @@ class ChatActivity : BaseActivity(), ChatView {
         if (message.id == 0) {
             etInput.setText(message.body)
         }
+    }
+
+    private fun onMessagesAdded(messages: List<Message>) {
+        val atEnd = recyclerView.isAtEnd(adapter.itemCount)
+        adapter.addAll(messages.reversed())
+        if (atEnd) scrollToBottom()
+    }
+
+    private fun scrollToBottom() {
+        recyclerView.scrollToPosition(adapter.itemCount - 1)
     }
 
     companion object {

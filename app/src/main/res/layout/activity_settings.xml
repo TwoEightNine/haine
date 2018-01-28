@@ -7,50 +7,96 @@
 
     <include layout="@layout/toolbar" />
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?actionBarSize"
+            android:padding="16dp">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:id="@+id/llAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/ivClearPhoto">
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/etPhoto"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#fff"
-                    android:hint="@string/photo_hint"
-                    android:maxLines="1"
-                    android:textColor="@color/textLight"
-                    android:textColorHint="@color/textLightSecondary" />
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/account_settings"
+                    android:textColor="@color/textLightSecondary" />
 
-            </android.support.design.widget.TextInputLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp">
 
-            <ImageView
-                android:id="@+id/ivClearPhoto"
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/ivClearPhoto">
+
+                        <EditText
+                            android:id="@+id/etPhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#fff"
+                            android:hint="@string/photo_hint"
+                            android:maxLines="1"
+                            android:textColor="@color/textLight"
+                            android:textColorHint="@color/textLightSecondary" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/ivClearPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_close" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/textLight"
+                        android:layout_marginTop="4dp"
+                        android:id="@+id/btnLogOut"
+                        android:text="@string/logOut"
+                        android:background="@drawable/selector_button_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/textLightSecondary"
+                        android:text="@string/logOutHint"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_toLeftOf="@+id/btnLogOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_close" />
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
-
-    </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

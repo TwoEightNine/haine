@@ -11,6 +11,8 @@ import android.net.ConnectivityManager
 import android.os.Handler
 import global.msnthrp.messenger.chat.service.NotificationBroadcastReceiver
 import global.msnthrp.messenger.chat.service.NotificationService
+import global.msnthrp.messenger.storage.Prefs
+import global.msnthrp.messenger.storage.Session
 import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -75,4 +77,8 @@ fun getRestartIntent(context: Context): Intent {
 
 fun startService(context: Context) {
     context.sendBroadcast(Intent(NotificationBroadcastReceiver.ACTION_NAME))
+}
+
+fun stopService(context: Context) {
+    context.stopService(Intent(context, NotificationService::class.java))
 }

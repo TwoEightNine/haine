@@ -34,7 +34,11 @@ class NotificationService : Service() {
             Thread {
                 isRunning = true
                 initPrefs()
-                poll()
+                if (session.token.isNotEmpty()) {
+                    poll()
+                } else {
+                    SystemClock.sleep(NO_TOKEN_DELAY)
+                }
             }.start()
         }
         return START_STICKY
@@ -63,7 +67,7 @@ class NotificationService : Service() {
                     sendResult(messages)
                 }, { error ->
                     l("polling error: $error")
-                    if (!isOnline(this)) {
+                    if (!isOnline(this) || "Auth" in error) {
                         SystemClock.sleep(INTERNET_DELAY)
                     }
                     postPolling()
@@ -89,5 +93,6 @@ class NotificationService : Service() {
 
     companion object {
         const val INTERNET_DELAY = 5000L
+        const val NO_TOKEN_DELAY = 1000L
     }
 }

@@ -62,10 +62,14 @@ class DialogsActivity : BaseActivity(), DialogsView {
         App.appComponent.inject(this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-        presenter.loadDialogs()
 
         apiUtils.updateStickers()
         startService(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.loadDialogs()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

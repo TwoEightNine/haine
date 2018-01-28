@@ -20,6 +20,10 @@ class Prefs @Inject constructor(private val context: Context) {
 
     fun needToUpdateStickers() = time() - stickerUpdTime > STICKERS_UPD_DELAY
 
+    fun reset() {
+        prefs.edit().clear().apply()
+    }
+
     companion object {
         const val NAME = "prefs"
         const val STICKERS_UPD_DELAY = 60 * 60 * 24

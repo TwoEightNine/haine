@@ -3,17 +3,22 @@ package global.msnthrp.messenger.settings
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseActivity
+import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
+import global.msnthrp.messenger.storage.Prefs
 import global.msnthrp.messenger.storage.Session
+import global.msnthrp.messenger.utils.restartApp
 import global.msnthrp.messenger.utils.showToast
+import global.msnthrp.messenger.utils.stopService
 import javax.inject.Inject
 
 /**
@@ -25,11 +30,16 @@ class SettingsActivity : BaseActivity(), SettingsView {
     lateinit var session: Session
     @Inject
     lateinit var api: ApiService
+    @Inject
+    lateinit var prefs: Prefs
+    @Inject
+    lateinit var dbHelper: DbHelper
 
     private val toolbar: Toolbar by view(R.id.toolbar)
     private val progressBar: ProgressBar by view(R.id.progressBar)
     private val etPhoto: EditText by view(R.id.etPhoto)
     private val ivClearPhoto: ImageView by view(R.id.ivClearPhoto)
+    private val btnLogOut: Button by view(R.id.btnLogOut)
 
     private var oldPhoto = ""
     private val presenter: SettingsPresenter by lazy { SettingsPresenter(this, api) }
@@ -43,6 +53,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
             it.setTitle(R.string.settings)
         }
         ivClearPhoto.setOnClickListener { etPhoto.setText("") }
+        btnLogOut.setOnClickListener { logOut() }
         presenter.loadUser(session.userId)
     }
 
@@ -64,6 +75,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
     }
 
     override fun onPhotoUpdated() {
+        saveSettings()
         finish()
     }
 
@@ -75,6 +87,15 @@ class SettingsActivity : BaseActivity(), SettingsView {
             saveSettings()
             super.onBackPressed()
         }
+    }
+
+    private fun logOut() {
+        prefs.reset()
+        session.reset()
+        dbHelper.db.dropAll()
+        stopService(this)
+        finishAffinity()
+        restartApp(this, getString(R.string.loggingOut))
     }
 
     private fun saveSettings() {
