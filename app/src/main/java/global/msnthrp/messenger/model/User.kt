@@ -1,4 +1,4 @@
-package global.msnthrp.messenger.profile
+package global.msnthrp.messenger.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

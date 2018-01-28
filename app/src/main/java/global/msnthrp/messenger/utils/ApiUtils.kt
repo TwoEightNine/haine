@@ -15,12 +15,12 @@ class ApiUtils @Inject constructor(private val api: ApiService,
                                    private val prefs: Prefs) {
 
     fun updateStickers() {
-        Lg.i("res = ${getStickers()}")
         if (!prefs.needToUpdateStickers()) return
 
         api.getStickers()
                 .subscribeSmart({
                     dbHelper.db.stickerDao.createOrUpdate(it)
+                    prefs.stickerUpdTime = time()
                 }, {
                     Lg.wtf("error obtaining stickers: $it")
                 })

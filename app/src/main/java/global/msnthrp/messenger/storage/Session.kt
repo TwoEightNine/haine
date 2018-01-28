@@ -18,11 +18,16 @@ class Session @Inject constructor(private val context: Context) {
         get() = prefs.getInt(UID, 0)
         set(value) = prefs.edit().putInt(UID, value).apply()
 
+    var lastMessage
+        get() = prefs.getInt(LAST_MESSAGE, 0)
+        set(value) = prefs.edit().putInt(LAST_MESSAGE, value).apply()
+
     companion object {
         const val PREF_NAME = "sessionPrefs"
 
         const val TOKEN = "token"
         const val UID = "userId"
+        const val LAST_MESSAGE = "lastMessage"
     }
 
 }

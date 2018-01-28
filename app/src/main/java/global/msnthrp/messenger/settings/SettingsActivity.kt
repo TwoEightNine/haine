@@ -11,7 +11,7 @@ import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseActivity
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
-import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.model.User
 import global.msnthrp.messenger.storage.Session
 import global.msnthrp.messenger.utils.showToast
 import javax.inject.Inject

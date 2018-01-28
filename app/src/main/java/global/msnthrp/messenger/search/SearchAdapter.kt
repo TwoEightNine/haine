@@ -10,7 +10,7 @@ import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseAdapter
 import global.msnthrp.messenger.extensions.loadUrl
 import global.msnthrp.messenger.extensions.view
-import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.model.User
 
 /**
  * Created by msnthrp on 22/01/18.

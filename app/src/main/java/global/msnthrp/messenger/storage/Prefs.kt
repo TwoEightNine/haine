@@ -14,11 +14,11 @@ class Prefs @Inject constructor(private val context: Context) {
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
     }
 
-    var stickerUpdTimer
+    var stickerUpdTime
         get() = prefs.getInt(STICKERS_UPD, 0)
         set(value) = prefs.edit().putInt(STICKERS_UPD, value).apply()
 
-    fun needToUpdateStickers() = time() - stickerUpdTimer > STICKERS_UPD_DELAY
+    fun needToUpdateStickers() = time() - stickerUpdTime > STICKERS_UPD_DELAY
 
     companion object {
         const val NAME = "prefs"

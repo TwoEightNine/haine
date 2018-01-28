@@ -27,7 +27,7 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    private val timeout = 30L
+    private val timeout = 45L
 
     @Provides
     @Singleton

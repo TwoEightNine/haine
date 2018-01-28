@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseAdapter
-import global.msnthrp.messenger.dialogs.Message
+import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.loadUrl
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.utils.ApiUtils

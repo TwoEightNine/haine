@@ -1,5 +1,6 @@
 package global.msnthrp.messenger.chat
 
+import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.model.Sticker
 import io.reactivex.processors.PublishProcessor
 
@@ -14,6 +15,14 @@ object ChatBus {
 
     fun publishSticker(sticker: Sticker) {
         stickerProcessor.onNext(sticker)
+    }
+
+    private val messageProcessor: PublishProcessor<List<Message>> = PublishProcessor.create()
+
+    fun subscribeMessage(consumer: (List<Message>) -> Unit) = messageProcessor.subscribe(consumer)
+
+    fun publishMessage(messages: List<Message>) {
+        messageProcessor.onNext(messages)
     }
 
 }

@@ -1,4 +1,4 @@
-package global.msnthrp.messenger.chat
+package global.msnthrp.messenger.chat.stickers
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

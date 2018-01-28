@@ -1,11 +1,11 @@
 package global.msnthrp.messenger.network
 
 import global.msnthrp.messenger.dialogs.DialogResponse
-import global.msnthrp.messenger.dialogs.Message
+import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.login.LoginResponse
 import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.network.model.BaseResponse
-import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.model.User
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -52,4 +52,7 @@ interface ApiService {
     @POST("/message/sticker")
     fun sendSticker(@Field("sticker_id") stickerId: Int,
                     @Field("to_id") toId: Int): Single<BaseResponse<Int>>
+
+    @GET("/poll")
+    fun poll(@Query("next_from") nextFrom: Int): Single<BaseResponse<List<Message>>>
 }

@@ -2,7 +2,8 @@ package global.msnthrp.messenger.dialogs
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.model.Message
+import global.msnthrp.messenger.model.User
 
 /**
  * Created by msnthrp on 22/01/18.

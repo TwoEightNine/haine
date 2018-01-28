@@ -2,7 +2,8 @@ package global.msnthrp.messenger.dagger
 
 import dagger.Component
 import global.msnthrp.messenger.chat.ChatActivity
-import global.msnthrp.messenger.chat.StickersFragment
+import global.msnthrp.messenger.chat.service.NotificationService
+import global.msnthrp.messenger.chat.stickers.StickersFragment
 import global.msnthrp.messenger.dagger.module.ContextModule
 import global.msnthrp.messenger.dagger.module.NetworkModule
 import global.msnthrp.messenger.dialogs.DialogsActivity
@@ -26,4 +27,6 @@ interface AppComponent {
     fun inject(chatActivity: ChatActivity)
 
     fun inject(stickersFragment: StickersFragment)
+
+    fun inject(notificationService: NotificationService)
 }

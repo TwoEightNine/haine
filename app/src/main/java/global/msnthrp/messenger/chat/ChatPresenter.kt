@@ -1,13 +1,12 @@
 package global.msnthrp.messenger.chat
 
 import global.msnthrp.messenger.base.BasePresenter
-import global.msnthrp.messenger.dialogs.Message
+import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.subscribeSmart
 import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.network.ApiService
-import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.model.User
 import global.msnthrp.messenger.utils.time
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by msnthrp on 22/01/18.

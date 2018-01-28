@@ -1,4 +1,4 @@
-package global.msnthrp.messenger.chat
+package global.msnthrp.messenger.chat.stickers
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,10 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.R
+import global.msnthrp.messenger.chat.ChatBus
 import global.msnthrp.messenger.extensions.view
-import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.utils.ApiUtils
-import global.msnthrp.messenger.utils.showToast
 import javax.inject.Inject
 
 /**

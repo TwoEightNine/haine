@@ -7,7 +7,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
+import android.net.ConnectivityManager
 import android.os.Handler
+import global.msnthrp.messenger.chat.service.NotificationBroadcastReceiver
+import global.msnthrp.messenger.chat.service.NotificationService
 import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -17,6 +20,11 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by msnthrp on 22/01/18.
  */
+
+fun isOnline(context: Context): Boolean {
+    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return cm.activeNetworkInfo?.isConnectedOrConnecting ?: false
+}
 
 fun <T> applySchedulersSingle() = { single: Single<T> -> single
             .subscribeOn(Schedulers.io())
@@ -63,4 +71,8 @@ fun getRestartIntent(context: Context): Intent {
         throw IllegalStateException("Unable to determine default activity for "
                 + packageName
                 + ". Does an activity specify the DEFAULT category in its intent filter?")
+}
+
+fun startService(context: Context) {
+    context.sendBroadcast(Intent(NotificationBroadcastReceiver.ACTION_NAME))
 }

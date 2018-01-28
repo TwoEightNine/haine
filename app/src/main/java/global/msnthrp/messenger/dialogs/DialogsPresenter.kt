@@ -2,8 +2,9 @@ package global.msnthrp.messenger.dialogs
 
 import global.msnthrp.messenger.base.BasePresenter
 import global.msnthrp.messenger.extensions.subscribeSmart
+import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.network.ApiService
-import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.model.User
 import java.util.*
 
 /**

@@ -15,12 +15,14 @@ import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseActivity
 import global.msnthrp.messenger.chat.ChatActivity
 import global.msnthrp.messenger.extensions.view
+import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.search.SearchActivity
 import global.msnthrp.messenger.settings.SettingsActivity
 import global.msnthrp.messenger.storage.Session
 import global.msnthrp.messenger.utils.ApiUtils
 import global.msnthrp.messenger.utils.showToast
+import global.msnthrp.messenger.utils.startService
 import javax.inject.Inject
 
 /**
@@ -63,6 +65,7 @@ class DialogsActivity : BaseActivity(), DialogsView {
         presenter.loadDialogs()
 
         apiUtils.updateStickers()
+        startService(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

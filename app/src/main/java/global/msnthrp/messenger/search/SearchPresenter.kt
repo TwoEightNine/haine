@@ -3,7 +3,7 @@ package global.msnthrp.messenger.search
 import global.msnthrp.messenger.base.BasePresenter
 import global.msnthrp.messenger.extensions.subscribeSmart
 import global.msnthrp.messenger.network.ApiService
-import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.model.User
 
 /**
  * Created by msnthrp on 22/01/18.

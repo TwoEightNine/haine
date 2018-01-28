@@ -1,7 +1,7 @@
 package global.msnthrp.messenger.search
 
 import global.msnthrp.messenger.base.BaseView
-import global.msnthrp.messenger.profile.User
+import global.msnthrp.messenger.model.User
 
 /**
  * Created by msnthrp on 22/01/18.
