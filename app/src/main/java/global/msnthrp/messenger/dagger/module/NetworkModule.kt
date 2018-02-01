@@ -75,7 +75,7 @@ class NetworkModule {
 
     inner class AuthInterceptor(private val session: Session) : Interceptor {
 
-        private val authToken = "Auth-Token"
+        private val authToken = "Auth"
 
         override fun intercept(chain: Interceptor.Chain): Response {
             var request = chain.request()
@@ -87,7 +87,6 @@ class NetworkModule {
                     .url(url)
                     .addHeader(authToken, session.token)
                     .build()
-//            Lg.i("header = ${request.headers().get(authToken)}")
             return chain.proceed(request)
         }
     }

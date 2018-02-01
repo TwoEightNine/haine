@@ -15,30 +15,30 @@ import retrofit2.http.*
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("/register")
+    @POST("/auth.signUp")
     fun register(@Field("name") name: String,
                  @Field("password") password: String): Single<BaseResponse<Int>>
 
     @FormUrlEncoded
-    @POST("/login")
+    @POST("/auth.logIn")
     fun login(@Field("name") name: String,
               @Field("password") password: String): Single<BaseResponse<LoginResponse>>
 
-    @GET("/messages")
+    @GET("/messages.getDialogs")
     fun getDialogs(): Single<BaseResponse<DialogResponse>>
 
-    @GET("/user/search")
+    @GET("/user.search")
     fun search(@Query("q") query: String): Single<BaseResponse<List<User>>>
 
     @FormUrlEncoded
-    @POST("/message/send")
-    fun sendMessage(@Field("body") text: String,
+    @POST("/messages.send")
+    fun sendMessage(@Field("text") text: String,
                     @Field("to_id") toId: Int): Single<BaseResponse<Int>>
 
-    @GET("/messages/{userId}")
-    fun getMessages(@Path("userId") userId: Int): Single<BaseResponse<List<Message>>>
+    @GET("/messages.get/{userId}")
+    fun getMessages(@Path("userId") userId: Int): Single<BaseResponse<ArrayList<Message>>>
 
-    @GET("/users/{userId}")
+    @GET("/user.get/{userId}")
     fun getUser(@Path("userId") userId: Int): Single<BaseResponse<User>>
 
     @FormUrlEncoded

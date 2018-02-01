@@ -39,7 +39,7 @@ class ChatPresenter(view: ChatView,
                 .subscribeSmart({ messages ->
                     view.onHideLoading()
                     if (messages.isNotEmpty()) {
-                        view.onMessagesLoaded(messages.reversed() as ArrayList<Message>)
+                        view.onMessagesLoaded((messages as ArrayList<Message>))
                     }
                 }, defaultError())
     }

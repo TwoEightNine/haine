@@ -21,7 +21,7 @@ data class User(
         @Expose
         val photo: String?,
 
-        @SerializedName("lastseen")
+        @SerializedName("last_seen")
         @Expose
         val lastSeen: Int
 ) : Serializable

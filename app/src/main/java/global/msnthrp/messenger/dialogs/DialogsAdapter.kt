@@ -28,8 +28,8 @@ class DialogsAdapter(context: Context,
 
         val message = items[position]
         holder.tvTitle.text = message.user?.name
-        holder.tvBody.text = message.body
-        holder.tvDate.text = getTime(message.date)
+        holder.tvBody.text = message.text
+        holder.tvDate.text = getTime(message.time)
         holder.civPhoto.loadUrl(context, message.user?.photo)
     }
 

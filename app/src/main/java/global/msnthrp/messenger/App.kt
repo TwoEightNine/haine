@@ -21,6 +21,6 @@ class App : Application() {
     companion object {
         lateinit var appComponent: AppComponent
 
-        const val BASE_URL = "https://cd820f5a.ngrok.io/"
+        const val BASE_URL = "http://10.0.2.2:5000"
     }
 }

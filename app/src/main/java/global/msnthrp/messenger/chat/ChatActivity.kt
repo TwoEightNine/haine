@@ -113,7 +113,7 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onMessageSent(message: Message) {
         if (message.id == 0) {
-            etInput.setText(message.body)
+            etInput.setText(message.text)
         }
     }
 

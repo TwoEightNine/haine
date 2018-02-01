@@ -35,8 +35,8 @@ class ChatAdapter(context: Context,
         if (holder == null) return
 
         val message = items[position]
-        holder.tvBody.text = message.body
-        holder.tvDate.text = getTime(message.date, true)
+        holder.tvBody.text = message.text
+        holder.tvDate.text = getTime(message.time, true)
         if (message.stickerId != null) {
             holder.ivSticker.loadUrl(context, stickers.find { it.id == message.stickerId }?.url)
         } else {

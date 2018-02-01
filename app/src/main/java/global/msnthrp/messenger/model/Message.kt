@@ -12,13 +12,13 @@ data class Message(
         @Expose
         val id: Int,
 
-        @SerializedName("body")
+        @SerializedName("text")
         @Expose
-        val body: String,
+        val text: String,
 
-        @SerializedName("date")
+        @SerializedName("time")
         @Expose
-        val date: Int,
+        val time: Int,
 
         @SerializedName("out")
         @Expose
