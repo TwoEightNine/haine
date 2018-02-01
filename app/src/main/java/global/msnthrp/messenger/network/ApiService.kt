@@ -53,6 +53,6 @@ interface ApiService {
     fun sendSticker(@Field("sticker_id") stickerId: Int,
                     @Field("to_id") toId: Int): Single<BaseResponse<Int>>
 
-    @GET("/poll")
+    @GET("/messages.poll")
     fun poll(@Query("next_from") nextFrom: Int): Single<BaseResponse<List<Message>>>
 }
