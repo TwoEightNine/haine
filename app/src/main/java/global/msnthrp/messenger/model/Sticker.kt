@@ -20,5 +20,5 @@ data class Sticker(
         @Expose
         val url: String
 ) {
-        constructor() : this(0, "")
+        constructor() : this(0, "") // for ormlite
 }

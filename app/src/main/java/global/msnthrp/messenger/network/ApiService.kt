@@ -6,6 +6,7 @@ import global.msnthrp.messenger.login.LoginResponse
 import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.network.model.BaseResponse
 import global.msnthrp.messenger.model.User
+import global.msnthrp.messenger.network.model.PollResponse
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -54,5 +55,6 @@ interface ApiService {
                     @Field("to_id") toId: Int): Single<BaseResponse<Int>>
 
     @GET("/messages.poll")
-    fun poll(@Query("next_from") nextFrom: Int): Single<BaseResponse<List<Message>>>
+    fun poll(@Query("next_message_from") nextMessageFrom: Int,
+             @Query("next_xchg_from") nextXchgFrom: Int): Single<BaseResponse<PollResponse>>
 }

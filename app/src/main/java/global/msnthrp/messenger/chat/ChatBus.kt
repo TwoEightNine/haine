@@ -25,4 +25,12 @@ object ChatBus {
         messageProcessor.onNext(messages)
     }
 
+    private val exchangeProcessor: PublishProcessor<String> = PublishProcessor.create()
+
+    fun subscribeExchange(consumer: (String) -> Unit) = exchangeProcessor.subscribe(consumer)
+
+    fun publishExchange(exchange: String) {
+        exchangeProcessor.onNext(exchange)
+    }
+
 }

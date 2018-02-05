@@ -61,10 +61,11 @@ class NotificationService : Service() {
     }
 
     private fun poll() {
-        api.poll(lastMessage)
-                .subscribeSmart({ messages ->
-                    l("updates: ${messages.size}")
-                    sendResult(messages)
+        api.poll(lastMessage, 0)
+                .subscribeSmart({ pollResponse ->
+
+                    l("updates: ${pollResponse.messages.size} ${pollResponse.exchanges.size}")
+                    sendResult(pollResponse.messages)
                 }, { error ->
                     l("polling error: $error")
                     SystemClock.sleep(INTERNET_DELAY)
