@@ -89,6 +89,7 @@ class NotificationService : Service() {
         if (exchanges.isNotEmpty()) {
             session.lastXchg = exchanges[0].id
         }
+
     }
 
     private fun postPolling() {

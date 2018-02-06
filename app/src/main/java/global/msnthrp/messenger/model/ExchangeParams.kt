@@ -38,12 +38,12 @@ data class ExchangeParams(
         @DatabaseField
         @SerializedName("pub_oth")
         @Expose
-        val publicOther: String,
+        val publicOther: String = "",
 
         @DatabaseField
         @SerializedName("shared")
         @Expose
-        val shared: String
+        val shared: String = ""
 ) {
     constructor() : this(0, "", "", "", "", "", "") // for ormlite
 }
