@@ -22,6 +22,10 @@ class Session @Inject constructor(private val context: Context) {
         get() = prefs.getInt(LAST_MESSAGE, 0)
         set(value) = prefs.edit().putInt(LAST_MESSAGE, value).apply()
 
+    var lastXchg
+        get() = prefs.getInt(LAST_XCHG, 0)
+        set(value) = prefs.edit().putInt(LAST_XCHG, value).apply()
+
     fun reset() {
         prefs.edit().clear().apply()
     }
@@ -32,6 +36,7 @@ class Session @Inject constructor(private val context: Context) {
         const val TOKEN = "token"
         const val UID = "userId"
         const val LAST_MESSAGE = "lastMessage"
+        const val LAST_XCHG = "lastExchange"
     }
 
 }

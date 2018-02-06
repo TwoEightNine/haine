@@ -57,4 +57,15 @@ interface ApiService {
     @GET("/messages.poll")
     fun poll(@Query("next_message_from") nextMessageFrom: Int,
              @Query("next_xchg_from") nextXchgFrom: Int): Single<BaseResponse<PollResponse>>
+
+    @FormUrlEncoded
+    @POST("/exchange.commit")
+    fun commitExchange(@Field("p") p: String,
+                       @Field("g") g: String,
+                       @Field("public") public: String,
+                       @Field("to_id") toId: Int): Single<BaseResponse<Int>>
+
+    @FormUrlEncoded
+    @POST("/exchange.safePrime")
+    fun getPrime(): Single<BaseResponse<String>>
 }

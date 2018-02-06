@@ -6,6 +6,7 @@ import android.os.SystemClock
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.chat.ChatBus
 import global.msnthrp.messenger.extensions.subscribeSmart
+import global.msnthrp.messenger.model.ExchangeParams
 import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.storage.Lg
@@ -25,6 +26,7 @@ class NotificationService : Service() {
     lateinit var api: ApiService
 
     private var lastMessage = 0
+    private var lastXchg = 0
     private var isRunning = false
 
     override fun onBind(intent: Intent?) = null
@@ -58,13 +60,15 @@ class NotificationService : Service() {
 
     private fun initPrefs() {
         lastMessage = session.lastMessage
+        lastXchg = session.lastXchg
     }
 
     private fun poll() {
-        api.poll(lastMessage, 0)
+        api.poll(lastMessage, lastXchg)
                 .subscribeSmart({ pollResponse ->
 
                     l("updates: ${pollResponse.messages.size} ${pollResponse.exchanges.size}")
+                    processExchange(pollResponse.exchanges)
                     sendResult(pollResponse.messages)
                 }, { error ->
                     l("polling error: $error")
@@ -79,6 +83,12 @@ class NotificationService : Service() {
             ChatBus.publishMessage(messages)
         }
         postPolling()
+    }
+
+    private fun processExchange(exchanges: List<ExchangeParams>) {
+        if (exchanges.isNotEmpty()) {
+            session.lastXchg = exchanges[0].id
+        }
     }
 
     private fun postPolling() {

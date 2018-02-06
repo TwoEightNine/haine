@@ -64,6 +64,7 @@ class DialogsActivity : BaseActivity(), DialogsView {
         recyclerView.adapter = adapter
 
         apiUtils.updateStickers()
+        apiUtils.updatePrime()
         startService(this)
     }
 

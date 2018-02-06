@@ -26,6 +26,19 @@ class ApiUtils @Inject constructor(private val api: ApiService,
                 })
     }
 
+    fun updatePrime() {
+        if (!prefs.needToUpdatePrime()) return
+
+        api.getPrime()
+                .subscribeSmart({ prime ->
+                    prefs.safePrime = prime
+                    prefs.primeUpdTime = time()
+                    Lg.i("got prime $prime")
+                }, {
+                    Lg.wtf("error obtaining prime: $it")
+                })
+    }
+
     fun getStickers() = dbHelper.db.stickerDao.getAll()
 
 }
