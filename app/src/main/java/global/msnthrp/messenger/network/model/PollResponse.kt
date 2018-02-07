@@ -2,7 +2,7 @@ package global.msnthrp.messenger.network.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import global.msnthrp.messenger.model.ExchangeParams
+import global.msnthrp.messenger.model.ExchangeRequest
 import global.msnthrp.messenger.model.Message
 
 /**
@@ -15,5 +15,5 @@ data class PollResponse(
 
         @SerializedName("exchanges")
         @Expose
-        val exchanges: List<ExchangeParams>
+        val exchanges: List<ExchangeRequest>
 )

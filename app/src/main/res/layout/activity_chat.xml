@@ -60,6 +60,21 @@
                 android:textColorHint="@color/textDarkSecondary"
                 android:textSize="14sp" />
 
+            <RelativeLayout
+                android:background="@color/alterWhite"
+                android:id="@+id/rlExchangeHint"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:text="@string/exchange_hint"
+                    android:textColor="@color/textDark"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
         <ProgressBar

@@ -28,22 +28,37 @@ data class ExchangeParams(
         @DatabaseField
         @SerializedName("priv_own")
         @Expose
-        val privateOwn: String,
+        var privateOwn: String,
 
         @DatabaseField
         @SerializedName("pub_own")
         @Expose
-        val publicOwn: String,
+        var publicOwn: String,
 
         @DatabaseField
         @SerializedName("pub_oth")
         @Expose
-        val publicOther: String = "",
+        var publicOther: String = "",
 
         @DatabaseField
         @SerializedName("shared")
         @Expose
-        val shared: String = ""
+        var shared: String = "",
+
+        @DatabaseField
+        @SerializedName("init")
+        @Expose
+        val initByUs: Int = 1
 ) {
-    constructor() : this(0, "", "", "", "", "", "") // for ormlite
+        constructor() : this(0, "", "", "", "", "", "") // for ormlite
+
+        fun toRequest(myId: Int) = ExchangeRequest(
+                p, g,
+                if (initByUs == 1) myId else id,
+                if (initByUs == 1) id else myId,
+                if (initByUs == 1) publicOwn else publicOther,
+                if (initByUs == 1) publicOther else publicOwn
+        )
+
+        fun isDebut() = publicOther == "" && shared == ""
 }

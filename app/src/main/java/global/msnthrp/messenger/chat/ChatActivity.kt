@@ -12,11 +12,13 @@ import global.msnthrp.messenger.App
 import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseActivity
 import global.msnthrp.messenger.chat.stickers.StickersFragment
+import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.extensions.isAtEnd
 import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
+import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.utils.ApiUtils
 import global.msnthrp.messenger.utils.BottomSheetController
 import global.msnthrp.messenger.utils.getTime
@@ -32,6 +34,8 @@ class ChatActivity : BaseActivity(), ChatView {
     lateinit var api: ApiService
     @Inject
     lateinit var apiUtils: ApiUtils
+    @Inject
+    lateinit var dbHelper: DbHelper
 
     private val toolbar: Toolbar by view(R.id.toolbar)
     private val recyclerView: RecyclerView by view(R.id.recyclerView)
@@ -41,6 +45,7 @@ class ChatActivity : BaseActivity(), ChatView {
     private val rlBottom: RelativeLayout by view(R.id.rlBottom)
     private val rlHideBottom: RelativeLayout by view(R.id.rlHideBottom)
     private val ivSticker: ImageView by view(R.id.ivSticker)
+    private val rlExchange: RelativeLayout by view(R.id.rlExchangeHint)
 
     private lateinit var user: User
     private val presenter by lazy { ChatPresenter(this, api, user) }
@@ -66,6 +71,8 @@ class ChatActivity : BaseActivity(), ChatView {
             bottomSheet.close()
         })
         compositeDisposable.add(ChatBus.subscribeMessage(::onMessagesAdded))
+        compositeDisposable.add(ChatBus.subscribeExchange { checkForExchanges() })
+        checkForExchanges()
     }
 
     private fun obtainArgs() {
@@ -93,6 +100,16 @@ class ChatActivity : BaseActivity(), ChatView {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.flContainer, StickersFragment())
                 .commit()
+    }
+
+    private fun checkForExchanges() {
+        val params = dbHelper.db.exchangeDao.queryForId(user.id)
+        if (params == null) {
+            apiUtils.createExchange(user.id) {}
+        } else if (!params.isDebut()) {
+            rlExchange.visibility = View.GONE
+            Lg.i("shared = ${params.shared}")
+        }
     }
 
     override fun onShowLoading() {

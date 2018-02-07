@@ -23,8 +23,8 @@ class Session @Inject constructor(private val context: Context) {
         set(value) = prefs.edit().putInt(LAST_MESSAGE, value).apply()
 
     var lastXchg
-        get() = prefs.getInt(LAST_XCHG, 0)
-        set(value) = prefs.edit().putInt(LAST_XCHG, value).apply()
+        get() = prefs.getLong(LAST_XCHG, 0)
+        set(value) = prefs.edit().putLong(LAST_XCHG, value).apply()
 
     fun reset() {
         prefs.edit().clear().apply()

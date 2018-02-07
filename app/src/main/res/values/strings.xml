@@ -17,4 +17,5 @@
     <string name="logOut">Log out</string>
     <string name="logOutHint">All data will be reset</string>
     <string name="loggingOut">Logging out...</string>
+    <string name="exchange_hint">Performing exchange. Waiting for the interlocutor</string>
 </resources>

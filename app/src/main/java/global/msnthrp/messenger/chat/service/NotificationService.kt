@@ -5,14 +5,20 @@ import android.content.Intent
 import android.os.SystemClock
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.chat.ChatBus
+import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.extensions.subscribeSmart
 import global.msnthrp.messenger.model.ExchangeParams
+import global.msnthrp.messenger.model.ExchangeRequest
 import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.storage.Lg
+import global.msnthrp.messenger.storage.Prefs
 import global.msnthrp.messenger.storage.Session
+import global.msnthrp.messenger.utils.DH_BITS
 import global.msnthrp.messenger.utils.isOnline
 import global.msnthrp.messenger.utils.startService
+import java.math.BigInteger
+import java.security.SecureRandom
 import javax.inject.Inject
 
 /**
@@ -23,10 +29,16 @@ class NotificationService : Service() {
     @Inject
     lateinit var session: Session
     @Inject
+    lateinit var prefs: Prefs
+    @Inject
     lateinit var api: ApiService
+    @Inject
+    lateinit var dbHelper: DbHelper
 
+    private var myPrime = ""
+    private var myId = 0
     private var lastMessage = 0
-    private var lastXchg = 0
+    private var lastXchg = 0L
     private var isRunning = false
 
     override fun onBind(intent: Intent?) = null
@@ -61,6 +73,8 @@ class NotificationService : Service() {
     private fun initPrefs() {
         lastMessage = session.lastMessage
         lastXchg = session.lastXchg
+        myId = session.userId
+        myPrime = prefs.safePrime
     }
 
     private fun poll() {
@@ -85,11 +99,60 @@ class NotificationService : Service() {
         postPolling()
     }
 
-    private fun processExchange(exchanges: List<ExchangeParams>) {
+    private fun processExchange(exchanges: List<ExchangeRequest>) {
         if (exchanges.isNotEmpty()) {
-            session.lastXchg = exchanges[0].id
+            session.lastXchg = exchanges[0].lastUpd
         }
+        exchanges
+                .filter { it.lastEditor != myId }
+                .forEach { exchange ->
+            if (exchange.isDebut()) {
+                supportExchange(exchange)
+            } else {
+                finishExchange(exchange)
+            }
+        }
+    }
 
+    /** This method confirms that someone supported our params and sent us its own */
+    private fun finishExchange(exchangeRequest: ExchangeRequest) {
+        val exchangeParams = exchangeRequest.toParams(myId)
+        val storedParams = dbHelper.db.exchangeDao.queryForId(exchangeParams.id)
+        val p = BigInteger(storedParams.p)
+
+        val privateOwn = BigInteger(storedParams.privateOwn)
+        val publicOther = BigInteger(exchangeParams.publicOther)
+        val shared = publicOther.modPow(privateOwn, p)
+
+        storedParams.publicOther = exchangeParams.publicOther
+        storedParams.shared = shared.toString()
+
+        dbHelper.db.exchangeDao.createOrUpdate(storedParams)
+        ChatBus.publishExchange(shared.toString())
+    }
+
+    /** This method is being run when someone sent us params at first time */
+    private fun supportExchange(exchangeRequest: ExchangeRequest) {
+        val exchangeParams = exchangeRequest.toParams(myId)
+        val p = BigInteger(exchangeParams.p)
+        val g = BigInteger(exchangeParams.g)
+
+        val privateOwn = BigInteger(DH_BITS, SecureRandom())
+        val publicOwn = g.modPow(privateOwn, p)
+        val publicOther = BigInteger(exchangeParams.publicOther)
+        val shared = publicOther.modPow(privateOwn, p)
+
+        api.commitExchange(p.toString(), g.toString(), publicOwn.toString(), exchangeParams.id)
+                .subscribeSmart({
+                    exchangeParams.privateOwn = privateOwn.toString()
+                    exchangeParams.publicOwn = publicOwn.toString()
+                    exchangeParams.shared = shared.toString()
+
+                    dbHelper.db.exchangeDao.createOrUpdate(exchangeParams)
+                    ChatBus.publishExchange(shared.toString())
+                }, {
+                    Lg.wtf("error supporting: $it")
+                })
     }
 
     private fun postPolling() {
