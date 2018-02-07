@@ -1,5 +1,6 @@
 package global.msnthrp.messenger.utils
 
+import android.util.Base64
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.SecureRandom
@@ -56,3 +57,7 @@ fun getUiFriendlyHash(hash: String) = hash
         .mapIndexed { index, s -> if (index % 16 == 15) "$s\n" else s } // new-lines
         .map { it.toUpperCase() }
         .joinToString(separator = "")
+
+fun toBase64(bytes: ByteArray): String = Base64.encodeToString(bytes, Base64.NO_WRAP)
+
+fun fromBase64(text: String) = Base64.decode(text, Base64.NO_WRAP)

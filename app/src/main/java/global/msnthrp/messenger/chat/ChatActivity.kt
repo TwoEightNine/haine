@@ -19,10 +19,7 @@ import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
 import global.msnthrp.messenger.storage.Lg
-import global.msnthrp.messenger.utils.ApiUtils
-import global.msnthrp.messenger.utils.BottomSheetController
-import global.msnthrp.messenger.utils.getTime
-import global.msnthrp.messenger.utils.showToast
+import global.msnthrp.messenger.utils.*
 import javax.inject.Inject
 
 /**
@@ -51,6 +48,7 @@ class ChatActivity : BaseActivity(), ChatView {
     private val presenter by lazy { ChatPresenter(this, api, user) }
     private val adapter by lazy { ChatAdapter(this, apiUtils) }
     private val bottomSheet by lazy { BottomSheetController(rlBottom, rlHideBottom) }
+    private var crypto: Cryptool? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,7 +106,8 @@ class ChatActivity : BaseActivity(), ChatView {
             apiUtils.createExchange(user.id) {}
         } else if (!params.isDebut()) {
             rlExchange.visibility = View.GONE
-            Lg.i("shared = ${params.shared}")
+            crypto = Cryptool(params.shared)
+            Lg.i("fingerprint = ${crypto?.getFingerPrint()}")
         }
     }
 
