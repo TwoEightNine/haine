@@ -9,7 +9,7 @@
 
     <TextView
         android:fontFamily="sans-serif-light"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -29,12 +29,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
+        android:textSize="16sp"
         android:fontFamily="monospace"
         android:gravity="center"
         android:textColor="@color/textDark"
         tools:text="A4 56 75 98 15 83 74 98\nA4 56 75 98 15 83 74 98\nA4 56 75 98 15 83 74 98\nA4 56 75 98 15 83 74 98\n" />
 
     <TextView
+        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
