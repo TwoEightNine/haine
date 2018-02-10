@@ -13,7 +13,7 @@ class Cryptool(private val shared: String) {
 
     fun encrypt(plain: String) = toBase64(Aes256.encrypt(aesIv, aesKey, plain.toByteArray()))
 
-    fun decrypt(plain: String) = Aes256.decrypt(aesIv, aesKey, fromBase64(plain))
+    fun decrypt(plain: String) = String(Aes256.decrypt(aesIv, aesKey, fromBase64(plain)))
 
     fun isSharedOther(otherShared: String) = shared != otherShared
 
