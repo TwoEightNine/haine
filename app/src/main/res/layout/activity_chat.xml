@@ -58,7 +58,7 @@
                 android:minHeight="44dp"
                 android:padding="10dp"
                 android:textColor="@color/textDark"
-                android:textColorHint="@color/textDarkSecondary"
+                android:textColorHint="@color/textLightSecondary"
                 android:textSize="14sp" />
 
             <RelativeLayout

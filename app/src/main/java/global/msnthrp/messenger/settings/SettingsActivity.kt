@@ -53,7 +53,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
             it.setTitle(R.string.settings)
         }
         ivClearPhoto.setOnClickListener { etPhoto.setText("") }
-        btnLogOut.setOnClickListener { logOut() }
+        btnLogOut.setOnClickListener { presenter.terminate() }
         presenter.loadUser(session.userId)
     }
 
@@ -79,6 +79,14 @@ class SettingsActivity : BaseActivity(), SettingsView {
         finish()
     }
 
+    override fun onTerminated() {
+        prefs.reset()
+        session.reset()
+        dbHelper.db.dropAll()
+        finishAffinity()
+        restartApp(this, getString(R.string.loggingOut))
+    }
+
     override fun onBackPressed() {
         val newPhoto = etPhoto.text.toString()
         if (newPhoto != oldPhoto) {
@@ -87,15 +95,6 @@ class SettingsActivity : BaseActivity(), SettingsView {
             saveSettings()
             super.onBackPressed()
         }
-    }
-
-    private fun logOut() {
-        prefs.reset()
-        session.reset()
-        dbHelper.db.dropAll()
-        stopService(this)
-        finishAffinity()
-        restartApp(this, getString(R.string.loggingOut))
     }
 
     private fun saveSettings() {

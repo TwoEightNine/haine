@@ -25,6 +25,9 @@ interface ApiService {
     fun login(@Field("name") name: String,
               @Field("password") password: String): Single<BaseResponse<LoginResponse>>
 
+    @GET("/auth.terminate")
+    fun terminateSessions(): Single<BaseResponse<Int>>
+
     @GET("/messages.getDialogs")
     fun getDialogs(): Single<BaseResponse<DialogResponse>>
 

@@ -9,4 +9,5 @@ import global.msnthrp.messenger.model.User
 interface SettingsView : BaseView {
     fun onUserLoaded(user: User)
     fun onPhotoUpdated()
+    fun onTerminated()
 }
