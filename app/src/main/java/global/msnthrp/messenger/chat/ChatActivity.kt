@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import global.msnthrp.messenger.App
@@ -20,6 +22,7 @@ import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
 import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.utils.*
+import global.msnthrp.messenger.view.FingerPrintAlertDialog
 import javax.inject.Inject
 
 /**
@@ -45,7 +48,7 @@ class ChatActivity : BaseActivity(), ChatView {
     private val rlExchange: RelativeLayout by view(R.id.rlExchangeHint)
 
     private lateinit var user: User
-    private val presenter by lazy { ChatPresenter(this, api, user) }
+    private val presenter by lazy { ChatPresenter(this, api, apiUtils, dbHelper, user) }
     private val adapter by lazy { ChatAdapter(this, apiUtils) }
     private val bottomSheet by lazy { BottomSheetController(rlBottom, rlHideBottom) }
     private var crypto: Cryptool? = null
@@ -68,9 +71,6 @@ class ChatActivity : BaseActivity(), ChatView {
             presenter.sendSticker(it)
             bottomSheet.close()
         })
-        compositeDisposable.add(ChatBus.subscribeMessage(::onMessagesAdded))
-        compositeDisposable.add(ChatBus.subscribeExchange { checkForExchanges() })
-        checkForExchanges()
     }
 
     private fun obtainArgs() {
@@ -100,16 +100,24 @@ class ChatActivity : BaseActivity(), ChatView {
                 .commit()
     }
 
-    private fun checkForExchanges() {
-        val params = dbHelper.db.exchangeDao.queryForId(user.id)
-        if (params == null) {
-            apiUtils.createExchange(user.id) {}
-        } else if (!params.isDebut()) {
-            rlExchange.visibility = View.GONE
-            crypto = Cryptool(params.shared)
-            Lg.i("fingerprint = ${crypto?.getFingerPrint()}")
-        }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_chat, menu)
+        return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?)
+        = when (item?.itemId) {
+            R.id.menu_fingerprint -> {
+                val fingerprint = presenter.getFingerPrint()
+                if (fingerprint == null) {
+                    showToast(this, getString(R.string.no_shared))
+                } else {
+                    FingerPrintAlertDialog(this, fingerprint).show()
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 
     override fun onShowLoading() {
         progressBar.visibility = View.VISIBLE
@@ -133,14 +141,24 @@ class ChatActivity : BaseActivity(), ChatView {
         }
     }
 
-    private fun onMessagesAdded(messages: List<Message>) {
+    override fun onSendingAllowed() {
+        rlExchange.visibility = View.GONE
+    }
+
+    override fun onMessagesAdded(messages: List<Message>) {
         val atEnd = recyclerView.isAtEnd(adapter.itemCount)
-        adapter.addAll(messages.reversed())
+        adapter.addAll(messages)
         if (atEnd) scrollToBottom()
     }
 
     private fun scrollToBottom() {
         recyclerView.scrollToPosition(adapter.itemCount - 1)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+        presenter.destroy()
     }
 
     companion object {

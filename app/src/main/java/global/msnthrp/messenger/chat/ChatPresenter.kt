@@ -1,11 +1,15 @@
 package global.msnthrp.messenger.chat
 
 import global.msnthrp.messenger.base.BasePresenter
+import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.subscribeSmart
 import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
+import global.msnthrp.messenger.storage.Lg
+import global.msnthrp.messenger.utils.ApiUtils
+import global.msnthrp.messenger.utils.Cryptool
 import global.msnthrp.messenger.utils.time
 
 /**
@@ -13,12 +17,23 @@ import global.msnthrp.messenger.utils.time
  */
 class ChatPresenter(view: ChatView,
                     api: ApiService,
+                    private val apiUtils: ApiUtils,
+                    private val dbHelper: DbHelper,
                     private val user: User) : BasePresenter<ChatView>(view, api) {
 
-    fun sendMessage(text: String) {
-        if (text.isBlank()) return
+    init {
+        compositeDisposable.add(ChatBus.subscribeMessage(::onMessagesAdded))
+        compositeDisposable.add(ChatBus.subscribeExchange { checkForExchanges() })
+        checkForExchanges()
+    }
 
-        api.sendMessage(text, user.id)
+    private var crypto: Cryptool? = null
+
+    fun sendMessage(text: String) {
+        if (text.isBlank() || crypto == null) return
+
+        val encrypted = crypto!!.encrypt(text)
+        api.sendMessage(encrypted, user.id)
                 .subscribeSmart({
                     view.onMessageSent(Message(it, text, time(), true, user.id, null))
                 }, defaultError {
@@ -38,10 +53,42 @@ class ChatPresenter(view: ChatView,
         api.getMessages(user.id)
                 .subscribeSmart({ messages ->
                     view.onHideLoading()
-                    messages.reverse()
+                    with(messages) {
+                        reverse()
+                        decrypt()
+                    }
                     if (messages.isNotEmpty()) {
                         view.onMessagesLoaded(messages)
                     }
                 }, defaultError())
+    }
+
+    fun getFingerPrint() = crypto?.getFingerPrint()
+
+    private fun checkForExchanges() {
+        val params = dbHelper.db.exchangeDao.queryForId(user.id)
+        if (params == null) {
+            apiUtils.createExchange(user.id) {}
+        } else if (!params.isDebut()) {
+            view.onSendingAllowed()
+            crypto = Cryptool(params.shared)
+            Lg.i("fingerprint = ${crypto?.getFingerPrint()}")
+        }
+    }
+
+    private fun onMessagesAdded(messages: List<Message>) {
+        with (messages) {
+            decrypt()
+        }
+        view.onMessagesAdded(messages)
+    }
+
+    private fun List<Message>.decrypt(): List<Message> {
+        if (crypto == null) return this
+
+        forEach {
+            it.text = crypto!!.decrypt(it.text)
+        }
+        return this
     }
 }

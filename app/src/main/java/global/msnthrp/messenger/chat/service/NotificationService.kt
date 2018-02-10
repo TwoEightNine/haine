@@ -117,7 +117,8 @@ class NotificationService : Service() {
     /** This method confirms that someone supported our params and sent us its own */
     private fun finishExchange(exchangeRequest: ExchangeRequest) {
         val exchangeParams = exchangeRequest.toParams(myId)
-        val storedParams = dbHelper.db.exchangeDao.queryForId(exchangeParams.id)
+        val storedParams = dbHelper.db.exchangeDao.queryForId(exchangeParams.id) ?: return
+
         val p = BigInteger(storedParams.p)
 
         val privateOwn = BigInteger(storedParams.privateOwn)

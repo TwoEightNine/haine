@@ -9,4 +9,6 @@ import global.msnthrp.messenger.model.Message
 interface ChatView : BaseView {
     fun onMessagesLoaded(messages: ArrayList<Message>)
     fun onMessageSent(message: Message)
+    fun onSendingAllowed()
+    fun onMessagesAdded(messages: List<Message>)
 }

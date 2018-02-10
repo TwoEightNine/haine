@@ -38,6 +38,7 @@
                 android:src="@drawable/ic_send" />
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/ivSticker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,6 +62,7 @@
                 android:textSize="14sp" />
 
             <RelativeLayout
+                android:clickable="true"
                 android:background="@color/alterWhite"
                 android:id="@+id/rlExchangeHint"
                 android:layout_width="match_parent"

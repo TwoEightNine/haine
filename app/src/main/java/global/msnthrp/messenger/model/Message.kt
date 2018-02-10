@@ -14,7 +14,7 @@ data class Message(
 
         @SerializedName("text")
         @Expose
-        val text: String,
+        var text: String,
 
         @SerializedName("time")
         @Expose
