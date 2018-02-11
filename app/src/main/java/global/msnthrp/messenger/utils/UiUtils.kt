@@ -3,6 +3,8 @@ package global.msnthrp.messenger.utils
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.support.annotation.IdRes
+import android.support.annotation.StringRes
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 
@@ -14,6 +16,10 @@ fun showToast(context: Context?, text: String = "", duration: Int = Toast.LENGTH
     if (context == null) return
 
     Toast.makeText(context, text, duration).show()
+}
+
+fun showToast(context: Context?, @StringRes textId: Int, duration: Int = Toast.LENGTH_SHORT) {
+    showToast(context, context?.getString(textId) ?: "", duration)
 }
 
 fun hideKeyboard(activity: Activity) {

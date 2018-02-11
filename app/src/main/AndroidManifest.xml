@@ -39,6 +39,7 @@
             android:theme="@style/LoginTheme"/>
 
         <activity android:name=".chat.ChatActivity" />
+        <activity android:name=".settings.WhatIsHaineActivity" />
     </application>
 
 </manifest>

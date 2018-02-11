@@ -1,6 +1,9 @@
 package global.msnthrp.messenger.settings
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Button
@@ -41,6 +44,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
     private val ivClearPhoto: ImageView by view(R.id.ivClearPhoto)
     private val btnLogOut: Button by view(R.id.btnLogOut)
 
+    private val handler = Handler()
     private var oldPhoto = ""
     private val presenter: SettingsPresenter by lazy { SettingsPresenter(this, api) }
 
@@ -55,6 +59,13 @@ class SettingsActivity : BaseActivity(), SettingsView {
         ivClearPhoto.setOnClickListener { etPhoto.setText("") }
         btnLogOut.setOnClickListener { presenter.terminate() }
         presenter.loadUser(session.userId)
+        handler.postDelayed({
+            Snackbar.make(findViewById<View>(android.R.id.content), "What is haine?", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Find out") {
+                        startActivity(Intent(this, WhatIsHaineActivity::class.java))
+                    }
+                    .show()
+        }, HINT_DELAY)
     }
 
     override fun onShowLoading() {
@@ -99,5 +110,9 @@ class SettingsActivity : BaseActivity(), SettingsView {
 
     private fun saveSettings() {
 
+    }
+
+    companion object {
+        const val HINT_DELAY = 1000L * 90
     }
 }

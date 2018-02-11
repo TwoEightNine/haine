@@ -1,6 +1,5 @@
 package global.msnthrp.messenger.chat
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -22,7 +21,6 @@ import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
-import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.utils.*
 import global.msnthrp.messenger.view.FingerPrintAlertDialog
 import javax.inject.Inject
@@ -80,7 +78,7 @@ class ChatActivity : BaseActivity(), ChatView {
         if (intent.extras != null) {
             user = intent.extras.getSerializable(USER) as User
         } else {
-            showToast(this, "User not found")
+            showToast(this, R.string.user_not_found)
             onBackPressed()
         }
     }
