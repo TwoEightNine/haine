@@ -19,6 +19,8 @@
     <string name="loggingOut">Logging out...</string>
     <string name="exchange_hint">Performing exchange. Waiting for the interlocutor</string>
     <string name="fingerprint">Fingerprint</string>
+    <string name="key_exchange">New key exchange</string>
     <string name="fingerprint_hint">This image and this text were generated from the encryption key. If they look the same on your interlocutor\'s device and the keys were set, be sure that no one breaks your privacy. Otherwise your conversation is not secure!</string>
     <string name="no_shared">Key exchange hasn\'t been performed yet</string>
+    <string name="really_wanna_exchange">Do you really want to perform new key exchange?</string>
 </resources>

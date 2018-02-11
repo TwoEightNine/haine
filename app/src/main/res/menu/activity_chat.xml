@@ -8,4 +8,16 @@
         android:icon="@drawable/ic_fingerprint"
         app:showAsAction="always" />
 
+    <item
+        android:title="@string/fingerprint"
+        android:id="@+id/menu_fingerprint_unchecked"
+        android:icon="@drawable/ic_fingerprint_warning"
+        app:showAsAction="always" />
+
+    <item
+        android:title="@string/key_exchange"
+        android:icon="@drawable/ic_key_exchange"
+        android:id="@+id/menu_exchange"
+        app:showAsAction="always" />
+
 </menu>

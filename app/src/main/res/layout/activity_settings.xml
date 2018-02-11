@@ -17,9 +17,10 @@
             android:layout_marginTop="?actionBarSize"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:padding="16dp">
+            android:paddingBottom="16dp">
 
             <LinearLayout
+                android:padding="16dp"
                 android:id="@+id/llAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/account_settings"
                     android:textColor="@color/textLightSecondary" />
 
@@ -90,6 +91,12 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
+            <View
+                android:layout_below="@+id/llAccount"
+                android:background="@color/textLightSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
 
             <ProgressBar
                 android:id="@+id/progressBar"

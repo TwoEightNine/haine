@@ -21,13 +21,19 @@ class ChatPresenter(view: ChatView,
                     private val dbHelper: DbHelper,
                     private val user: User) : BasePresenter<ChatView>(view, api) {
 
+    private var crypto: Cryptool? = null
+
+    var isFingerprintChecked = true
+        set(value) {
+            field = value
+            view.onFingerPrintUpdated(value)
+        }
+
     init {
         compositeDisposable.add(ChatBus.subscribeMessage(::onMessagesAdded))
         compositeDisposable.add(ChatBus.subscribeExchange { checkForExchanges() })
         checkForExchanges()
     }
-
-    private var crypto: Cryptool? = null
 
     fun sendMessage(text: String) {
         if (text.isBlank() || crypto == null) return
@@ -65,6 +71,13 @@ class ChatPresenter(view: ChatView,
 
     fun getFingerPrint() = crypto?.getFingerPrint()
 
+    fun createNewExchange() {
+        view.onShowLoading()
+        apiUtils.createExchange(user.id) {
+            view.onHideLoading()
+        }
+    }
+
     private fun checkForExchanges() {
         val params = dbHelper.db.exchangeDao.queryForId(user.id)
         if (params == null) {
@@ -73,11 +86,12 @@ class ChatPresenter(view: ChatView,
             view.onSendingAllowed()
             crypto = Cryptool(params.shared)
             Lg.i("fingerprint = ${crypto?.getFingerPrint()}")
+            isFingerprintChecked = false
         }
     }
 
     private fun onMessagesAdded(messages: List<Message>) {
-        with (messages) {
+        with(messages) {
             decrypt()
         }
         view.onMessagesAdded(messages)

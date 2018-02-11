@@ -11,4 +11,5 @@ interface ChatView : BaseView {
     fun onMessageSent(message: Message)
     fun onSendingAllowed()
     fun onMessagesAdded(messages: List<Message>)
+    fun onFingerPrintUpdated(checked: Boolean)
 }

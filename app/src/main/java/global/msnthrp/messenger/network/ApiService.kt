@@ -46,7 +46,7 @@ interface ApiService {
     fun getUser(@Path("userId") userId: Int): Single<BaseResponse<User>>
 
     @FormUrlEncoded
-    @POST("/user/photo")
+    @POST("/user.photo")
     fun updatePhoto(@Field("photo") photo: String): Single<BaseResponse<Int>>
 
     @GET("/stickers")

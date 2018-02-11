@@ -1,8 +1,10 @@
 package global.msnthrp.messenger.chat
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.IdRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -51,7 +53,8 @@ class ChatActivity : BaseActivity(), ChatView {
     private val presenter by lazy { ChatPresenter(this, api, apiUtils, dbHelper, user) }
     private val adapter by lazy { ChatAdapter(this, apiUtils) }
     private val bottomSheet by lazy { BottomSheetController(rlBottom, rlHideBottom) }
-    private var crypto: Cryptool? = null
+    private var menu: Menu? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,22 +105,36 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_chat, menu)
+        this.menu = menu
+        menu?.setVisible(R.id.menu_fingerprint_unchecked, false)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?)
         = when (item?.itemId) {
-            R.id.menu_fingerprint -> {
+            R.id.menu_fingerprint, R.id.menu_fingerprint_unchecked -> {
                 val fingerprint = presenter.getFingerPrint()
                 if (fingerprint == null) {
                     showToast(this, getString(R.string.no_shared))
                 } else {
                     FingerPrintAlertDialog(this, fingerprint).show()
+                    presenter.isFingerprintChecked = true
+                }
+                true
+            }
+            R.id.menu_exchange -> {
+                showConfirm(this, getString(R.string.really_wanna_exchange)) {
+                    presenter.createNewExchange()
                 }
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    override fun onFingerPrintUpdated(checked: Boolean) {
+        menu?.setVisible(R.id.menu_fingerprint, checked)
+        menu?.setVisible(R.id.menu_fingerprint_unchecked, !checked)
+    }
 
     override fun onShowLoading() {
         progressBar.visibility = View.VISIBLE
@@ -153,6 +170,11 @@ class ChatActivity : BaseActivity(), ChatView {
 
     private fun scrollToBottom() {
         recyclerView.scrollToPosition(adapter.itemCount - 1)
+    }
+
+    private fun Menu.setVisible(@IdRes itemId: Int, visible: Boolean) {
+        val item = this.findItem(itemId)
+        item?.isVisible = visible
     }
 
     override fun onDestroy() {
