@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appName">haine</string>
+    <string name="name">Nom</string>
+    <string name="password">Mot de passé</string>
+    <string name="logIn">Se connecter</string>
+    <string name="register">Enregister</string>
+    <string name="registerHint">N\'avez pas de compte?</string>
+    <string name="logInHint">J\'ai déjà le compte</string>
+
+    <string name="dialogs">Conversations</string>
+    <string name="search">Rechercher</string>
+    <string name="settings">Paramètres</string>
+    <string name="write_message">Écrire un message</string>
+    <string name="photo_hint">URL de votre photo</string>
+    <string name="stickers">Autocollants</string>
+    <string name="account_settings">Compte</string>
+    <string name="logOut">Se déconnecter</string>
+    <string name="logOutHint">Tout les données sera supprimé</string>
+    <string name="loggingOut">Déconnecte...</string>
+    <string name="exchange_hint">Exécute l\'échange. Attends votre interlocuteur</string>
+    <string name="fingerprint">Empreinte digitale</string>
+    <string name="key_exchange">Nouvel échange des clés</string>
+    <string name="fingerprint_hint">Cette photo et ce texte étaient généré de les clés de chiffrement. S\'ils sont les mêmes dans un appareil de votre interlocuteur, soyez sûr que personne ne va pas casser votre confidentialité. Sinon, votre conversation n\'est pas securicée!</string>
+    <string name="no_shared">Échange de clés n\'est pas exécuté encore</string>
+    <string name="really_wanna_exchange">Voulez-vous réellement exécuter un nouvel échange des clés?</string>
+    <string name="user_not_found">Utilisateur n\'est pas trouvé</string>
+</resources>
