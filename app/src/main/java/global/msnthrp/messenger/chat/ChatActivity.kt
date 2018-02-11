@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.R
@@ -56,6 +57,7 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         setContentView(R.layout.activity_chat)
         App.appComponent.inject(this)
         obtainArgs()
@@ -104,7 +106,7 @@ class ChatActivity : BaseActivity(), ChatView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_chat, menu)
         this.menu = menu
-        menu?.setVisible(R.id.menu_fingerprint_unchecked, false)
+        menu?.setVisible(R.id.menu_fingerprint, false)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -122,7 +124,7 @@ class ChatActivity : BaseActivity(), ChatView {
             }
             R.id.menu_exchange -> {
                 showConfirm(this, getString(R.string.really_wanna_exchange)) {
-                    presenter.createNewExchange()
+                    if (it) presenter.createNewExchange()
                 }
                 true
             }

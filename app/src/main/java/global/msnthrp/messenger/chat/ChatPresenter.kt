@@ -23,7 +23,7 @@ class ChatPresenter(view: ChatView,
 
     private var crypto: Cryptool? = null
 
-    var isFingerprintChecked = true
+    var isFingerprintChecked = false
         set(value) {
             field = value
             view.onFingerPrintUpdated(value)
