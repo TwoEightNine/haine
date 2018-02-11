@@ -2,6 +2,7 @@ package global.msnthrp.messenger.chat.service
 
 import android.app.Service
 import android.content.Intent
+import android.os.Handler
 import android.os.SystemClock
 import global.msnthrp.messenger.App
 import global.msnthrp.messenger.chat.ChatBus
@@ -35,6 +36,7 @@ class NotificationService : Service() {
     @Inject
     lateinit var dbHelper: DbHelper
 
+    private val handler = Handler()
     private var myPrime = ""
     private var myId = 0
     private var lastMessage = 0
@@ -84,10 +86,10 @@ class NotificationService : Service() {
                     l("updates: ${pollResponse.messages.size} ${pollResponse.exchanges.size}")
                     processExchange(pollResponse.exchanges)
                     sendResult(pollResponse.messages)
+                    postPolling()
                 }, { error ->
                     l("polling error: $error")
-                    SystemClock.sleep(INTERNET_DELAY)
-                    postPolling()
+                    handler.postDelayed(::postPolling, INTERNET_DELAY)
                 })
     }
 
@@ -96,7 +98,6 @@ class NotificationService : Service() {
             session.lastMessage = messages[0].id
             ChatBus.publishMessage(messages)
         }
-        postPolling()
     }
 
     private fun processExchange(exchanges: List<ExchangeRequest>) {
