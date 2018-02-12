@@ -1,13 +1,15 @@
 package global.msnthrp.messenger.utils
 
+import io.reactivex.Flowable
+
 
 /**
  * Created by twoeightnine on 2/7/18.
  */
 class Cryptool(private val shared: String) {
 
-    private var aesIv = md5Raw(shared.toByteArray())
-    private var aesKey = sha256Raw(shared.toByteArray())
+    private val aesIv = md5Raw(shared.toByteArray())
+    private val aesKey = sha256Raw(shared.toByteArray())
 
     fun getFingerPrint() = sha256("${bytesToHex(aesIv)}${bytesToHex(aesKey)}")
 
@@ -21,5 +23,41 @@ class Cryptool(private val shared: String) {
         }
 
     fun isSharedOther(otherShared: String) = shared != otherShared
+
+    fun encryptFile(path: String, callback: (String) -> Unit = {}) {
+        val bytes = getBytesFromFile(path)
+        val resultName = getNameFromUrl(path) + ENC_POSTFIX
+        Flowable.fromCallable {
+            writeBytesToFile(
+                    Aes256.encrypt(aesIv, aesKey, bytes),
+                    resultName
+            )
+        }
+                .compose(applySchedulersFlowable())
+                .subscribe(callback)
+    }
+
+    fun decryptFile(path: String, callback: (String) -> Unit = {}) {
+        val bytes = getBytesFromFile(path)
+        val resultName = getNameFromUrl(path) + DEC_POSTFIX
+        Flowable.fromCallable {
+            try {
+                writeBytesToFile(
+                        Aes256.encrypt(aesIv, aesKey, bytes),
+                        resultName
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                ""
+            }
+        }
+                .compose(applySchedulersFlowable())
+                .subscribe(callback)
+    }
+
+    companion object {
+        val ENC_POSTFIX = ".enc"
+        val DEC_POSTFIX = ".dec"
+    }
 
 }
