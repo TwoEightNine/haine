@@ -20,6 +20,9 @@ import java.io.*
 import android.webkit.MimeTypeMap
 import android.content.ContentResolver
 import android.net.Uri
+import android.graphics.BitmapFactory
+
+
 
 
 /**
@@ -132,16 +135,18 @@ fun writeResponseBodyToDisk(body: ResponseBody, path: String): Boolean {
 
 }
 
-fun getMimeType(context: Context, path: String): String? {
-    val uri = Uri.parse(path)
-    return if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
-        val cr = context.contentResolver
-        cr.getType(uri)
-    } else {
-        val fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri
-                .toString())
-        MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                fileExtension.toLowerCase())
-    }
+fun getPicMimeType(context: Context, path: String): String {
+    val opt = BitmapFactory.Options()
+    /* The doc says that if inJustDecodeBounds set to true, the decoder
+     * will return null (no bitmap), but the out... fields will still be
+     * set, allowing the caller to query the bitmap without having to
+     * allocate the memory for its pixels. */
+    opt.inJustDecodeBounds = true
+
+    val istream = context.contentResolver.openInputStream(Uri.fromFile(File(path)))
+    BitmapFactory.decodeStream(istream, null, opt)
+    istream?.close()
+
+    return opt.outMimeType
 }
 
