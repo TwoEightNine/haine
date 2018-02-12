@@ -2,6 +2,7 @@ package global.msnthrp.messenger.dialogs
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -19,8 +20,10 @@ import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.search.SearchActivity
 import global.msnthrp.messenger.settings.SettingsActivity
+import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.storage.Session
 import global.msnthrp.messenger.utils.ApiUtils
+import global.msnthrp.messenger.utils.getMimeType
 import global.msnthrp.messenger.utils.showToast
 import global.msnthrp.messenger.utils.startService
 import javax.inject.Inject
@@ -66,6 +69,7 @@ class DialogsActivity : BaseActivity(), DialogsView {
         apiUtils.updateStickers()
         apiUtils.updatePrime()
         startService(this)
+
     }
 
     override fun onResume() {

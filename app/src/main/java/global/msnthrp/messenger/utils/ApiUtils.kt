@@ -1,11 +1,16 @@
 package global.msnthrp.messenger.utils
 
+import android.os.Environment
 import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.extensions.subscribeSmart
 import global.msnthrp.messenger.model.ExchangeParams
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.storage.Prefs
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import java.math.BigInteger
 import java.security.SecureRandom
 import javax.inject.Inject
@@ -71,6 +76,53 @@ class ApiUtils @Inject constructor(private val api: ApiService,
                 })
     }
 
+    fun uploadFile(path: String,
+                   onSuccess: (String) -> Unit = {},
+                   onError: (String) -> Unit = {}) {
+        val file = File(path)
+        val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        api.uploadFile(body)
+                .compose(applySchedulersSingle())
+                .subscribe({ response ->
+                    if (response != null) {
+                        onSuccess.invoke(response.link)
+                    } else {
+                        onError.invoke("null")
+                    }
+                }, { error ->
+                    onError.invoke(error.message ?: "")
+                })
+    }
+
+    fun downloadFile(link: String,
+                     onSuccess: (String) -> Unit = {},
+                     onError: (String) -> Unit = {}) {
+        val dir = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                DIRECTORY
+        )
+        dir.mkdir()
+        val file = File(dir, getNameFromUrl(link)
+        ).absolutePath
+        api.downloadFile(link)
+                .compose(applySchedulersSingle())
+                .subscribe({ response ->
+                    val written = writeResponseBodyToDisk(response, file)
+                    if (written) {
+                        onSuccess.invoke(file)
+                    } else {
+                        onError.invoke("Downloaded but not written")
+                    }
+                }, { error ->
+                    onError.invoke(error?.message ?: "null")
+                })
+    }
+
     fun getStickers() = dbHelper.db.stickerDao.getAll()
+
+    companion object {
+        val DIRECTORY = "/haine"
+    }
 
 }

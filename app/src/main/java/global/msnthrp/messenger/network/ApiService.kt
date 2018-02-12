@@ -7,7 +7,10 @@ import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.network.model.BaseResponse
 import global.msnthrp.messenger.model.User
 import global.msnthrp.messenger.network.model.PollResponse
+import global.msnthrp.messenger.network.model.UploadResponse
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 /**
@@ -70,4 +73,11 @@ interface ApiService {
 
     @GET("/exchange.safePrime")
     fun getPrime(): Single<BaseResponse<String>>
+
+    @Multipart
+    @POST("https://file.io")
+    fun uploadFile(@Part file: MultipartBody.Part): Single<UploadResponse>
+
+    @GET
+    fun downloadFile(@Url link: String): Single<ResponseBody>
 }
