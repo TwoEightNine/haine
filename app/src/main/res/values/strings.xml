@@ -25,4 +25,5 @@
     <string name="really_wanna_exchange">Do you really want to perform new key exchange?</string>
     <string name="user_not_found">User not found</string>
     <string name="file_downloaded">File %s has been downloaded</string>
+    <string name="permissions_info">App needs an access to your files for sending and saving them</string>
 </resources>

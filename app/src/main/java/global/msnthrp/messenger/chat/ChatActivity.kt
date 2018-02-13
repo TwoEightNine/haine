@@ -3,6 +3,7 @@ package global.msnthrp.messenger.chat
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -27,7 +28,6 @@ import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
-import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.utils.*
 import global.msnthrp.messenger.view.FingerPrintAlertDialog
 import javax.inject.Inject
@@ -92,9 +92,11 @@ class ChatActivity : BaseActivity(), ChatView {
             etInput.setText("")
         }
         ivAttach.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            startActivityForResult(intent, PICKFILE_REQUEST_CODE)
+            if (hasPermissions(this)) {
+                chooseFile()
+            } else {
+                requestPermissions(this, PERMISSIONS_REQUEST_CODE)
+            }
         }
         val llm = LinearLayoutManager(this)
         llm.stackFromEnd = true
@@ -188,6 +190,12 @@ class ChatActivity : BaseActivity(), ChatView {
         }
     }
 
+    private fun chooseFile() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        startActivityForResult(intent, PICKFILE_REQUEST_CODE)
+    }
+
     private fun scrollToBottom() {
         recyclerView.scrollToPosition(adapter.itemCount - 1)
     }
@@ -206,6 +214,14 @@ class ChatActivity : BaseActivity(), ChatView {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONS_REQUEST_CODE &&
+                grantResults.filter { it != PackageManager.PERMISSION_GRANTED }.isEmpty()) {
+            chooseFile()
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.dispose()
@@ -214,7 +230,8 @@ class ChatActivity : BaseActivity(), ChatView {
 
     companion object {
         const val USER = "user"
-        const val PICKFILE_REQUEST_CODE = 17+53
+        const val PICKFILE_REQUEST_CODE = 17 + 53
+        const val PERMISSIONS_REQUEST_CODE = 17 * 53
 
         fun launch(context: Context, user: User) {
             val intent = Intent(context, ChatActivity::class.java)
