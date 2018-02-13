@@ -39,15 +39,17 @@ class Cryptool(private val shared: String) {
 
     fun decryptFile(path: String, callback: (String) -> Unit = {}) {
         val bytes = getBytesFromFile(path)
-        val resultName = path + DEC_POSTFIX
         Flowable.fromCallable {
-            try {
-                writeBytesToFile(
-                        Aes256.encrypt(aesIv, aesKey, bytes),
-                        resultName
-                )
+            val decBytes = try {
+                Aes256.decrypt(aesIv, aesKey, bytes)
             } catch (e: Exception) {
                 e.printStackTrace()
+                byteArrayOf()
+            }
+            if (decBytes.isNotEmpty()) {
+                val extension = ExtensionHelper.getExtension(decBytes) ?: DEC_POSTFIX
+                writeBytesToFile(decBytes, "$path.$extension")
+            } else {
                 ""
             }
         }

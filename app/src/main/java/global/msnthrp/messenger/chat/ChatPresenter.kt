@@ -8,10 +8,7 @@ import global.msnthrp.messenger.model.Sticker
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
 import global.msnthrp.messenger.storage.Lg
-import global.msnthrp.messenger.utils.ApiUtils
-import global.msnthrp.messenger.utils.Cryptool
-import global.msnthrp.messenger.utils.isUrl
-import global.msnthrp.messenger.utils.time
+import global.msnthrp.messenger.utils.*
 import java.io.File
 
 /**

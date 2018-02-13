@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.IdRes
@@ -177,8 +175,6 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onFileAvailable(path: String) {
         showToast(this, getString(R.string.file_downloaded, getNameFromUrl(path)))
-        val customTabsIntent = CustomTabsIntent.Builder().build()
-        customTabsIntent.launchUrl(this, Uri.parse(path))
     }
 
     private fun onAttachmentClick(link: String) {

@@ -5,13 +5,11 @@ import android.content.Context
 import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import okhttp3.ResponseBody
 import java.io.*
-import java.net.URISyntaxException
 
 /**
  * Created by twoeightnine on 2/12/18.
@@ -159,8 +157,8 @@ private fun getDataColumn(context: Context, uri: Uri, selection: String?,
 
         cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
         if (cursor != null && cursor.moveToFirst()) {
-            val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            val res = cursor.getString(column_index)
+            val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            val res = cursor.getString(columnIndex)
             cursor.close()
             return res
         }
