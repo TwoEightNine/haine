@@ -95,7 +95,7 @@ class NotificationService : Service() {
 
     private fun sendResult(messages: List<Message>) {
         if (messages.isNotEmpty()) {
-            session.lastMessage = messages[0].id
+            session.lastMessage = messages.last().id
             ChatBus.publishMessage(messages)
         }
     }
