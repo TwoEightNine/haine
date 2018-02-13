@@ -1,6 +1,7 @@
 package global.msnthrp.messenger.dialogs
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.widget.LinearLayoutManager
@@ -24,6 +25,9 @@ import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.storage.Session
 import global.msnthrp.messenger.utils.*
 import javax.inject.Inject
+import android.support.customtabs.CustomTabsIntent
+
+
 
 /**
  * Created by msnthrp on 22/01/18.

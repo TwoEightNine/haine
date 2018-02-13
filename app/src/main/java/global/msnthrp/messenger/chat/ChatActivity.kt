@@ -3,8 +3,12 @@ package global.msnthrp.messenger.chat
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.IdRes
+import android.support.customtabs.CustomTabsIntent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -23,6 +27,7 @@ import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
+import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.utils.*
 import global.msnthrp.messenger.view.FingerPrintAlertDialog
 import javax.inject.Inject
@@ -88,7 +93,7 @@ class ChatActivity : BaseActivity(), ChatView {
         }
         ivAttach.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "file/*"
+            intent.type = "*/*"
             startActivityForResult(intent, PICKFILE_REQUEST_CODE)
         }
         val llm = LinearLayoutManager(this)
@@ -168,8 +173,19 @@ class ChatActivity : BaseActivity(), ChatView {
         if (atEnd) scrollToBottom()
     }
 
-    private fun onAttachmentClick(link: String) {
+    override fun onFileAvailable(path: String) {
+        showToast(this, getString(R.string.file_downloaded, getNameFromUrl(path)))
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(this, Uri.parse(path))
+    }
 
+    private fun onAttachmentClick(link: String) {
+        if (needToDecryptAttachment(link)) {
+            presenter.openFile(link)
+        } else {
+            val customTabsIntent = CustomTabsIntent.Builder().build()
+            customTabsIntent.launchUrl(this, Uri.parse(link))
+        }
     }
 
     private fun scrollToBottom() {

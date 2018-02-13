@@ -24,4 +24,5 @@
     <string name="no_shared">Key exchange hasn\'t been performed yet</string>
     <string name="really_wanna_exchange">Do you really want to perform new key exchange?</string>
     <string name="user_not_found">User not found</string>
+    <string name="file_downloaded">File %s has been downloaded</string>
 </resources>

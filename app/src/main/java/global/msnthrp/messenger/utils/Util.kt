@@ -15,21 +15,14 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
-import java.io.*
-import android.webkit.MimeTypeMap
-import android.content.ContentResolver
-import android.net.Uri
-import android.graphics.BitmapFactory
-
-
 
 
 /**
  * Created by msnthrp on 22/01/18.
  */
 
-const val URL_REGEX = """^(?:http(s)?://)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[]@!${'$'}&'()*+,;=.]+${'$'}"""
+const val URL_REGEX = """^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"""
+const val FILE_SHARE_URL = "file.io"
 
 fun isOnline(context: Context): Boolean {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -97,3 +90,5 @@ fun getNameFromUrl(link: String) = link.split("/")
         .last().split("?").first()
 
 fun isUrl(text: String) = text.matches(Regex(URL_REGEX))
+
+fun needToDecryptAttachment(link: String) = FILE_SHARE_URL in link

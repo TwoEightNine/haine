@@ -59,10 +59,29 @@ class ChatPresenter(view: ChatView,
     }
 
     fun sendFile(path: String) {
-        if (path.isBlank() || !File(path).exists()) return
+        if (path.isBlank() || !File(path).exists()
+                || crypto == null) return
 
-        apiUtils.uploadFile(path, { link ->
-            sendMessage(link)
+        view.onShowLoading()
+        crypto!!.encryptFile(path) { encPath ->
+            apiUtils.uploadFile(encPath, { link ->
+                sendMessage(link)
+                File(encPath).delete()
+                view.onHideLoading()
+            }, defaultError())
+        }
+    }
+
+    fun openFile(link: String) {
+        if (crypto == null) return
+
+        view.onShowLoading()
+        apiUtils.downloadFile(link, { path ->
+            crypto!!.decryptFile(path) { decPath ->
+                File(path).delete()
+                view.onHideLoading()
+                view.onFileAvailable(decPath)
+            }
         }, defaultError())
     }
 

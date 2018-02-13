@@ -12,4 +12,5 @@ interface ChatView : BaseView {
     fun onSendingAllowed()
     fun onMessagesAdded(messages: List<Message>)
     fun onFingerPrintUpdated(checked: Boolean)
+    fun onFileAvailable(path: String)
 }

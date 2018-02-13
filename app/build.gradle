@@ -33,6 +33,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$appCompat"
     implementation "com.android.support:design:$appCompat"
     implementation "com.android.support:recyclerview-v7:$appCompat"
+    implementation "com.android.support:customtabs:$appCompat"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
 

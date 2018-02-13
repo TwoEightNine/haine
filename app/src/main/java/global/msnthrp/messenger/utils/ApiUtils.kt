@@ -10,6 +10,7 @@ import global.msnthrp.messenger.storage.Prefs
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.HttpException
 import java.io.File
 import java.math.BigInteger
 import java.security.SecureRandom

@@ -26,7 +26,7 @@ class Cryptool(private val shared: String) {
 
     fun encryptFile(path: String, callback: (String) -> Unit = {}) {
         val bytes = getBytesFromFile(path)
-        val resultName = getNameFromUrl(path) + ENC_POSTFIX
+        val resultName = path + ENC_POSTFIX
         Flowable.fromCallable {
             writeBytesToFile(
                     Aes256.encrypt(aesIv, aesKey, bytes),
@@ -39,7 +39,7 @@ class Cryptool(private val shared: String) {
 
     fun decryptFile(path: String, callback: (String) -> Unit = {}) {
         val bytes = getBytesFromFile(path)
-        val resultName = getNameFromUrl(path) + DEC_POSTFIX
+        val resultName = path + DEC_POSTFIX
         Flowable.fromCallable {
             try {
                 writeBytesToFile(
