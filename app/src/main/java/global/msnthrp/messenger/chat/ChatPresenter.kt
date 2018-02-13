@@ -12,6 +12,7 @@ import global.msnthrp.messenger.utils.ApiUtils
 import global.msnthrp.messenger.utils.Cryptool
 import global.msnthrp.messenger.utils.isUrl
 import global.msnthrp.messenger.utils.time
+import java.io.File
 
 /**
  * Created by msnthrp on 22/01/18.
@@ -55,6 +56,14 @@ class ChatPresenter(view: ChatView,
                         view.onMessageSent(Message.getNotSended(text))
                     })
         }
+    }
+
+    fun sendFile(path: String) {
+        if (path.isBlank() || !File(path).exists()) return
+
+        apiUtils.uploadFile(path, { link ->
+            sendMessage(link)
+        }, defaultError())
     }
 
     fun loadDialogs() {

@@ -1,5 +1,6 @@
 package global.msnthrp.messenger.chat
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -45,7 +46,7 @@ class ChatActivity : BaseActivity(), ChatView {
     private val progressBar: ProgressBar by view(R.id.progressBar)
     private val rlBottom: RelativeLayout by view(R.id.rlBottom)
     private val rlHideBottom: RelativeLayout by view(R.id.rlHideBottom)
-    private val ivSticker: ImageView by view(R.id.ivSticker)
+    private val ivAttach: ImageView by view(R.id.ivAttach)
     private val rlExchange: RelativeLayout by view(R.id.rlExchangeHint)
 
     private lateinit var user: User
@@ -85,7 +86,11 @@ class ChatActivity : BaseActivity(), ChatView {
             presenter.sendMessage(etInput.text.toString())
             etInput.setText("")
         }
-        ivSticker.setOnClickListener { bottomSheet.open() }
+        ivAttach.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "file/*"
+            startActivityForResult(intent, PICKFILE_REQUEST_CODE)
+        }
         val llm = LinearLayoutManager(this)
         llm.stackFromEnd = true
         recyclerView.layoutManager = llm
@@ -176,6 +181,15 @@ class ChatActivity : BaseActivity(), ChatView {
         item?.isVisible = visible
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICKFILE_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK && data != null) {
+            val path = getPath(this, data.data) ?: return
+            presenter.sendFile(path)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.dispose()
@@ -184,6 +198,7 @@ class ChatActivity : BaseActivity(), ChatView {
 
     companion object {
         const val USER = "user"
+        const val PICKFILE_REQUEST_CODE = 17+53
 
         fun launch(context: Context, user: User) {
             val intent = Intent(context, ChatActivity::class.java)

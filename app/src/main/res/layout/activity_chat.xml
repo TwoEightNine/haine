@@ -38,20 +38,19 @@
                 android:src="@drawable/ic_send" />
 
             <ImageView
-                android:visibility="gone"
-                android:id="@+id/ivSticker"
+                android:id="@+id/ivAttach"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="6dp"
-                android:src="@drawable/ic_image"/>
+                android:src="@drawable/ic_attach_primary"/>
 
             <EditText
                 android:id="@+id/etInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/ivSend"
-                android:layout_toRightOf="@+id/ivSticker"
+                android:layout_toRightOf="@+id/ivAttach"
                 android:background="@null"
                 android:hint="@string/write_message"
                 android:maxLines="4"
