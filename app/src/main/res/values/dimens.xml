@@ -7,5 +7,8 @@
     <dimen name="button_radius">5dp</dimen>
 
     <dimen name="chat_bottom_height">400dp</dimen>
+    <dimen name="chat_attachment_width">200dp</dimen>
+    <dimen name="chat_attachment_circle">44dp</dimen>
+    <dimen name="chat_attachment_circle_margin">6dp</dimen>
 
 </resources>

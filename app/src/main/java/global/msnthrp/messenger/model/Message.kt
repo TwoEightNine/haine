@@ -2,6 +2,7 @@ package global.msnthrp.messenger.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import global.msnthrp.messenger.utils.time
 
 /**
  * Created by msnthrp on 22/01/18.
@@ -28,9 +29,23 @@ data class Message(
         @Expose
         val peerId: Int,
 
-        @SerializedName("sticker_id")
+        @SerializedName("attachment")
         @Expose
-        val stickerId: Int?
+        val attachment: String?
 ) {
         var user: User? = null
+
+        companion object {
+            fun getNotSended(text: String) = Message(
+                    0, text, 0, false, 0, null
+            )
+
+            fun getSendedText(id: Int, text: String, userId: Int) = Message(
+                    id, text, time(), true, userId, null
+            )
+
+            fun getSendedAttachment(id: Int, link: String, userId: Int) = Message(
+                    id, "", time(), true, userId, link
+            )
+        }
 }

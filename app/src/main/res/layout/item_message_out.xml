@@ -22,23 +22,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
-            android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="7dp"
             android:maxWidth="270dp"
             android:textColor="@color/textLight"
             android:textSize="15sp"
-            tools:text="hello its me you lookin fo" />
+            tools:text="teper ty vtoroy kogdato byl pervim" />
 
-        <ImageView
-            android:id="@+id/ivSticker"
-            android:layout_margin="10dp"
-            android:maxWidth="220dp"
-            android:maxHeight="240dp"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rlAttachment"
+            android:layout_width="@dimen/chat_attachment_width"
+            android:layout_height="?actionBarSize">
+
+            <RelativeLayout
+                android:id="@+id/rlCircle"
+                android:layout_width="@dimen/chat_attachment_circle"
+                android:layout_height="@dimen/chat_attachment_circle"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/chat_attachment_circle_margin"
+                android:background="@drawable/shape_circle_white">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_attach_primary" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvAttachment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/chat_attachment_circle_margin"
+                android:layout_toRightOf="@+id/rlCircle"
+                android:maxLines="2"
+                android:textColor="@color/textLight"
+                android:textSize="15sp"
+                tools:text="dkfsdfksdfskfjsk osj oerseorsjrersjdfksdjfkdsj" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

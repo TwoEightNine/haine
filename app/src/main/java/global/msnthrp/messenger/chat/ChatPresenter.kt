@@ -10,6 +10,7 @@ import global.msnthrp.messenger.model.User
 import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.utils.ApiUtils
 import global.msnthrp.messenger.utils.Cryptool
+import global.msnthrp.messenger.utils.isUrl
 import global.msnthrp.messenger.utils.time
 
 /**
@@ -38,20 +39,22 @@ class ChatPresenter(view: ChatView,
     fun sendMessage(text: String) {
         if (text.isBlank() || crypto == null) return
 
-        val encrypted = crypto!!.encrypt(text)
-        api.sendMessage(encrypted, user.id)
-                .subscribeSmart({
-                    view.onMessageSent(Message(it, text, time(), true, user.id, null))
-                }, defaultError {
-                    view.onMessageSent(Message(0, text, 0, false, 0, null))
-                })
-    }
-
-    fun sendSticker(sticker: Sticker) {
-        api.sendSticker(sticker.id, user.id)
-                .subscribeSmart({
-                    view.onMessageSent(Message(it, "", time(), true, user.id, sticker.id))
-                }, defaultError())
+        if (isUrl(text)) {
+            api.sendAttachments(text, user.id)
+                    .subscribeSmart({
+                        view.onMessageSent(Message.getSendedAttachment(it, text, user.id))
+                    }, defaultError {
+                        view.onMessageSent(Message.getNotSended(text))
+                    })
+        } else {
+            val encrypted = crypto!!.encrypt(text)
+            api.sendMessage(encrypted, user.id)
+                    .subscribeSmart({
+                        view.onMessageSent(Message.getSendedText(it, text, user.id))
+                    }, defaultError {
+                        view.onMessageSent(Message.getNotSended(text))
+                    })
+        }
     }
 
     fun loadDialogs() {

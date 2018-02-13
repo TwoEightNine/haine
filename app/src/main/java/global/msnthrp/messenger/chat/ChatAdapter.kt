@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseAdapter
@@ -18,7 +19,8 @@ import global.msnthrp.messenger.utils.getTime
  * Created by msnthrp on 22/01/18.
  */
 class ChatAdapter(context: Context,
-                  apiUtils: ApiUtils) : BaseAdapter<Message, ChatAdapter.ChatViewHolder>(context) {
+                  apiUtils: ApiUtils,
+                  private val onAttachmentClick: ((String) -> Unit)? = {}) : BaseAdapter<Message, ChatAdapter.ChatViewHolder>(context) {
 
     private val stickers = apiUtils.getStickers()
 
@@ -37,10 +39,11 @@ class ChatAdapter(context: Context,
         val message = items[position]
         holder.tvBody.text = message.text
         holder.tvDate.text = getTime(message.time, true)
-        if (message.stickerId != null) {
-            holder.ivSticker.loadUrl(context, stickers.find { it.id == message.stickerId }?.url)
+        if (message.attachment != null) {
+            holder.rlAttachment.visibility = View.VISIBLE
+            holder.tvAttachment.text = message.attachment
         } else {
-            holder.ivSticker.visibility = View.GONE
+            holder.rlAttachment.visibility = View.GONE
         }
     }
 
@@ -55,10 +58,13 @@ class ChatAdapter(context: Context,
 
         val tvBody: TextView by view(R.id.tvBody)
         val tvDate: TextView by view(R.id.tvDate)
-        val ivSticker: ImageView by view(R.id.ivSticker)
+        val rlAttachment: RelativeLayout by view(R.id.rlAttachment)
+        val tvAttachment: TextView by view(R.id.tvAttachment)
 
         init {
-
+            rlAttachment.setOnClickListener {
+                onAttachmentClick?.invoke(items[adapterPosition].attachment ?: return@setOnClickListener)
+            }
         }
     }
 }

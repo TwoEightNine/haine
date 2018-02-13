@@ -29,6 +29,8 @@ import android.graphics.BitmapFactory
  * Created by msnthrp on 22/01/18.
  */
 
+const val URL_REGEX = """^(?:http(s)?://)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[]@!${'$'}&'()*+,;=.]+${'$'}"""
+
 fun isOnline(context: Context): Boolean {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return cm.activeNetworkInfo?.isConnectedOrConnecting ?: false
@@ -94,3 +96,4 @@ fun stopService(context: Context) {
 fun getNameFromUrl(link: String) = link.split("/")
         .last().split("?").first()
 
+fun isUrl(text: String) = text.matches(Regex(URL_REGEX))

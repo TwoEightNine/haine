@@ -38,9 +38,14 @@ interface ApiService {
     fun search(@Query("q") query: String): Single<BaseResponse<List<User>>>
 
     @FormUrlEncoded
-    @POST("/messages.send")
+    @POST("/messages.sendText")
     fun sendMessage(@Field("text") text: String,
                     @Field("to_id") toId: Int): Single<BaseResponse<Int>>
+
+    @FormUrlEncoded
+    @POST("/messages.sendFile")
+    fun sendAttachments(@Field("attached") attached: String,
+                        @Field("to_id") toId: Int): Single<BaseResponse<Int>>
 
     @GET("/messages.get/{userId}")
     fun getMessages(@Path("userId") userId: Int): Single<BaseResponse<ArrayList<Message>>>
