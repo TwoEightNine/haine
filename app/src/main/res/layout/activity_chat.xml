@@ -42,8 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_margin="6dp"
-                android:src="@drawable/ic_attach_primary"/>
+                android:padding="6dp"
+                android:src="@drawable/ic_attach_primary" />
 
             <EditText
                 android:id="@+id/etInput"
@@ -61,18 +61,18 @@
                 android:textSize="14sp" />
 
             <RelativeLayout
-                android:clickable="true"
-                android:background="@color/alterWhite"
                 android:id="@+id/rlExchangeHint"
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="44dp"
+                android:background="@color/alterWhite"
+                android:clickable="true">
 
                 <TextView
-                    android:text="@string/exchange_hint"
-                    android:textColor="@color/textDark"
-                    android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/exchange_hint"
+                    android:textColor="@color/textDark" />
 
             </RelativeLayout>
 
@@ -90,10 +90,10 @@
         android:id="@+id/rlBottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/chat_bottom_height"
+        android:background="@color/alterWhite"
         android:elevation="14dp"
         app:behavior_hideable="true"
         app:behavior_peekHeight="00dp"
-        android:background="@color/alterWhite"
         app:layout_behavior="global.msnthrp.messenger.utils.UserLockBottomSheetBehavior">
 
         <RelativeLayout
@@ -103,20 +103,20 @@
             android:background="@color/colorPrimary">
 
             <TextView
-                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/stickers"
-                android:textColor="@color/textLight" />
+                android:textColor="@color/textLight"
+                android:textSize="15sp" />
 
             <ImageView
-                android:layout_margin="6dp"
                 android:id="@+id/ivClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_margin="6dp"
                 android:src="@drawable/ic_close" />
 
         </RelativeLayout>

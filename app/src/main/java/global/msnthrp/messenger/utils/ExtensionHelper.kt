@@ -15,7 +15,7 @@ object ExtensionHelper {
             ExtensionModel("mp3", intArrayOf(73, 68, 67)),
             ExtensionModel("wav", intArrayOf(82, 73, 70, 70)),
             ExtensionModel("pdf", intArrayOf(37, 80, 48, 70)),
-            ExtensionModel("gif", intArrayOf(71, 73, 70, 56, 55, 97))
+            ExtensionModel("gif", intArrayOf(71, 73, 70, 56))
     )
 
     fun getExtension(path: String) = getExtension(getBytesFromFile(path))
