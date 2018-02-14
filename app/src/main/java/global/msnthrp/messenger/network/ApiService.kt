@@ -85,7 +85,4 @@ interface ApiService {
 
     @GET
     fun downloadFile(@Url link: String): Single<ResponseBody>
-
-    @HEAD
-    fun checkFile(@Url link: String): Single<Void>
 }

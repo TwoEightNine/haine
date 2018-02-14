@@ -18,6 +18,8 @@ object ExtensionHelper {
             ExtensionModel("gif", intArrayOf(71, 73, 70, 56))
     )
 
+    private val imageExts = listOf("jpg", "png", "bmp", "gif")
+
     fun getExtension(path: String) = getExtension(getBytesFromFile(path))
 
     fun getExtension(bytes: ByteArray): String? {
@@ -29,6 +31,8 @@ object ExtensionHelper {
         }
         return null
     }
+
+    fun isPic(path: String) = getExtension(path) in imageExts
 
     private fun IntArray.toByteArray() = map { it.toByte() }.toByteArray()
 }

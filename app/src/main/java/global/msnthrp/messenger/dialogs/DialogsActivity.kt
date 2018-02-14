@@ -67,7 +67,7 @@ class DialogsActivity : BaseActivity(), DialogsView {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        apiUtils.updateStickers()
+//        apiUtils.updateStickers()
         apiUtils.updatePrime()
         startService(this)
     }

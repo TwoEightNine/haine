@@ -175,6 +175,12 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onFileAvailable(path: String) {
         showToast(this, getString(R.string.file_downloaded, getNameFromUrl(path)))
+        if (ExtensionHelper.isPic(path)) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(android.R.id.content, PhotoFragment.newInstance(path), PhotoFragment.javaClass.name)
+                    .commit()
+        }
     }
 
     private fun onAttachmentClick(link: String) {
@@ -222,6 +228,18 @@ class ChatActivity : BaseActivity(), ChatView {
         super.onDestroy()
         compositeDisposable.dispose()
         presenter.destroy()
+    }
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentById(android.R.id.content)
+        if (fragment != null) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .remove(fragment)
+                    .commit()
+        } else {
+            super.onBackPressed()
+        }
     }
 
     companion object {
