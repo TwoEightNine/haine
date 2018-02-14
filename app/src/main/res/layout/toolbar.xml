@@ -13,7 +13,7 @@
         android:visibility="gone"
         android:id="@+id/ivToolbarLogo"
         android:layout_marginRight="16dp"
-        android:src="@mipmap/haine"
+        android:src="@mipmap/haine_minimal"
         android:layout_width="match_parent"
         android:layout_height="44dp" />
 
