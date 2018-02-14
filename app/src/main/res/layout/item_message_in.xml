@@ -26,7 +26,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
             android:maxWidth="270dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/icons"
             android:textSize="15sp"
             tools:text="its me you lookin for" />
 
@@ -61,7 +61,7 @@
                 android:layout_marginRight="@dimen/chat_attachment_circle_margin"
                 android:layout_toRightOf="@+id/rlCircle"
                 android:maxLines="2"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/icons"
                 android:textSize="15sp"
                 tools:text="dkfsdfksdfskfjsk osj oerseorsjrersjdfksdjfkdsj" />
 

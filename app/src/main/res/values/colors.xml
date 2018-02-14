@@ -5,6 +5,8 @@
     <color name="colorPrimaryLight">#111</color>
     <color name="colorAccent">#fff</color>
     <color name="alterWhite">#fff</color>
+    <color name="background">#000</color>
+    <color name="icons">#fff</color>
 
     <color name="textLight">#222</color>
     <color name="textLightSecondary">#555</color>
