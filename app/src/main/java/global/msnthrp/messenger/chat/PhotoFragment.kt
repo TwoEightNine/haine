@@ -25,6 +25,9 @@ class PhotoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val path = arguments.getString(PATH) ?: return
         touchImageView.loadUrl(context, "file://$path")
+        touchImageView.dismissListener = {
+            activity.onBackPressed()
+        }
     }
 
     companion object {
