@@ -26,5 +26,7 @@
     <string name="really_wanna_exchange">Voulez-vous réellement exécuter un nouvel échange des clés?</string>
     <string name="user_not_found">Utilisateur n\'est pas trouvé</string>
     <string name="file_downloaded">Fichier %s a été téléchargé</string>
-    <string name="permissions_info">App needs an access to your files for sending and saving them</string>
+    <string name="permissions_info">L\'app veut avoir l\'accès à vos fichiers pour les envoyer et les télécharger</string>
+    <string name="about_app">À propos</string>
+    <string name="version">version %1$s il y a %2$s</string>
 </resources>
