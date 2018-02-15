@@ -3,24 +3,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/background">
 
     <ProgressBar
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <ImageView
         android:visibility="gone"
-        android:id="@+id/tv1753"
-        android:fontFamily="sans-serif-light"
-        android:textSize="72sp"
-        android:layout_marginBottom="56dp"
+        android:id="@+id/iv1753"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/colorPrimary"
-        android:text="17/53"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:src="@mipmap/a1753_raw"
+        android:layout_width="220dp"
+        android:layout_height="160dp" />
 
 </RelativeLayout>

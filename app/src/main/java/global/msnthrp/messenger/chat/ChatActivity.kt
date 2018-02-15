@@ -169,8 +169,12 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onMessagesAdded(messages: List<Message>) {
         val atEnd = recyclerView.isAtEnd(adapter.itemCount)
-        val lastMessage = adapter.items.last()
-        adapter.addAll(messages.filter { it.id > lastMessage.id })
+        val lastMessageId = if (adapter.items.isNotEmpty()) {
+            adapter.items.last().id
+        } else {
+            0
+        }
+        adapter.addAll(messages.filter { it.id > lastMessageId })
         if (atEnd) scrollToBottom()
     }
 

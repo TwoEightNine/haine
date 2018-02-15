@@ -3,18 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/alterWhite"
+    android:background="@color/background"
     android:orientation="vertical"
     android:padding="12dp">
 
     <TextView
         android:fontFamily="sans-serif-light"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/fingerprint"
-        android:textColor="@color/textDark" />
+        android:textColor="@color/textLight" />
 
     <ImageView
         android:id="@+id/ivGravatar"
@@ -32,7 +32,7 @@
         android:textSize="16sp"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:textColor="@color/textDark"
+        android:textColor="@color/textLight"
         tools:text="A4 56 75 98 15 83 74 98\nA4 56 75 98 15 83 74 98\nA4 56 75 98 15 83 74 98\nA4 56 75 98 15 83 74 98\n" />
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:gravity="center"
-        android:textColor="@color/textDarkSecondary"
+        android:textColor="@color/textLightSecondary"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/fingerprint_hint" />
 

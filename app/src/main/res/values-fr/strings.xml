@@ -16,7 +16,7 @@
     <string name="stickers">Autocollants</string>
     <string name="account_settings">Compte</string>
     <string name="logOut">Se déconnecter</string>
-    <string name="logOutHint">Tout les données sera supprimé</string>
+    <string name="logOutHint">Tout les données sera supprimées</string>
     <string name="loggingOut">Déconnecte...</string>
     <string name="exchange_hint">Exécute l\'échange. Attends votre interlocuteur</string>
     <string name="fingerprint">Empreinte digitale</string>
