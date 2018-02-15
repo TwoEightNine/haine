@@ -98,6 +98,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px" />
 
+            <LinearLayout
+                android:layout_below="@+id/llAccount"
+                android:padding="16dp"
+                android:id="@+id/llAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/about_app"
+                    android:textColor="@color/textLightSecondary" />
+
+                <ImageView
+                    android:layout_marginTop="-20dp"
+                    android:id="@+id/ivHaine"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/haine_minimal"
+                    android:layout_width="160dp"
+                    android:layout_height="70dp" />
+
+                <TextView
+                    android:id="@+id/tvVersion"
+                    android:text="@string/version"
+                    android:textColor="@color/textLightSecondary"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_below="@+id/llAbout"
+                android:background="@color/textLightSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"

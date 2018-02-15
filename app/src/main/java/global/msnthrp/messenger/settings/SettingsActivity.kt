@@ -1,27 +1,25 @@
 package global.msnthrp.messenger.settings
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
+import android.widget.*
 import global.msnthrp.messenger.App
+import global.msnthrp.messenger.BuildConfig
 import global.msnthrp.messenger.R
 import global.msnthrp.messenger.base.BaseActivity
 import global.msnthrp.messenger.db.DbHelper
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
+import global.msnthrp.messenger.storage.Lg
 import global.msnthrp.messenger.storage.Prefs
 import global.msnthrp.messenger.storage.Session
-import global.msnthrp.messenger.utils.restartApp
-import global.msnthrp.messenger.utils.showToast
-import global.msnthrp.messenger.utils.stopService
+import global.msnthrp.messenger.utils.*
 import javax.inject.Inject
 
 /**
@@ -44,6 +42,9 @@ class SettingsActivity : BaseActivity(), SettingsView {
     private val ivClearPhoto: ImageView by view(R.id.ivClearPhoto)
     private val btnLogOut: Button by view(R.id.btnLogOut)
 
+    private val ivHaine: ImageView by view(R.id.ivHaine)
+    private val tvVersion: TextView by view(R.id.tvVersion)
+
     private val handler = Handler()
     private var oldPhoto = ""
     private val presenter: SettingsPresenter by lazy { SettingsPresenter(this, api) }
@@ -59,13 +60,9 @@ class SettingsActivity : BaseActivity(), SettingsView {
         ivClearPhoto.setOnClickListener { etPhoto.setText("") }
         btnLogOut.setOnClickListener { presenter.terminate() }
         presenter.loadUser(session.userId)
-        handler.postDelayed({
-            Snackbar.make(findViewById<View>(android.R.id.content), "What is haine?", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Find out") {
-                        startActivity(Intent(this, WhatIsHaineActivity::class.java))
-                    }
-                    .show()
-        }, HINT_DELAY)
+        handler.postDelayed(::showWhatIs, HINT_DELAY)
+        ivHaine.setOnClickListener { showLogs() }
+        tvVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME, BuildConfig.BUILD_TIME)
     }
 
     override fun onShowLoading() {
@@ -106,6 +103,18 @@ class SettingsActivity : BaseActivity(), SettingsView {
             saveSettings()
             super.onBackPressed()
         }
+    }
+
+    private fun showWhatIs() {
+        Snackbar.make(findViewById<View>(android.R.id.content), "What is haine?", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Find out") {
+                    startActivity(Intent(this, WhatIsHaineActivity::class.java))
+                }
+                .show()
+    }
+
+    private fun showLogs() {
+        showAlert(this, Lg.logs.joinToString(separator = "\n"))
     }
 
     private fun saveSettings() {
