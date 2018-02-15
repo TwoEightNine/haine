@@ -21,7 +21,7 @@ fun hasPermissions(activity: Activity) = Build.VERSION.SDK_INT < 23 ||
 
 @TargetApi(23)
 fun requestPermissions(activity: Activity, requestCode: Int) {
-    AlertDialog.Builder(activity)
+    val dialog = AlertDialog.Builder(activity)
             .setMessage(R.string.permissions_info)
             .setPositiveButton(android.R.string.ok, { _, _ ->
                 activity.requestPermissions(arrayOf(
@@ -31,5 +31,6 @@ fun requestPermissions(activity: Activity, requestCode: Int) {
                 ), requestCode)
             })
             .create()
-            .show()
+    dialog.show()
+    paintDialog(activity, dialog)
 }
