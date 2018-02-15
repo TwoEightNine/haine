@@ -27,7 +27,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="7dp"
             android:maxWidth="270dp"
-            android:textColor="@color/textLight"
+            android:textColor="@color/textDark"
             android:textSize="15sp"
             tools:text="teper ty vtoroy kogdato byl pervim" />
 
@@ -62,7 +62,7 @@
                 android:layout_marginRight="@dimen/chat_attachment_circle_margin"
                 android:layout_toRightOf="@+id/rlCircle"
                 android:maxLines="2"
-                android:textColor="@color/textLight"
+                android:textColor="@color/textDark"
                 android:textSize="15sp"
                 tools:text="dkfsdfksdfskfjsk osj oerseorsjrersjdfksdjfkdsj" />
 
@@ -79,7 +79,7 @@
         android:layout_marginRight="6dp"
         android:layout_toLeftOf="@+id/rlBody"
         android:gravity="end"
-        android:textColor="@color/textLightSecondary"
+        android:textColor="@color/textDarkSecondary"
         android:textSize="11sp"
         tools:text="21.01.2017 11:34" />
 

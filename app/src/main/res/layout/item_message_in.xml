@@ -7,7 +7,8 @@
     android:paddingBottom="2dp"
     android:paddingLeft="4dp"
     android:paddingRight="4dp"
-    android:paddingTop="2dp">
+    android:paddingTop="2dp"
+    android:background="@color/background">
 
     <RelativeLayout
         android:id="@+id/rlBody"
@@ -26,7 +27,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
             android:maxWidth="270dp"
-            android:textColor="@color/icons"
+            android:textColor="@color/textLight"
             android:textSize="15sp"
             tools:text="its me you lookin for" />
 
@@ -61,7 +62,7 @@
                 android:layout_marginRight="@dimen/chat_attachment_circle_margin"
                 android:layout_toRightOf="@+id/rlCircle"
                 android:maxLines="2"
-                android:textColor="@color/icons"
+                android:textColor="@color/textLight"
                 android:textSize="15sp"
                 tools:text="dkfsdfksdfskfjsk osj oerseorsjrersjdfksdjfkdsj" />
 
@@ -77,7 +78,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="6dp"
         android:layout_toRightOf="@+id/rlBody"
-        android:textColor="@color/textLightSecondary"
+        android:textColor="@color/textDarkSecondary"
         android:textSize="11sp"
         tools:text="21.01.2017 11:34" />
 

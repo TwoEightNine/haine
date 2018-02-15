@@ -8,11 +8,11 @@
     <color name="background">#000</color>
     <color name="icons">#fff</color>
 
-    <color name="textLight">#222</color>
-    <color name="textLightSecondary">#555</color>
+    <color name="textLight">#fff</color>
+    <color name="textLightSecondary">#ddd</color>
 
-    <color name="textDark">#fff</color>
-    <color name="textDarkSecondary">#ddd</color>
+    <color name="textDark">#222</color>
+    <color name="textDarkSecondary">#555</color>
 
     <color name="buttonBackground">#222</color>
     <color name="buttonBackgroundPressed">#444</color>

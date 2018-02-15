@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:src="@drawable/haine"
+            android:src="@drawable/haine_minimal"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="100dp" />
