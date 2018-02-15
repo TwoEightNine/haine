@@ -6,7 +6,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/haine_minimal" />
+            android:src="@mipmap/haine_minimal" />
     </item>
 
 </layer-list>
