@@ -100,11 +100,10 @@ class ApiUtils @Inject constructor(private val api: ApiService,
                      onError: (String) -> Unit = {}) {
         val dir = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                DIRECTORY
+                DOWNLOADS_DIRECTORY
         )
         dir.mkdir()
-        val file = File(dir, getNameFromUrl(link)
-        ).absolutePath
+        val file = File(dir, getNameFromUrl(link)).absolutePath
         api.downloadFile(link)
                 .compose(applySchedulersSingle())
                 .subscribe({ response ->
@@ -122,7 +121,7 @@ class ApiUtils @Inject constructor(private val api: ApiService,
     fun getStickers() = dbHelper.db.stickerDao.getAll()
 
     companion object {
-        val DIRECTORY = "/haine"
+        const val DOWNLOADS_DIRECTORY = "/haine"
     }
 
 }
