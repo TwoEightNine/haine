@@ -12,6 +12,7 @@
         android:layout_height="match_parent" />
 
     <RelativeLayout
+        android:id="@+id/rlTitle"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="#6000">
@@ -22,8 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
+            android:fontFamily="sans-serif-condensed"
             android:textColor="@color/textLight"
-            android:textSize="16sp"
+            android:textSize="18sp"
             tools:text="/Pictures/haine/h7dU6.png" />
 
     </RelativeLayout>

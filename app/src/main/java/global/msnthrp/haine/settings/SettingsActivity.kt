@@ -45,6 +45,10 @@ class SettingsActivity : BaseActivity(), SettingsView {
     private val ivHaine: ImageView by view(R.id.ivHaine)
     private val tvVersion: TextView by view(R.id.tvVersion)
 
+    private val swShowNotifications: Switch by view(R.id.swShowNotifications)
+    private val swVibrate: Switch by view(R.id.swVibrate)
+    private val swPlayRingtone: Switch by view(R.id.swPlayRingtone)
+
     private val handler = Handler()
     private var oldPhoto = ""
     private val presenter: SettingsPresenter by lazy { SettingsPresenter(this, api) }
@@ -57,6 +61,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
             it.setDisplayHomeAsUpEnabled(true)
             it.setTitle(R.string.settings)
         }
+        initSwitches()
         ivClearPhoto.setOnClickListener { etPhoto.setText("") }
         btnLogOut.setOnClickListener { showLogOutConfirm() }
         presenter.loadUser(session.userId)
@@ -123,8 +128,16 @@ class SettingsActivity : BaseActivity(), SettingsView {
         }
     }
 
-    private fun saveSettings() {
+    private fun initSwitches() {
+        swShowNotifications.isChecked = prefs.showNotifications
+        swVibrate.isChecked = prefs.vibrate
+        swPlayRingtone.isChecked = prefs.soundNotifications
+    }
 
+    private fun saveSettings() {
+        prefs.showNotifications = swShowNotifications.isChecked
+        prefs.vibrate = swVibrate.isChecked
+        prefs.soundNotifications = swPlayRingtone.isChecked
     }
 
     companion object {

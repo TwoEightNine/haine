@@ -20,19 +20,19 @@
             android:paddingBottom="16dp">
 
             <LinearLayout
-                android:padding="16dp"
                 android:id="@+id/llAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@string/account_settings"
-                    android:textSize="16sp"
-                    android:textColor="@color/textLightSecondary" />
+                    android:textColor="@color/textLightSecondary"
+                    android:textSize="16sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -94,51 +94,99 @@
             </LinearLayout>
 
             <View
-                android:layout_below="@+id/llAccount"
-                android:background="@color/textDarkSecondary"
                 android:layout_width="match_parent"
-                android:layout_height="1px" />
+                android:layout_height="1px"
+                android:layout_below="@+id/llAccount"
+                android:background="@color/textDarkSecondary" />
 
             <LinearLayout
-                android:layout_below="@+id/llAccount"
-                android:padding="16dp"
-                android:id="@+id/llAbout"
+                android:id="@+id/llNotifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_below="@+id/llAccount"
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
-                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/about_app"
-                    android:textColor="@color/textLightSecondary" />
-
-                <ImageView
-                    android:layout_marginTop="-20dp"
-                    android:id="@+id/ivHaine"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/haine_minimal"
-                    android:layout_width="160dp"
-                    android:layout_height="70dp" />
-
-                <TextView
-                    android:id="@+id/tvVersion"
-                    android:text="@string/version"
+                    android:text="@string/notifications"
                     android:textColor="@color/textLightSecondary"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="16sp" />
+
+                <Switch
+                    android:id="@+id/swShowNotifications"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_notifications"
+                    android:textColor="@color/textLight" />
+
+                <Switch
+                    android:id="@+id/swVibrate"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vibrate"
+                    android:textColor="@color/textLight" />
+
+                <Switch
+                    android:id="@+id/swPlayRingtone"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/play_ringtone"
+                    android:textColor="@color/textLight" />
 
             </LinearLayout>
 
             <View
-                android:layout_below="@+id/llAbout"
-                android:background="@color/textDarkSecondary"
                 android:layout_width="match_parent"
-                android:layout_height="1px" />
+                android:layout_height="1px"
+                android:layout_below="@+id/llNotifications"
+                android:background="@color/textDarkSecondary" />
+
+            <LinearLayout
+                android:id="@+id/llAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llNotifications"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/about_app"
+                    android:textColor="@color/textLightSecondary"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivHaine"
+                    android:layout_width="160dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-20dp"
+                    android:src="@mipmap/haine_minimal" />
+
+                <TextView
+                    android:id="@+id/tvVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/version"
+                    android:textColor="@color/textLightSecondary"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/llAbout"
+                android:background="@color/textDarkSecondary" />
 
             <ProgressBar
                 android:id="@+id/progressBar"

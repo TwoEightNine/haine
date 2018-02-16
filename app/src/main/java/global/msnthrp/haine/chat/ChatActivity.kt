@@ -74,6 +74,7 @@ class ChatActivity : BaseActivity(), ChatView {
             it.title = user.name
             it.subtitle = getTime(user.lastSeen, true)
         }
+        toolbar.setOnClickListener { showPicture(user.photo ?: return@setOnClickListener, user.name) }
         initViews()
         initStickers()
         presenter.loadDialogs()
@@ -194,12 +195,16 @@ class ChatActivity : BaseActivity(), ChatView {
     override fun onFileAvailable(path: String) {
         showToast(this, getString(R.string.file_downloaded, getNameFromUrl(path)))
         if (ExtensionHelper.isPic(path)) {
-            hideKeyboard(this)
-            supportFragmentManager
-                    .beginTransaction()
-                    .add(android.R.id.content, PhotoFragment.newInstance(path), PhotoFragment.javaClass.name)
-                    .commit()
+            showPicture(path)
         }
+    }
+
+    private fun showPicture(path: String, name: String = "") {
+        hideKeyboard(this)
+        supportFragmentManager
+                .beginTransaction()
+                .add(android.R.id.content, PhotoFragment.newInstance(path, name), PhotoFragment.javaClass.name)
+                .commit()
     }
 
     private fun onAttachmentClick(link: String) {
@@ -226,6 +231,9 @@ class ChatActivity : BaseActivity(), ChatView {
             val lastMessageId = adapter.items.last().id
             if (session.lastRead < lastMessageId) {
                 session.lastRead = lastMessageId
+                if (session.lastRead == session.lastMessage) {
+                    closeNotification(this)
+                }
             }
         }
     }

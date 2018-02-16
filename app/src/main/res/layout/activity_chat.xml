@@ -94,7 +94,7 @@
         android:elevation="14dp"
         app:behavior_hideable="true"
         app:behavior_peekHeight="00dp"
-        app:layout_behavior="global.msnthrp.messenger.utils.UserLockBottomSheetBehavior">
+        app:layout_behavior="global.msnthrp.haine.utils.UserLockBottomSheetBehavior">
 
         <RelativeLayout
             android:id="@+id/rlHideBottom"

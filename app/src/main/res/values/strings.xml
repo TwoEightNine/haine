@@ -30,4 +30,8 @@
     <string name="version">version %1$s from %2$s</string>
     <string name="wanna_log_out">Do you really want to log out?</string>
     <string name="hidden_content">Content hidden</string>
+    <string name="notifications">Notifications</string>
+    <string name="show_notifications">Show notifications</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="play_ringtone">Play ringtone</string>
 </resources>
