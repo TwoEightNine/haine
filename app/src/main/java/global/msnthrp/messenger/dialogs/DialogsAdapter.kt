@@ -35,7 +35,6 @@ class DialogsAdapter(context: Context,
 //        holder.tvBody.text = message.text
         holder.tvDate.text = getTime(message.time)
         holder.civPhoto.loadUrl(context, message.user?.photo)
-        Lg.i("last read = ${session.lastRead}")
         holder.ivUnread.visibility = if (session.lastRead < message.id) View.VISIBLE else View.GONE
     }
 

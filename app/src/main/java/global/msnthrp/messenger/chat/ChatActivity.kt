@@ -225,7 +225,6 @@ class ChatActivity : BaseActivity(), ChatView {
             val lastMessageId = adapter.items.last().id
             if (session.lastRead < lastMessageId) {
                 session.lastRead = lastMessageId
-                Lg.i("updated: last read = ${session.lastRead}")
             }
         }
     }
