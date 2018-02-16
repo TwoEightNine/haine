@@ -29,4 +29,10 @@
     <string name="permissions_info">L\'app veut avoir l\'accès à vos fichiers pour les envoyer et les télécharger</string>
     <string name="about_app">À propos</string>
     <string name="version">version %1$s il y a %2$s</string>
+    <string name="wanna_log_out">Voulez-vous réellement se déconnecter?</string>
+    <string name="hidden_content">Contenu caché</string>
+    <string name="notifications">Notifications</string>
+    <string name="show_notifications">Afficher notifications</string>
+    <string name="vibrate">Vibrarer</string>
+    <string name="play_ringtone">Ringtone</string>
 </resources>
