@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="global.msnthrp.messenger">
+    package="global.msnthrp.haine">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,23 +10,33 @@
     <uses-sdk tools:overrideLibrary="android.support.customtabs"/>
 
     <application
-        android:name=".App"
+        android:name="global.msnthrp.haine.App"
         android:allowBackup="true"
         android:icon="@mipmap/haine_128"
         android:label="@string/appName"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service android:name=".chat.service.NotificationService" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="global.msnthrp.haine"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
-        <receiver android:name=".chat.service.NotificationBroadcastReceiver">
+        <service android:name="global.msnthrp.haine.chat.service.NotificationService" />
+
+        <receiver android:name="global.msnthrp.haine.chat.service.NotificationBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="notificationBroadcastReceiver" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".login.LoginActivity"
+        <activity android:name="global.msnthrp.haine.login.LoginActivity"
             android:theme="@style/LoginTheme"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
@@ -35,15 +45,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".dialogs.DialogsActivity" />
+        <activity android:name="global.msnthrp.haine.dialogs.DialogsActivity" />
 
-        <activity android:name=".search.SearchActivity" />
+        <activity android:name="global.msnthrp.haine.search.SearchActivity" />
 
-        <activity android:name=".settings.SettingsActivity"
+        <activity android:name="global.msnthrp.haine.settings.SettingsActivity"
             android:theme="@style/LoginTheme"/>
 
-        <activity android:name=".chat.ChatActivity" />
-        <activity android:name=".settings.WhatIsHaineActivity" />
+        <activity android:name="global.msnthrp.haine.chat.ChatActivity" />
+        <activity android:name="global.msnthrp.haine.settings.WhatIsHaineActivity" />
     </application>
 
 </manifest>

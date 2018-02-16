@@ -95,7 +95,7 @@
 
             <View
                 android:layout_below="@+id/llAccount"
-                android:background="@color/textLightSecondary"
+                android:background="@color/textDarkSecondary"
                 android:layout_width="match_parent"
                 android:layout_height="1px" />
 
@@ -127,6 +127,7 @@
                     android:id="@+id/tvVersion"
                     android:text="@string/version"
                     android:textColor="@color/textLightSecondary"
+                    android:textSize="12sp"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -135,7 +136,7 @@
 
             <View
                 android:layout_below="@+id/llAbout"
-                android:background="@color/textLightSecondary"
+                android:background="@color/textDarkSecondary"
                 android:layout_width="match_parent"
                 android:layout_height="1px" />
 
