@@ -58,8 +58,8 @@ class Cryptool(private val shared: String) {
     }
 
     companion object {
-        val ENC_POSTFIX = ".enc"
-        val DEC_POSTFIX = ".dec"
+        const val ENC_POSTFIX = ".enc"
+        const val DEC_POSTFIX = ".dec"
     }
 
 }

@@ -12,6 +12,7 @@ import global.msnthrp.haine.BuildConfig
 import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseActivity
 import global.msnthrp.haine.db.DbHelper
+import global.msnthrp.haine.extensions.setVisible
 import global.msnthrp.haine.extensions.view
 import global.msnthrp.haine.network.ApiService
 import global.msnthrp.haine.model.User
@@ -65,11 +66,11 @@ class SettingsActivity : BaseActivity(), SettingsView {
     }
 
     override fun onShowLoading() {
-        progressBar.visibility = View.VISIBLE
+        progressBar.setVisible(true)
     }
 
     override fun onHideLoading() {
-        progressBar.visibility = View.GONE
+        progressBar.setVisible(false)
     }
 
     override fun onShowError(error: String) {
@@ -105,7 +106,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
     }
 
     private fun showWhatIs() {
-        Snackbar.make(findViewById<View>(android.R.id.content), "What is haine?", Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(contentView, "What is haine?", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Find out") {
                     startActivity(Intent(this, WhatIsHaineActivity::class.java))
                 }
@@ -118,9 +119,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
 
     private fun showLogOutConfirm() {
         showConfirm(this, getString(R.string.wanna_log_out)) {
-            if (it) {
-                presenter.terminate()
-            }
+            if (it) presenter.terminate()
         }
     }
 

@@ -8,6 +8,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseAdapter
+import global.msnthrp.haine.extensions.setVisible
 import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.extensions.view
 import global.msnthrp.haine.utils.ApiUtils
@@ -37,11 +38,10 @@ class ChatAdapter(context: Context,
         val message = items[position]
         holder.tvBody.text = message.text
         holder.tvDate.text = getTime(message.time, true)
-        if (message.attachment != null) {
-            holder.rlAttachment.visibility = View.VISIBLE
+        val hasAttached = message.attachment != null
+        holder.rlAttachment.setVisible(hasAttached)
+        if (hasAttached) {
             holder.tvAttachment.text = message.attachment
-        } else {
-            holder.rlAttachment.visibility = View.GONE
         }
     }
 

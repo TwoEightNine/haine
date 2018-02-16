@@ -1,13 +1,24 @@
 package global.msnthrp.haine.chat.service
 
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.RingtoneManager
 import android.os.Handler
 import android.os.SystemClock
+import android.os.Vibrator
+import android.support.v4.app.NotificationCompat
+import android.text.Html
 import global.msnthrp.haine.App
+import global.msnthrp.haine.R
 import global.msnthrp.haine.chat.ChatBus
 import global.msnthrp.haine.db.DbHelper
 import global.msnthrp.haine.extensions.subscribeSmart
+import global.msnthrp.haine.login.LoginActivity
 import global.msnthrp.haine.model.ExchangeRequest
 import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.network.ApiService
@@ -15,6 +26,7 @@ import global.msnthrp.haine.storage.Lg
 import global.msnthrp.haine.storage.Prefs
 import global.msnthrp.haine.storage.Session
 import global.msnthrp.haine.utils.DH_BITS
+import global.msnthrp.haine.utils.getRestartIntent
 import global.msnthrp.haine.utils.startService
 import java.math.BigInteger
 import java.security.SecureRandom
@@ -160,6 +172,44 @@ class NotificationService : Service() {
         startService(this)
     }
 
+    private fun showNotification(content: String = getString(R.string.hidden_content),
+                                 title: String = getString(R.string.appName),
+                                 icon: Bitmap = BitmapFactory.decodeResource(resources, R.mipmap.haine_128)) {
+        val intent = getRestartIntent(this) //Intent(this, LoginActivity::class.java)
+        val pIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val mBuilder = NotificationCompat.Builder(this)
+                .setLargeIcon(icon)
+                .setSmallIcon(R.drawable.ic_message)
+                .setContentTitle(title)
+                .setContentText(Html.fromHtml(content))
+                .setContentIntent(pIntent)
+
+        val mNotifyMgr = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        mNotifyMgr.notify(NOTIFICATION, mBuilder.build())
+    }
+
+    private fun closeNotification() {
+        val mNotifyMgr = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        mNotifyMgr.cancel(NOTIFICATION)
+    }
+
+    private fun vibrate() {
+        val vi = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vi.vibrate(VIBRATE_DELAY)
+    }
+
+    private fun playRingtone() {
+        RingtoneManager.getRingtone(
+                applicationContext,
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        ).play()
+    }
+
     private fun l(s: String) {
         Lg.i("[service] $s")
     }
@@ -167,5 +217,8 @@ class NotificationService : Service() {
     companion object {
         const val INTERNET_DELAY = 5000L
         const val NO_TOKEN_DELAY = 1000L
+
+        const val VIBRATE_DELAY = 200L
+        const val NOTIFICATION = 1753
     }
 }

@@ -14,6 +14,22 @@ class Prefs @Inject constructor(private val context: Context) {
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
     }
 
+    var showNotifications
+        get() = prefs.getBoolean(SHOW_NOTIFICATIONS, true)
+        set(value) = prefs.edit().putBoolean(SHOW_NOTIFICATIONS, value).apply()
+
+    var showName
+        get() = prefs.getBoolean(SHOW_NAME, false)
+        set(value) = prefs.edit().putBoolean(SHOW_NAME, value).apply()
+
+    var vibrate
+        get() = prefs.getBoolean(VIBRATE, true)
+        set(value) = prefs.edit().putBoolean(VIBRATE, value).apply()
+
+    var soundNotifications
+        get() = prefs.getBoolean(SOUND_NOTIFICATIONS, false)
+        set(value) = prefs.edit().putBoolean(SOUND_NOTIFICATIONS, value).apply()
+
     var stickerUpdTime
         get() = prefs.getInt(STICKERS_UPD, 0)
         set(value) = prefs.edit().putInt(STICKERS_UPD, value).apply()
@@ -38,6 +54,11 @@ class Prefs @Inject constructor(private val context: Context) {
         const val NAME = "prefs"
         const val STICKERS_UPD_DELAY = 60 * 60 * 24
         const val PRIMES_UPD_DELAY = 60 * 60 * 24 * 30
+
+        const val SHOW_NOTIFICATIONS = "showNotifications"
+        const val SHOW_NAME = "showName"
+        const val VIBRATE = "vibrate"
+        const val SOUND_NOTIFICATIONS = "soundNotifications"
 
         const val STICKERS_UPD = "stickersUpd"
         const val PRIMES_UPD = "primesUpd"

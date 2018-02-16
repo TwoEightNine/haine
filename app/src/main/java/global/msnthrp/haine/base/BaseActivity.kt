@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
+import global.msnthrp.haine.extensions.view
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -14,6 +16,7 @@ import io.reactivex.disposables.CompositeDisposable
 @SuppressLint("Registered")
 open class BaseActivity() : AppCompatActivity() {
 
+    protected val contentView: View by view(android.R.id.content)
     protected val compositeDisposable = CompositeDisposable()
 
     protected var isShown = false

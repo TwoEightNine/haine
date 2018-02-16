@@ -14,6 +14,7 @@ import global.msnthrp.haine.App
 import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseActivity
 import global.msnthrp.haine.chat.ChatActivity
+import global.msnthrp.haine.extensions.setVisible
 import global.msnthrp.haine.extensions.view
 import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.network.ApiService
@@ -62,7 +63,6 @@ class DialogsActivity : BaseActivity(), DialogsView {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-//        apiUtils.updateStickers()
         apiUtils.updatePrime()
         startService(this)
     }
@@ -91,11 +91,11 @@ class DialogsActivity : BaseActivity(), DialogsView {
         }
 
     override fun onShowLoading() {
-        progressBar.visibility = View.VISIBLE
+        progressBar.setVisible(true)
     }
 
     override fun onHideLoading() {
-        progressBar.visibility = View.GONE
+        progressBar.setVisible(false)
     }
 
     override fun onShowError(error: String) {

@@ -22,6 +22,7 @@ import global.msnthrp.haine.base.BaseActivity
 import global.msnthrp.haine.chat.stickers.StickersFragment
 import global.msnthrp.haine.db.DbHelper
 import global.msnthrp.haine.extensions.isAtEnd
+import global.msnthrp.haine.extensions.setVisible
 import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.extensions.view
 import global.msnthrp.haine.network.ApiService
@@ -150,11 +151,11 @@ class ChatActivity : BaseActivity(), ChatView {
     }
 
     override fun onShowLoading() {
-        progressBar.visibility = View.VISIBLE
+        progressBar.setVisible(true)
     }
 
     override fun onHideLoading() {
-        progressBar.visibility = View.GONE
+        progressBar.setVisible(false)
     }
 
     override fun onShowError(error: String) {
@@ -173,7 +174,7 @@ class ChatActivity : BaseActivity(), ChatView {
     }
 
     override fun onSendingAllowed() {
-        rlExchange.visibility = View.GONE
+        rlExchange.setVisible(false)
     }
 
     override fun onMessagesAdded(messages: List<Message>) {

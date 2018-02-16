@@ -2,10 +2,10 @@ package global.msnthrp.haine.chat
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseFragment
-import global.msnthrp.haine.extensions.loadUrl
-import global.msnthrp.haine.extensions.view
+import global.msnthrp.haine.extensions.*
 import global.msnthrp.haine.view.TouchImageView
 
 /**
@@ -14,6 +14,7 @@ import global.msnthrp.haine.view.TouchImageView
 class PhotoFragment : BaseFragment() {
 
     private val touchImageView: TouchImageView by view(R.id.touchImageView)
+    private val tvTitle: TextView by view(R.id.tvTitle)
 
     override fun getLayoutId() = R.layout.fragment_photo
 
@@ -24,6 +25,7 @@ class PhotoFragment : BaseFragment() {
         touchImageView.dismissListener = {
             activity.onBackPressed()
         }
+        touchImageView.tapListener = { tvTitle.toggleVisibility() }
     }
 
     companion object {
