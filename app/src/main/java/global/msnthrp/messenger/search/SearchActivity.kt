@@ -43,9 +43,9 @@ class SearchActivity : BaseActivity(), SearchView {
     }
 
     private fun initSearchView() {
-        searchView.setBackgroundColor(resources.getColor(R.color.alterWhite))
-        searchView.setTextColor(resources.getColor(R.color.textDark))
-        searchView.setHintTextColor(resources.getColor(R.color.textDarkSecondary))
+        searchView.setBackgroundColor(resources.getColor(R.color.textDark))
+        searchView.setTextColor(resources.getColor(R.color.textLight))
+        searchView.setHintTextColor(resources.getColor(R.color.textLightSecondary))
         searchView.setOnQueryTextListener(SearchTextListener { presenter.search(it) })
         searchView.setOnSearchViewListener(SearchCloseListener())
         searchView.post {
@@ -72,7 +72,6 @@ class SearchActivity : BaseActivity(), SearchView {
     }
 
     private fun onUserClicked(user: User) {
-//        finish()
         ChatActivity.launch(this, user)
     }
 

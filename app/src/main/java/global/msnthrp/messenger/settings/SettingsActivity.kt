@@ -58,7 +58,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
             it.setTitle(R.string.settings)
         }
         ivClearPhoto.setOnClickListener { etPhoto.setText("") }
-        btnLogOut.setOnClickListener { presenter.terminate() }
+        btnLogOut.setOnClickListener { showLogOutConfirm() }
         presenter.loadUser(session.userId)
         handler.postDelayed(::showWhatIs, HINT_DELAY)
         ivHaine.setOnClickListener { showLogs() }
@@ -115,6 +115,14 @@ class SettingsActivity : BaseActivity(), SettingsView {
 
     private fun showLogs() {
         showAlert(this, Lg.logs.joinToString(separator = "\n"))
+    }
+
+    private fun showLogOutConfirm() {
+        showConfirm(this, getString(R.string.wanna_log_out)) {
+            if (it) {
+                presenter.terminate()
+            }
+        }
     }
 
     private fun saveSettings() {

@@ -31,6 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@string/account_settings"
+                    android:textSize="16sp"
                     android:textColor="@color/textLightSecondary" />
 
                 <RelativeLayout
@@ -107,6 +108,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
