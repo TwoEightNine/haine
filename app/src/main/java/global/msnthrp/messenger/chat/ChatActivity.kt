@@ -26,6 +26,8 @@ import global.msnthrp.messenger.model.Message
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.network.ApiService
 import global.msnthrp.messenger.model.User
+import global.msnthrp.messenger.storage.Lg
+import global.msnthrp.messenger.storage.Session
 import global.msnthrp.messenger.utils.*
 import global.msnthrp.messenger.view.FingerPrintAlertDialog
 import javax.inject.Inject
@@ -41,6 +43,8 @@ class ChatActivity : BaseActivity(), ChatView {
     lateinit var apiUtils: ApiUtils
     @Inject
     lateinit var dbHelper: DbHelper
+    @Inject
+    lateinit var session: Session
 
     private val toolbar: Toolbar by view(R.id.toolbar)
     private val recyclerView: RecyclerView by view(R.id.recyclerView)
@@ -136,6 +140,11 @@ class ChatActivity : BaseActivity(), ChatView {
             else -> super.onOptionsItemSelected(item)
         }
 
+    override fun onResume() {
+        super.onResume()
+        invalidateLastRead()
+    }
+
     override fun onFingerPrintUpdated(checked: Boolean) {
         menu?.setVisible(R.id.menu_fingerprint, checked)
         menu?.setVisible(R.id.menu_fingerprint_unchecked, !checked)
@@ -155,6 +164,7 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onMessagesLoaded(messages: ArrayList<Message>) {
         adapter.addAll(messages)
+        invalidateLastRead()
     }
 
     override fun onMessageSent(message: Message) {
@@ -176,6 +186,9 @@ class ChatActivity : BaseActivity(), ChatView {
         }
         adapter.addAll(messages.filter { it.id > lastMessageId })
         if (atEnd) scrollToBottom()
+        if (isShown) {
+            invalidateLastRead()
+        }
     }
 
     override fun onFileAvailable(path: String) {
@@ -205,6 +218,16 @@ class ChatActivity : BaseActivity(), ChatView {
 
     private fun scrollToBottom() {
         recyclerView.scrollToPosition(adapter.itemCount - 1)
+    }
+
+    private fun invalidateLastRead() {
+        if (adapter.items.isNotEmpty()) {
+            val lastMessageId = adapter.items.last().id
+            if (session.lastRead < lastMessageId) {
+                session.lastRead = lastMessageId
+                Lg.i("updated: last read = ${session.lastRead}")
+            }
+        }
     }
 
     private fun Menu.setVisible(@IdRes itemId: Int, visible: Boolean) {

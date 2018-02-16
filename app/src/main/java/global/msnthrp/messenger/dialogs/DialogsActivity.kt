@@ -49,7 +49,7 @@ class DialogsActivity : BaseActivity(), DialogsView {
 
     private val presenter: DialogsPresenter by lazy { DialogsPresenter(api, this) }
     private val adapter: DialogsAdapter by lazy {
-        DialogsAdapter(this) { _, message ->
+        DialogsAdapter(this, session) { _, message ->
             if (message.user != null) {
                 ChatActivity.launch(this, message.user!!)
             }

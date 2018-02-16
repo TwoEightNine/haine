@@ -16,6 +16,8 @@ open class BaseActivity() : AppCompatActivity() {
 
     protected val compositeDisposable = CompositeDisposable()
 
+    protected var isShown = false
+
     fun initToolbar(toolbar: Toolbar?, postInit: (ActionBar) -> Unit = {}) {
         if (toolbar == null) return
 
@@ -23,6 +25,16 @@ open class BaseActivity() : AppCompatActivity() {
         supportActionBar?.let {
             postInit.invoke(it)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isShown = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isShown = false
     }
 
     override fun onOptionsItemSelected(item: MenuItem?)

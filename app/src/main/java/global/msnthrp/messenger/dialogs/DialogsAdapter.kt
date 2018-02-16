@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import de.hdodenhof.circleimageview.CircleImageView
@@ -12,12 +13,15 @@ import global.msnthrp.messenger.base.BaseAdapter
 import global.msnthrp.messenger.extensions.loadUrl
 import global.msnthrp.messenger.extensions.view
 import global.msnthrp.messenger.model.Message
+import global.msnthrp.messenger.storage.Lg
+import global.msnthrp.messenger.storage.Session
 import global.msnthrp.messenger.utils.getTime
 
 /**
  * Created by msnthrp on 22/01/18.
  */
 class DialogsAdapter(context: Context,
+                     private val session: Session,
                      private val onClick: (Int, Message) -> Unit = { _, _ -> }) : BaseAdapter<Message, DialogsAdapter.DialogViewHolder>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup?,
@@ -31,6 +35,8 @@ class DialogsAdapter(context: Context,
 //        holder.tvBody.text = message.text
         holder.tvDate.text = getTime(message.time)
         holder.civPhoto.loadUrl(context, message.user?.photo)
+        Lg.i("last read = ${session.lastRead}")
+        holder.ivUnread.visibility = if (session.lastRead < message.id) View.VISIBLE else View.GONE
     }
 
     inner class DialogViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -40,6 +46,7 @@ class DialogsAdapter(context: Context,
         val civPhoto: CircleImageView by view(R.id.civPhoto)
         val tvDate: TextView by view(R.id.tvDate)
         val rlItem: RelativeLayout by view(R.id.rlItemContainer)
+        val ivUnread: ImageView by view(R.id.ivUnread)
 
         init {
             rlItem.setOnClickListener { onClick.invoke(adapterPosition, items[adapterPosition]) }
