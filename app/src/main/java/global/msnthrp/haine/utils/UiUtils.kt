@@ -83,7 +83,7 @@ fun paintDialog(context: Context?, dialog: AlertDialog?) {
 fun showNotification(context: Context?,
                              content: String? = context?.getString(R.string.hidden_content),
                              title: String? = context?.getString(R.string.appName),
-                             icon: Bitmap = BitmapFactory.decodeResource(context?.resources, R.mipmap.haine_128)) {
+                             icon: Bitmap = BitmapFactory.decodeResource(context?.resources, R.mipmap.haine128)) {
     if (context == null) return
 
     val intent = getRestartIntent(context)
