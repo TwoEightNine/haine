@@ -17,7 +17,6 @@ class SearchPresenter(view: SearchView,
                 .subscribeSmart({ response ->
                     view.onHideLoading()
                     view.onUsersLoaded(response as ArrayList<User>)
-
                 }, defaultError())
     }
 

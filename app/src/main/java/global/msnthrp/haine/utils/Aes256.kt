@@ -13,12 +13,12 @@ import javax.crypto.spec.SecretKeySpec
 
 object Aes256 {
 
-    private val KEY_LENGTH = 32
-    private val IV_LENGTH = 16
-    private val CIPHER = "AES/CBC/PKCS5Padding"
-    private val AES = "AES"
-    private val KEY_LENGTH_EXCEPTION = "AES-256 requires $KEY_LENGTH byte of key"
-    private val IV_LENGTH_EXCEPTION = "AES-256 requires $IV_LENGTH byte of IV"
+    private const val KEY_LENGTH = 32
+    private const val IV_LENGTH = 16
+    private const val CIPHER = "AES/CBC/PKCS5Padding"
+    private const val AES = "AES"
+    private const val KEY_LENGTH_EXCEPTION = "AES-256 requires $KEY_LENGTH byte of key"
+    private const val IV_LENGTH_EXCEPTION = "AES-256 requires $IV_LENGTH byte of IV"
 
     @Throws(java.io.UnsupportedEncodingException::class,
             NoSuchAlgorithmException::class,

@@ -98,8 +98,9 @@ class NotificationService : Service() {
     private fun sendResult(messages: List<Message>) {
         if (messages.isNotEmpty()) {
             session.lastMessage = messages.last().id
+            val cameToMe = messages.filter { !it.out }.isNotEmpty()
             ChatBus.publishMessage(messages)
-            if (prefs.showNotifications) {
+            if (cameToMe && prefs.showNotifications) {
                 showNotification(this)
                 if (prefs.soundNotifications) {
                     playRingtone()
