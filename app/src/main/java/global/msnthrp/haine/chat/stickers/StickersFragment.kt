@@ -11,7 +11,9 @@ import global.msnthrp.haine.App
 import global.msnthrp.haine.R
 import global.msnthrp.haine.chat.ChatBus
 import global.msnthrp.haine.extensions.view
+import global.msnthrp.haine.model.Sticker
 import global.msnthrp.haine.utils.ApiUtils
+import java.util.ArrayList
 import javax.inject.Inject
 
 /**
@@ -36,10 +38,19 @@ class StickersFragment : Fragment() {
 
         recyclerView.layoutManager = GridLayoutManager(context, GRID_COLUMNS_COUNT)
         recyclerView.adapter = adapter
-        adapter.addAll(apiUtils.getStickers())
+
+        val stickersQty = arguments.getInt(STICKER_QTY)
+        adapter.addAll(List(stickersQty, { Sticker(it) }))
     }
 
     companion object {
+
+        fun newInstance(stickersQty: Int): StickersFragment {
+            val frag = StickersFragment()
+            frag.arguments.putInt(STICKER_QTY, stickersQty)
+            return frag
+        }
         const val GRID_COLUMNS_COUNT = 4
+        const val STICKER_QTY = "stickerQty"
     }
 }

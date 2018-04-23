@@ -10,5 +10,6 @@
     <dimen name="chat_attachment_width">200dp</dimen>
     <dimen name="chat_attachment_circle">44dp</dimen>
     <dimen name="chat_attachment_circle_margin">6dp</dimen>
+    <dimen name="chat_attachment_sticker_width">180dp</dimen>
 
 </resources>

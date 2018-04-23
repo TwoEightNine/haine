@@ -39,17 +39,17 @@ class ChatPresenter(view: ChatView,
         if (isUrl(text)) {
             api.sendAttachments(text, user.id)
                     .subscribeSmart({
-                        view.onMessageSent(Message.getSendedAttachment(it, text, user.id))
+                        view.onMessageSent(Message.getSentAttachment(it, text, user.id))
                     }, defaultError {
-                        view.onMessageSent(Message.getNotSended(text))
+                        view.onMessageSent(Message.getNotSent(text))
                     })
         } else {
             val encrypted = crypto!!.encrypt(text)
             api.sendMessage(encrypted, user.id)
                     .subscribeSmart({
-                        view.onMessageSent(Message.getSendedText(it, text, user.id))
+                        view.onMessageSent(Message.getSentText(it, text, user.id))
                     }, defaultError {
-                        view.onMessageSent(Message.getNotSended(text))
+                        view.onMessageSent(Message.getNotSent(text))
                     })
         }
     }

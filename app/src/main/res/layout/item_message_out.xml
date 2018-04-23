@@ -13,7 +13,7 @@
         android:id="@+id/rlBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="@drawable/shape_message_solid"
         android:minHeight="36dp">
 
@@ -32,10 +32,10 @@
             tools:text="teper ty vtoroy kogdato byl pervim" />
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/rlAttachment"
             android:layout_width="@dimen/chat_attachment_width"
-            android:layout_height="?actionBarSize">
+            android:layout_height="?actionBarSize"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/rlCircle"
@@ -67,6 +67,14 @@
                 tools:text="dkfsdfksdfskfjsk osj oerseorsjrersjdfksdjfkdsj" />
 
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ivSticker"
+            android:layout_width="@dimen/chat_attachment_width"
+            android:layout_height="@dimen/chat_attachment_width"
+            android:layout_margin="4dp"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

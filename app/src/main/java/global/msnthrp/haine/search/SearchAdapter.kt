@@ -11,6 +11,7 @@ import global.msnthrp.haine.base.BaseAdapter
 import global.msnthrp.haine.extensions.loadUrl
 import global.msnthrp.haine.extensions.view
 import global.msnthrp.haine.model.User
+import global.msnthrp.haine.storage.Lg
 
 /**
  * Created by msnthrp on 22/01/18.
@@ -26,7 +27,8 @@ class SearchAdapter(context: Context,
 
         val user = items[position]
         holder.tvName.text = user.name
-        holder.civPhoto.loadUrl(context, user.photo)
+        holder.civPhoto.loadUrl(context, user.photoUrl())
+        Lg.i("phoyo = " + user.photoUrl())
     }
 
     inner class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -27,7 +27,7 @@ class ApiUtils @Inject constructor(private val api: ApiService,
 
         api.getStickers()
                 .subscribeSmart({
-                    dbHelper.db.stickerDao.createOrUpdate(it)
+                    prefs.stickersQuantity = it
                     prefs.stickerUpdTime = time()
                 }, {
                     Lg.wtf("error obtaining stickers: $it")
@@ -117,8 +117,6 @@ class ApiUtils @Inject constructor(private val api: ApiService,
                     onError.invoke(error?.message ?: "null")
                 })
     }
-
-    fun getStickers() = dbHelper.db.stickerDao.getAll()
 
     companion object {
         const val DOWNLOADS_DIRECTORY = "/haine"

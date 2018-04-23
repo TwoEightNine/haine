@@ -34,6 +34,10 @@ class Prefs @Inject constructor(private val context: Context) {
         get() = prefs.getInt(STICKERS_UPD, 0)
         set(value) = prefs.edit().putInt(STICKERS_UPD, value).apply()
 
+    var stickersQuantity
+        get() = prefs.getInt(STICKERS_QTY, 0)
+        set(value) = prefs.edit().putInt(STICKERS_QTY, value).apply()
+
     var primeUpdTime
         get() = prefs.getInt(PRIMES_UPD, 0)
         set(value) = prefs.edit().putInt(PRIMES_UPD, value).apply()
@@ -61,6 +65,7 @@ class Prefs @Inject constructor(private val context: Context) {
         const val SOUND_NOTIFICATIONS = "soundNotifications"
 
         const val STICKERS_UPD = "stickersUpd"
+        const val STICKERS_QTY = "stickersQty"
         const val PRIMES_UPD = "primesUpd"
         const val SAFE_PRIME = "safePrime"
 

@@ -74,7 +74,7 @@ class ChatActivity : BaseActivity(), ChatView {
             it.title = user.name
             it.subtitle = getTime(user.lastSeen, true)
         }
-        toolbar.setOnClickListener { showPicture(user.photo ?: return@setOnClickListener, user.name) }
+        toolbar.setOnClickListener { showPicture(user.photoUrl(), user.name) }
         initViews()
         initStickers()
         presenter.loadDialogs()

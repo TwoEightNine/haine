@@ -20,6 +20,6 @@ class App : Application() {
     companion object {
         lateinit var appComponent: AppComponent
 
-        const val BASE_URL = "http://188.227.75.231:1753"
+        const val BASE_URL = "http://192.168.1.50:1753"
     }
 }

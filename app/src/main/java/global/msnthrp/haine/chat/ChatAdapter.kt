@@ -4,13 +4,16 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseAdapter
+import global.msnthrp.haine.extensions.loadUrl
 import global.msnthrp.haine.extensions.setVisible
 import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.extensions.view
+import global.msnthrp.haine.model.Sticker
 import global.msnthrp.haine.utils.ApiUtils
 import global.msnthrp.haine.utils.getTime
 
@@ -20,8 +23,6 @@ import global.msnthrp.haine.utils.getTime
 class ChatAdapter(context: Context,
                   apiUtils: ApiUtils,
                   private val onAttachmentClick: ((String) -> Unit)? = {}) : BaseAdapter<Message, ChatAdapter.ChatViewHolder>(context) {
-
-    private val stickers = apiUtils.getStickers()
 
     override fun onCreateViewHolder(parent: ViewGroup?,
                                     viewType: Int): ChatViewHolder {
@@ -38,10 +39,15 @@ class ChatAdapter(context: Context,
         val message = items[position]
         holder.tvBody.text = message.text
         holder.tvDate.text = getTime(message.time, true)
-        val hasAttached = message.attachment != null
-        holder.rlAttachment.setVisible(hasAttached)
-        if (hasAttached) {
+
+        holder.rlAttachment.setVisible(message.hasAttachments())
+        if (message.hasAttachments()) {
             holder.tvAttachment.text = message.attachment
+        }
+
+        holder.ivSticker.setVisible(message.hasSticker())
+        if (message.hasSticker()) {
+            holder.ivSticker.loadUrl(context, Sticker(message.stickerId).stickerUrl())
         }
     }
 
@@ -58,6 +64,7 @@ class ChatAdapter(context: Context,
         val tvDate: TextView by view(R.id.tvDate)
         val rlAttachment: RelativeLayout by view(R.id.rlAttachment)
         val tvAttachment: TextView by view(R.id.tvAttachment)
+        val ivSticker: ImageView by view(R.id.ivSticker)
 
         init {
             rlAttachment.setOnClickListener {

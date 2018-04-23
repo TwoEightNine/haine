@@ -24,7 +24,7 @@ class StickersAdapter(context: Context,
         if (holder == null) return
 
         val sticker = items[position]
-        holder.ivSticker.loadUrl(context, sticker.url)
+        holder.ivSticker.loadUrl(context, sticker.stickerUrl())
     }
 
     inner class StickerViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -33,7 +33,7 @@ class DialogsAdapter(context: Context,
         val message = items[position]
         holder.tvTitle.text = message.user?.name
         holder.tvDate.text = getTime(message.time)
-        holder.civPhoto.loadUrl(context, message.user?.photo)
+        holder.civPhoto.loadUrl(context, message.user?.photoUrl())
         holder.ivUnread.setVisible(session.lastRead < message.id)
     }
 

@@ -1,17 +1,21 @@
 package global.msnthrp.haine.settings
 
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
-import android.view.View
 import android.widget.*
+import de.hdodenhof.circleimageview.CircleImageView
 import global.msnthrp.haine.App
 import global.msnthrp.haine.BuildConfig
 import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseActivity
 import global.msnthrp.haine.db.DbHelper
+import global.msnthrp.haine.extensions.loadUrl
+import global.msnthrp.haine.extensions.loadUrlForce
 import global.msnthrp.haine.extensions.setVisible
 import global.msnthrp.haine.extensions.view
 import global.msnthrp.haine.network.ApiService
@@ -38,9 +42,9 @@ class SettingsActivity : BaseActivity(), SettingsView {
 
     private val toolbar: Toolbar by view(R.id.toolbar)
     private val progressBar: ProgressBar by view(R.id.progressBar)
-    private val etPhoto: EditText by view(R.id.etPhoto)
-    private val ivClearPhoto: ImageView by view(R.id.ivClearPhoto)
-    private val btnLogOut: Button by view(R.id.btnLogOut)
+    private val ivLogOut: ImageView by view(R.id.ivLogOut)
+    private val civAvatar: CircleImageView by view(R.id.civAvatar)
+    private val tvName: TextView by view(R.id.tvName)
 
     private val ivHaine: ImageView by view(R.id.ivHaine)
     private val tvVersion: TextView by view(R.id.tvVersion)
@@ -50,7 +54,6 @@ class SettingsActivity : BaseActivity(), SettingsView {
     private val swPlayRingtone: Switch by view(R.id.swPlayRingtone)
 
     private val handler = Handler()
-    private var oldPhoto = ""
     private val presenter: SettingsPresenter by lazy { SettingsPresenter(this, api) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,12 +65,18 @@ class SettingsActivity : BaseActivity(), SettingsView {
             it.setTitle(R.string.settings)
         }
         initSwitches()
-        ivClearPhoto.setOnClickListener { etPhoto.setText("") }
-        btnLogOut.setOnClickListener { showLogOutConfirm() }
+        ivLogOut.setOnClickListener { showLogOutConfirm() }
         presenter.loadUser(session.userId)
         handler.postDelayed(::showWhatIs, HINT_DELAY)
         ivHaine.setOnClickListener { showLogs() }
         tvVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME, BuildConfig.BUILD_TIME)
+        civAvatar.setOnClickListener {
+            if (hasPermissions(this)) {
+                chooseFile()
+            } else {
+                requestPermissions(this, PERMISSIONS_REQUEST_CODE)
+            }
+        }
     }
 
     override fun onShowLoading() {
@@ -83,13 +92,18 @@ class SettingsActivity : BaseActivity(), SettingsView {
     }
 
     override fun onUserLoaded(user: User) {
-        etPhoto.setText(user.photo)
-        user.photo?.let { oldPhoto = it }
+        tvName.text = user.name
+        civAvatar.loadUrl(this, user.photoUrl())
     }
 
-    override fun onPhotoUpdated() {
-        saveSettings()
-        finish()
+    override fun onPhotoUpdated(user: User) {
+        civAvatar.loadUrlForce(this, user.photoUrl())
+    }
+
+    private fun chooseFile() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICKFILE_REQUEST_CODE)
     }
 
     override fun onTerminated() {
@@ -100,14 +114,26 @@ class SettingsActivity : BaseActivity(), SettingsView {
         restartApp(this, getString(R.string.loggingOut))
     }
 
-    override fun onBackPressed() {
-        val newPhoto = etPhoto.text.toString()
-        if (newPhoto != oldPhoto) {
-            presenter.updatePhoto(newPhoto)
-        } else {
-            saveSettings()
-            super.onBackPressed()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICKFILE_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK && data != null) {
+            val path = getPath(this, data.data) ?: return
+            presenter.updatePhoto(path)
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONS_REQUEST_CODE &&
+                grantResults.filter { it != PackageManager.PERMISSION_GRANTED }.isEmpty()) {
+            chooseFile()
+        }
+    }
+
+    override fun onBackPressed() {
+        saveSettings()
+        super.onBackPressed()
     }
 
     private fun showWhatIs() {
@@ -142,5 +168,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
 
     companion object {
         const val HINT_DELAY = 1000L * 90
+        const val PICKFILE_REQUEST_CODE = 17 * 5 * 3
+        const val PERMISSIONS_REQUEST_CODE = 175 + 3
     }
 }

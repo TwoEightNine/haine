@@ -8,6 +8,6 @@ import global.msnthrp.haine.model.User
  */
 interface SettingsView : BaseView {
     fun onUserLoaded(user: User)
-    fun onPhotoUpdated()
+    fun onPhotoUpdated(user: User)
     fun onTerminated()
 }

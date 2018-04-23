@@ -54,14 +54,14 @@ interface ApiService {
     fun getUser(@Path("userId") userId: Int): Single<BaseResponse<User>>
 
     @FormUrlEncoded
-    @POST("/user.photo")
-    fun updatePhoto(@Field("photo") photo: String): Single<BaseResponse<Int>>
+    @POST("/user.uploadPhoto")
+    fun uploadPhoto(@Field("avatar") photo: String): Single<BaseResponse<Int>>
 
-    @GET("/stickers")
-    fun getStickers(): Single<BaseResponse<List<Sticker>>>
+    @GET("/stickers.get")
+    fun getStickers(): Single<BaseResponse<Int>>
 
     @FormUrlEncoded
-    @POST("/message/sticker")
+    @POST("/messages.sendSticker")
     fun sendSticker(@Field("sticker_id") stickerId: Int,
                     @Field("to_id") toId: Int): Single<BaseResponse<Int>>
 

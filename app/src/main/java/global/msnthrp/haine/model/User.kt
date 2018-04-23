@@ -2,6 +2,7 @@ package global.msnthrp.haine.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import global.msnthrp.haine.App
 import java.io.Serializable
 
 /**
@@ -17,11 +18,11 @@ data class User(
         @Expose
         val name: String,
 
-        @SerializedName("photo")
-        @Expose
-        val photo: String?,
-
         @SerializedName("last_seen")
         @Expose
         val lastSeen: Int
-) : Serializable
+) : Serializable {
+
+    fun photoUrl() = App.BASE_URL + "/user.avatar/$id"
+
+}
