@@ -11,6 +11,8 @@ import android.support.customtabs.CustomTabsIntent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,6 +29,8 @@ import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.extensions.view
 import global.msnthrp.haine.network.ApiService
 import global.msnthrp.haine.model.User
+import global.msnthrp.haine.storage.Prefs
+import global.msnthrp.haine.storage.Prefs_Factory
 import global.msnthrp.haine.storage.Session
 import global.msnthrp.haine.utils.*
 import global.msnthrp.haine.view.FingerPrintAlertDialog
@@ -42,6 +46,8 @@ class ChatActivity : BaseActivity(), ChatView {
     @Inject
     lateinit var apiUtils: ApiUtils
     @Inject
+    lateinit var prefs: Prefs
+    @Inject
     lateinit var dbHelper: DbHelper
     @Inject
     lateinit var session: Session
@@ -50,6 +56,7 @@ class ChatActivity : BaseActivity(), ChatView {
     private val recyclerView: RecyclerView by view(R.id.recyclerView)
     private val etInput: EditText by view(R.id.etInput)
     private val ivSend: ImageView by view(R.id.ivSend)
+    private val ivSticker: ImageView by view(R.id.ivSticker)
     private val progressBar: ProgressBar by view(R.id.progressBar)
     private val rlBottom: RelativeLayout by view(R.id.rlBottom)
     private val rlHideBottom: RelativeLayout by view(R.id.rlHideBottom)
@@ -78,6 +85,7 @@ class ChatActivity : BaseActivity(), ChatView {
         initViews()
         initStickers()
         presenter.loadDialogs()
+        compositeDisposable.addAll(ChatBus.subscribeSticker { bottomSheet.close() })
     }
 
     private fun obtainArgs() {
@@ -90,10 +98,12 @@ class ChatActivity : BaseActivity(), ChatView {
     }
 
     private fun initViews() {
+        etInput.addTextChangedListener(MessageTextWatcher())
         ivSend.setOnClickListener {
             presenter.sendMessage(etInput.text.toString())
             etInput.setText("")
         }
+        ivSticker.setOnClickListener { bottomSheet.open() }
         ivAttach.setOnClickListener {
             if (hasPermissions(this)) {
                 chooseFile()
@@ -107,9 +117,20 @@ class ChatActivity : BaseActivity(), ChatView {
         recyclerView.adapter = adapter
     }
 
+    fun requestSticker() {
+        if (hasPermissions(this)) {
+            bottomSheet.close()
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/png"
+            startActivityForResult(intent, STICKER_REQUEST_CODE)
+        } else {
+            requestPermissions(this, PERMISSIONS_REQUEST_CODE)
+        }
+    }
+
     private fun initStickers() {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.flContainer, StickersFragment())
+                .replace(R.id.flContainer, StickersFragment.newInstance(prefs.stickersQuantity))
                 .commit()
     }
 
@@ -199,6 +220,12 @@ class ChatActivity : BaseActivity(), ChatView {
         }
     }
 
+    override fun onStickerAdded(stickerId: Int) {
+        prefs.stickersQuantity = stickerId
+        prefs.stickerUpdTime = time()
+        initStickers()
+    }
+
     private fun showPicture(path: String, name: String = "") {
         hideKeyboard(this)
         supportFragmentManager
@@ -257,18 +284,28 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICKFILE_REQUEST_CODE
-                && resultCode == Activity.RESULT_OK && data != null) {
-            val path = getPath(this, data.data) ?: return
-            presenter.sendFile(path)
+        when (requestCode) {
+            PICKFILE_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val path = getPath(this, data.data) ?: return
+                    presenter.sendFile(path)
+                }
+            }
+            STICKER_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val path = getPath(this, data.data) ?: return
+                    presenter.addSticker(path)
+                }
+            }
         }
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSIONS_REQUEST_CODE &&
                 grantResults.filter { it != PackageManager.PERMISSION_GRANTED }.isEmpty()) {
-            chooseFile()
+//            chooseFile()
         }
     }
 
@@ -285,6 +322,8 @@ class ChatActivity : BaseActivity(), ChatView {
                     .beginTransaction()
                     .remove(fragment)
                     .commit()
+        } else if (bottomSheet.isOpen()) {
+            bottomSheet.close()
         } else {
             super.onBackPressed()
         }
@@ -293,6 +332,7 @@ class ChatActivity : BaseActivity(), ChatView {
     companion object {
         const val USER = "user"
         const val PICKFILE_REQUEST_CODE = 17 + 53
+        const val STICKER_REQUEST_CODE = 175 * 3
         const val PERMISSIONS_REQUEST_CODE = 17 * 53
 
         fun launch(context: Context, user: User) {
@@ -300,5 +340,17 @@ class ChatActivity : BaseActivity(), ChatView {
             intent.putExtra(USER, user)
             context.startActivity(intent)
         }
+    }
+
+    private inner class MessageTextWatcher : TextWatcher {
+
+        override fun afterTextChanged(p0: Editable?) {
+            ivSticker.setVisible(etInput.text.toString().isBlank())
+            ivSend.setVisible(!etInput.text.toString().isBlank())
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
     }
 }

@@ -1,6 +1,7 @@
 package global.msnthrp.haine.chat
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,10 @@ class ChatAdapter(context: Context,
         holder.ivSticker.setVisible(message.hasSticker())
         if (message.hasSticker()) {
             holder.ivSticker.loadUrl(context, Sticker(message.stickerId).stickerUrl())
+            holder.rlBody.background = null
+        } else {
+            holder.rlBody.background = ContextCompat.getDrawable(context,
+                    if (message.out) R.drawable.shape_message_solid else R.drawable.shape_message_outfit)
         }
     }
 
@@ -60,6 +65,7 @@ class ChatAdapter(context: Context,
 
     inner class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        val rlBody: RelativeLayout by view(R.id.rlBody)
         val tvBody: TextView by view(R.id.tvBody)
         val tvDate: TextView by view(R.id.tvDate)
         val rlAttachment: RelativeLayout by view(R.id.rlAttachment)

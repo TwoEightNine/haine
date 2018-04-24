@@ -23,8 +23,6 @@ class ApiUtils @Inject constructor(private val api: ApiService,
                                    private val prefs: Prefs) {
 
     fun updateStickers() {
-        if (!prefs.needToUpdateStickers()) return
-
         api.getStickers()
                 .subscribeSmart({
                     prefs.stickersQuantity = it

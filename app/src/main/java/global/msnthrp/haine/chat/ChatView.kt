@@ -13,4 +13,5 @@ interface ChatView : BaseView {
     fun onMessagesAdded(messages: List<Message>)
     fun onFingerPrintUpdated(checked: Boolean)
     fun onFileAvailable(path: String)
+    fun onStickerAdded(stickerId: Int)
 }

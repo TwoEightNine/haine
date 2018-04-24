@@ -68,6 +68,15 @@
 
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/ivSticker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/chat_attachment_width"
+            android:maxHeight="@dimen/chat_attachment_height"
+            android:layout_margin="4dp"
+            android:visibility="gone" />
+
     </RelativeLayout>
 
     <TextView

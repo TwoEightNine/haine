@@ -4,6 +4,7 @@ import global.msnthrp.haine.base.BasePresenter
 import global.msnthrp.haine.db.DbHelper
 import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.extensions.subscribeSmart
+import global.msnthrp.haine.model.Sticker
 import global.msnthrp.haine.network.ApiService
 import global.msnthrp.haine.model.User
 import global.msnthrp.haine.storage.Lg
@@ -30,6 +31,7 @@ class ChatPresenter(view: ChatView,
     init {
         compositeDisposable.add(ChatBus.subscribeMessage(::onMessagesAdded))
         compositeDisposable.add(ChatBus.subscribeExchange { checkForExchanges() })
+        compositeDisposable.addAll(ChatBus.subscribeSticker(::sendSticker))
         checkForExchanges()
     }
 
@@ -66,6 +68,26 @@ class ChatPresenter(view: ChatView,
                 view.onHideLoading()
             }, defaultError())
         }
+    }
+
+    fun sendSticker(sticker: Sticker) {
+        api.sendSticker(sticker.id, user.id)
+                .subscribeSmart({
+                    view.onMessageSent(Message.getSentSticker(it, sticker.id, user.id))
+                }, defaultError {
+                    view.onMessageSent(Message.getNotSent("", sticker.id))
+                })
+    }
+
+    fun addSticker(path: String) {
+        if (path.isBlank() || !File(path).exists()) return
+
+        view.onShowLoading()
+        api.uploadSticker(toBase64(getBytesFromFile(path)))
+                .subscribeSmart({
+                    view.onHideLoading()
+                    view.onStickerAdded(it)
+                }, defaultError())
     }
 
     fun openFile(link: String) {
