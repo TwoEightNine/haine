@@ -61,6 +61,10 @@ interface ApiService {
     fun getStickers(): Single<BaseResponse<Int>>
 
     @FormUrlEncoded
+    @POST("/stickers.upload")
+    fun uploadSticker(@Field("sticker") sticker: String): Single<BaseResponse<Int>>
+
+    @FormUrlEncoded
     @POST("/messages.sendSticker")
     fun sendSticker(@Field("sticker_id") stickerId: Int,
                     @Field("to_id") toId: Int): Single<BaseResponse<Int>>
