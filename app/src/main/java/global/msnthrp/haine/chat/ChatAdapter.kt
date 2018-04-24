@@ -22,7 +22,7 @@ import global.msnthrp.haine.utils.getTime
  */
 class ChatAdapter(context: Context,
                   apiUtils: ApiUtils,
-                  private val onAttachmentClick: ((String) -> Unit)? = {}) : BaseAdapter<Message, ChatAdapter.ChatViewHolder>(context) {
+                  private val onAttachmentClick: ((Message) -> Unit)? = {}) : BaseAdapter<Message, ChatAdapter.ChatViewHolder>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup?,
                                     viewType: Int): ChatViewHolder {
@@ -68,7 +68,7 @@ class ChatAdapter(context: Context,
 
         init {
             rlAttachment.setOnClickListener {
-                onAttachmentClick?.invoke(items[adapterPosition].attachment ?: return@setOnClickListener)
+                onAttachmentClick?.invoke(items[adapterPosition])
             }
         }
     }

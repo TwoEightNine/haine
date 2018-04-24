@@ -207,12 +207,24 @@ class ChatActivity : BaseActivity(), ChatView {
                 .commit()
     }
 
-    private fun onAttachmentClick(link: String) {
+    private fun onAttachmentClick(message: Message) {
+        val link = message.attachment ?: return
+
         if (needToDecryptAttachment(link)) {
-            presenter.openFile(link)
+            if (message.out) {
+                showDownloadingConfirm(link)
+            } else {
+                presenter.openFile(link)
+            }
         } else {
             val customTabsIntent = CustomTabsIntent.Builder().build()
             customTabsIntent.launchUrl(this, Uri.parse(link))
+        }
+    }
+
+    private fun showDownloadingConfirm(link: String) {
+        showConfirm(this, getString(R.string.downloading_disclaimer)) {
+            if (it) presenter.openFile(link)
         }
     }
 
