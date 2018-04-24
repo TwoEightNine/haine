@@ -36,6 +36,8 @@ class SettingsActivity : BaseActivity(), SettingsView {
     @Inject
     lateinit var api: ApiService
     @Inject
+    lateinit var apiUtils: ApiUtils
+    @Inject
     lateinit var prefs: Prefs
     @Inject
     lateinit var dbHelper: DbHelper
@@ -77,6 +79,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
                 requestPermissions(this, PERMISSIONS_REQUEST_CODE)
             }
         }
+        apiUtils.updateStickers()
     }
 
     override fun onShowLoading() {
