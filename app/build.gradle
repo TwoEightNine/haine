@@ -62,7 +62,7 @@ dependencies {
 
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
-    provided "javax.annotation:jsr250-api:$jsrVersion"
+    compileOnly "javax.annotation:jsr250-api:$jsrVersion"
 
     implementation "com.squareup.picasso:picasso:$picassoVersion"
     implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"

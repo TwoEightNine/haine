@@ -64,12 +64,12 @@ class DialogsActivity : BaseActivity(), DialogsView {
         recyclerView.adapter = adapter
 
         apiUtils.updatePrime()
-        apiUtils.updateStickers()
         startService(this)
     }
 
     override fun onResume() {
         super.onResume()
+        apiUtils.updateStickers()
         presenter.loadDialogs()
     }
 

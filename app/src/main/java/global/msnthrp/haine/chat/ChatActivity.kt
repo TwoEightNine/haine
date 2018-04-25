@@ -64,7 +64,7 @@ class ChatActivity : BaseActivity(), ChatView {
     private val rlExchange: RelativeLayout by view(R.id.rlExchangeHint)
 
     private lateinit var user: User
-    private val presenter by lazy { ChatPresenter(this, api, apiUtils, dbHelper, user) }
+    private val presenter by lazy { ChatPresenter(this, api, session, apiUtils, dbHelper, user) }
     private val adapter by lazy { ChatAdapter(this, apiUtils, ::onAttachmentClick) }
     private val bottomSheet by lazy { BottomSheetController(rlBottom, rlHideBottom) }
     private var menu: Menu? = null
@@ -138,6 +138,7 @@ class ChatActivity : BaseActivity(), ChatView {
         menuInflater.inflate(R.menu.activity_chat, menu)
         this.menu = menu
         menu?.setVisible(R.id.menu_fingerprint, false)
+        menu?.setVisible(R.id.menu_exchange, user.id != session.userId)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -294,7 +295,11 @@ class ChatActivity : BaseActivity(), ChatView {
             STICKER_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val path = getPath(this, data.data) ?: return
-                    presenter.addSticker(path)
+                    if (isAllowedToBeSticker(path)) {
+                        presenter.addSticker(path)
+                    } else {
+                        showToast(this, R.string.sticker_format_hint)
+                    }
                 }
             }
         }

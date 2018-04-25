@@ -35,4 +35,5 @@
     <string name="vibrate">Vibrate</string>
     <string name="play_ringtone">Play ringtone</string>
     <string name="downloading_disclaimer">If you open this file now, it will become unavailable for other user. Continue?</string>
+    <string name="sticker_format_hint">Sticker must be not larger than 512x512</string>
 </resources>

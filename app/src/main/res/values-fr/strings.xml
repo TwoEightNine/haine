@@ -35,5 +35,6 @@
     <string name="show_notifications">Afficher notifications</string>
     <string name="vibrate">Vibrarer</string>
     <string name="play_ringtone">Ringtone</string>
-    <string name="downloading_disclaimer">If you open this file now, it will become unavailable for other user. Continuer?</string>
+    <string name="downloading_disclaimer">Si vous ouvrirai le fichier maintenant, il deviendra indisposible pour l\'autre. Continuer?</string>
+    <string name="sticker_format_hint">Autocollant dois être pas plus large que 512x512</string>
 </resources>

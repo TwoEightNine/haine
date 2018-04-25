@@ -7,6 +7,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
+import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.os.Handler
 import global.msnthrp.haine.chat.service.NotificationBroadcastReceiver
@@ -23,6 +24,7 @@ import io.reactivex.schedulers.Schedulers
 
 const val URL_REGEX = """^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"""
 const val FILE_SHARE_URL = "file.io"
+const val STICKER_SIZE_MAX = 512
 
 fun isOnline(context: Context): Boolean {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -92,3 +94,12 @@ fun getNameFromUrl(link: String) = link.split("/")
 fun isUrl(text: String) = text.matches(Regex(URL_REGEX))
 
 fun needToDecryptAttachment(link: String) = FILE_SHARE_URL in link
+
+fun isAllowedToBeSticker(path: String): Boolean {
+    val options = BitmapFactory.Options()
+    options.inJustDecodeBounds = true
+    BitmapFactory.decodeFile(path, options)
+    val imageHeight = options.outHeight.toFloat()
+    val imageWidth = options.outWidth.toFloat()
+    return imageHeight < STICKER_SIZE_MAX && imageWidth < STICKER_SIZE_MAX
+}

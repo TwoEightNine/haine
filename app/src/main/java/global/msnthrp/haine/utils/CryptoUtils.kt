@@ -4,6 +4,7 @@ import android.util.Base64
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.SecureRandom
+import java.util.*
 
 /**
  * Created by twoeightnine on 2/6/18.
@@ -45,6 +46,8 @@ fun sha256(plain: String) = sha256Raw(plain.toByteArray())
         .map { Integer.toHexString(it.toInt() and 0xff) }
         .map { if (it.length == 2) it else "0$it" }
         .joinToString(separator = "")
+
+fun randomString() = UUID.randomUUID().toString().replace("-", "")
 
 fun bytesToHex(bytes: ByteArray) = bytes
         .map { Integer.toHexString(it.toInt() and 0xff) }

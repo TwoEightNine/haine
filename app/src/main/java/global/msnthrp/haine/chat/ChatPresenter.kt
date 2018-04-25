@@ -4,10 +4,12 @@ import global.msnthrp.haine.base.BasePresenter
 import global.msnthrp.haine.db.DbHelper
 import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.extensions.subscribeSmart
+import global.msnthrp.haine.model.ExchangeParams
 import global.msnthrp.haine.model.Sticker
 import global.msnthrp.haine.network.ApiService
 import global.msnthrp.haine.model.User
 import global.msnthrp.haine.storage.Lg
+import global.msnthrp.haine.storage.Session
 import global.msnthrp.haine.utils.*
 import java.io.File
 
@@ -16,6 +18,7 @@ import java.io.File
  */
 class ChatPresenter(view: ChatView,
                     api: ApiService,
+                    private val session: Session,
                     private val apiUtils: ApiUtils,
                     private val dbHelper: DbHelper,
                     private val user: User) : BasePresenter<ChatView>(view, api) {
@@ -130,13 +133,26 @@ class ChatPresenter(view: ChatView,
     private fun checkForExchanges() {
         val params = dbHelper.db.exchangeDao.queryForId(user.id)
         if (params == null) {
-            apiUtils.createExchange(user.id) {}
+            if (session.userId == user.id) {
+                val newParams = ExchangeParams(
+                        session.userId, "0", "0", "0", "0", "0",
+                        sha256(randomString())
+                )
+                dbHelper.db.exchangeDao.createOrUpdate(newParams)
+                applyExchange(newParams)
+            } else {
+                apiUtils.createExchange(user.id) {}
+            }
         } else if (!params.isDebut()) {
-            view.onSendingAllowed()
-            crypto = Cryptool(params.shared)
-            Lg.i("fingerprint = ${crypto?.getFingerPrint()}")
-            isFingerprintChecked = false
+            applyExchange(params)
         }
+    }
+
+    private fun applyExchange(params: ExchangeParams) {
+        view.onSendingAllowed()
+        crypto = Cryptool(params.shared)
+        Lg.i("fingerprint = ${crypto?.getFingerPrint()}")
+        isFingerprintChecked = false
     }
 
     private fun onMessagesAdded(messages: List<Message>) {
