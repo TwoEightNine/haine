@@ -62,6 +62,7 @@ class ChatActivity : BaseActivity(), ChatView {
     private val rlHideBottom: RelativeLayout by view(R.id.rlHideBottom)
     private val ivAttach: ImageView by view(R.id.ivAttach)
     private val rlExchange: RelativeLayout by view(R.id.rlExchangeHint)
+    private val ivExchange: ImageView by view(R.id.ivExchangeHint)
 
     private lateinit var user: User
     private val presenter by lazy { ChatPresenter(this, api, session, apiUtils, dbHelper, user) }
@@ -198,6 +199,7 @@ class ChatActivity : BaseActivity(), ChatView {
 
     override fun onSendingAllowed() {
         rlExchange.setVisible(false)
+        ivExchange.setVisible(false)
     }
 
     override fun onMessagesAdded(messages: List<Message>) {

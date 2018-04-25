@@ -98,6 +98,13 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
+        <ImageView
+            android:id="@+id/ivExchangeHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_key_exchange_large" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -136,11 +143,11 @@
         </RelativeLayout>
 
         <FrameLayout
-            android:background="@color/backgroundPopup"
             android:id="@+id/flContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rlHideBottom" />
+            android:layout_below="@+id/rlHideBottom"
+            android:background="@color/backgroundPopup" />
 
     </RelativeLayout>
 
