@@ -10,14 +10,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?actionBarSize">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?actionBarSize"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:orientation="vertical"
             android:paddingBottom="16dp">
 
             <LinearLayout
@@ -72,14 +73,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_below="@+id/llAccount"
                 android:background="@color/textDarkSecondary" />
 
             <LinearLayout
                 android:id="@+id/llNotifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/llAccount"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -120,14 +119,90 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_below="@+id/llNotifications"
                 android:background="@color/textDarkSecondary" />
+
+            <LinearLayout
+                android:id="@+id/llPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/password"
+                    android:textColor="@color/textLightSecondary"
+                    android:textSize="16sp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/etOldPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/old_password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/textLight"
+                        android:textColorHint="@color/textDarkSecondary" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/etNewPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/new_password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/textLight"
+                        android:textColorHint="@color/textDarkSecondary" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/etNewPasswordRepeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/new_password_repeat"
+                        android:inputType="textPassword"
+                        android:textColor="@color/textLight"
+                        android:textColorHint="@color/textDarkSecondary" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnChangePassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/selector_button_background"
+                    android:text="@string/change_password"
+                    android:textColor="@color/textLight" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/textDarkSecondary" />
+
 
             <LinearLayout
                 android:id="@+id/llAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/llNotifications"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -161,18 +236,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_below="@+id/llAbout"
                 android:background="@color/textDarkSecondary" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>
