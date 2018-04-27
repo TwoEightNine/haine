@@ -36,6 +36,10 @@ class SettingsPresenter(view: SettingsView,
                 }, defaultError())
     }
 
+    fun changePassword(oldPassword: String, newPassword: String) {
+
+    }
+
     fun terminate() {
         api.terminateSessions()
                 .subscribeSmart({

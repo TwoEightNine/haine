@@ -146,6 +146,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/old_password"
                         android:inputType="textPassword"
+                        android:paddingEnd="20dp"
                         android:textColor="@color/textLight"
                         android:textColorHint="@color/textDarkSecondary" />
 
@@ -161,6 +162,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/new_password"
                         android:inputType="textPassword"
+                        android:paddingEnd="20dp"
                         android:textColor="@color/textLight"
                         android:textColorHint="@color/textDarkSecondary" />
 
@@ -176,6 +178,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/new_password_repeat"
                         android:inputType="textPassword"
+                        android:paddingEnd="20dp"
                         android:textColor="@color/textLight"
                         android:textColorHint="@color/textDarkSecondary" />
 

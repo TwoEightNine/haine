@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.*
 import de.hdodenhof.circleimageview.CircleImageView
 import global.msnthrp.haine.App
@@ -55,6 +57,11 @@ class SettingsActivity : BaseActivity(), SettingsView {
     private val swVibrate: Switch by view(R.id.swVibrate)
     private val swPlayRingtone: Switch by view(R.id.swPlayRingtone)
 
+    private val etOldPassword: EditText by view(R.id.etOldPassword)
+    private val etNewPassword: EditText by view(R.id.etNewPassword)
+    private val etNewPasswordRepeat: EditText by view(R.id.etNewPasswordRepeat)
+    private val btnChangePassword: Button by view(R.id.btnChangePassword)
+
     private val handler = Handler()
     private val presenter: SettingsPresenter by lazy { SettingsPresenter(this, api) }
 
@@ -67,6 +74,11 @@ class SettingsActivity : BaseActivity(), SettingsView {
             it.setTitle(R.string.settings)
         }
         initSwitches()
+        initViews()
+        apiUtils.updateStickers()
+    }
+
+    private fun initViews() {
         ivLogOut.setOnClickListener { showLogOutConfirm() }
         presenter.loadUser(session.userId)
         handler.postDelayed(::showWhatIs, HINT_DELAY)
@@ -79,7 +91,16 @@ class SettingsActivity : BaseActivity(), SettingsView {
                 requestPermissions(this, PERMISSIONS_REQUEST_CODE)
             }
         }
-        apiUtils.updateStickers()
+        val watcher = PasswordWatcher()
+        etOldPassword.addTextChangedListener(watcher)
+        etNewPassword.addTextChangedListener(watcher)
+        etNewPasswordRepeat.addTextChangedListener(watcher)
+        btnChangePassword.setOnClickListener {
+            presenter.changePassword(
+                    etOldPassword.text.toString(),
+                    etNewPassword.text.toString())
+        }
+        invalidatePasswords()
     }
 
     override fun onShowLoading() {
@@ -107,6 +128,17 @@ class SettingsActivity : BaseActivity(), SettingsView {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent, PICKFILE_REQUEST_CODE)
+    }
+
+    private fun invalidatePasswords() {
+        val oldPassword = etOldPassword.text.toString()
+        val newPassword = etNewPassword.text.toString()
+        val newPasswordRepeat = etNewPasswordRepeat.text.toString()
+        val confirmed = newPassword == newPasswordRepeat
+                && newPassword.length >= PASSWORD_LENGTH
+        val icon = if (confirmed) R.drawable.ic_check else 0
+        etNewPasswordRepeat.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0)
+        btnChangePassword.isEnabled = confirmed && oldPassword.length > PASSWORD_LENGTH
     }
 
     override fun onTerminated() {
@@ -173,5 +205,18 @@ class SettingsActivity : BaseActivity(), SettingsView {
         const val HINT_DELAY = 1000L * 90
         const val PICKFILE_REQUEST_CODE = 17 * 5 * 3
         const val PERMISSIONS_REQUEST_CODE = 175 + 3
+
+        const val PASSWORD_LENGTH = 8
+    }
+
+    private inner class PasswordWatcher : TextWatcher {
+
+        override fun afterTextChanged(p0: Editable?) {
+            invalidatePasswords()
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
     }
 }
