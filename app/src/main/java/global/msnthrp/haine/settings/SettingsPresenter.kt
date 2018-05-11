@@ -37,7 +37,12 @@ class SettingsPresenter(view: SettingsView,
     }
 
     fun changePassword(oldPassword: String, newPassword: String) {
-
+        view.onShowLoading()
+        api.changePassword(oldPassword, newPassword)
+                .subscribeSmart({
+                    view.onHideLoading()
+                    view.onPasswordChanged()
+                }, defaultError())
     }
 
     fun terminate() {

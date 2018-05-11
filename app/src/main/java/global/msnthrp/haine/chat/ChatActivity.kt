@@ -23,6 +23,7 @@ import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseActivity
 import global.msnthrp.haine.chat.stickers.StickersFragment
 import global.msnthrp.haine.db.DbHelper
+import global.msnthrp.haine.extensions.getAsString
 import global.msnthrp.haine.extensions.isAtEnd
 import global.msnthrp.haine.extensions.setVisible
 import global.msnthrp.haine.model.Message
@@ -101,7 +102,7 @@ class ChatActivity : BaseActivity(), ChatView {
     private fun initViews() {
         etInput.addTextChangedListener(MessageTextWatcher())
         ivSend.setOnClickListener {
-            presenter.sendMessage(etInput.text.toString())
+            presenter.sendMessage(etInput.getAsString())
             etInput.setText("")
         }
         ivSticker.setOnClickListener { bottomSheet.open() }
@@ -352,8 +353,8 @@ class ChatActivity : BaseActivity(), ChatView {
     private inner class MessageTextWatcher : TextWatcher {
 
         override fun afterTextChanged(p0: Editable?) {
-            ivSticker.setVisible(etInput.text.toString().isBlank())
-            ivSend.setVisible(!etInput.text.toString().isBlank())
+            ivSticker.setVisible(etInput.getAsString().isBlank())
+            ivSend.setVisible(!etInput.getAsString().isBlank())
         }
 
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}

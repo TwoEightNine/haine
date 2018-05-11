@@ -16,10 +16,7 @@ import global.msnthrp.haine.BuildConfig
 import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseActivity
 import global.msnthrp.haine.db.DbHelper
-import global.msnthrp.haine.extensions.loadUrl
-import global.msnthrp.haine.extensions.loadUrlForce
-import global.msnthrp.haine.extensions.setVisible
-import global.msnthrp.haine.extensions.view
+import global.msnthrp.haine.extensions.*
 import global.msnthrp.haine.network.ApiService
 import global.msnthrp.haine.model.User
 import global.msnthrp.haine.storage.Lg
@@ -97,8 +94,8 @@ class SettingsActivity : BaseActivity(), SettingsView {
         etNewPasswordRepeat.addTextChangedListener(watcher)
         btnChangePassword.setOnClickListener {
             presenter.changePassword(
-                    etOldPassword.text.toString(),
-                    etNewPassword.text.toString())
+                    etOldPassword.getAsString(),
+                    etNewPassword.getAsString())
         }
         invalidatePasswords()
     }
@@ -124,6 +121,12 @@ class SettingsActivity : BaseActivity(), SettingsView {
         civAvatar.loadUrlForce(this, user.photoUrl())
     }
 
+    override fun onPasswordChanged() {
+        etOldPassword.clear()
+        etNewPasswordRepeat.clear()
+        etNewPassword.clear()
+    }
+
     private fun chooseFile() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
@@ -131,9 +134,9 @@ class SettingsActivity : BaseActivity(), SettingsView {
     }
 
     private fun invalidatePasswords() {
-        val oldPassword = etOldPassword.text.toString()
-        val newPassword = etNewPassword.text.toString()
-        val newPasswordRepeat = etNewPasswordRepeat.text.toString()
+        val oldPassword = etOldPassword.getAsString()
+        val newPassword = etNewPassword.getAsString()
+        val newPasswordRepeat = etNewPasswordRepeat.getAsString()
         val confirmed = newPassword == newPasswordRepeat
                 && newPassword.length >= PASSWORD_LENGTH
         val icon = if (confirmed) R.drawable.ic_check else 0

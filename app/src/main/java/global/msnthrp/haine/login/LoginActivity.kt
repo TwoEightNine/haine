@@ -11,6 +11,7 @@ import global.msnthrp.haine.App
 import global.msnthrp.haine.R
 import global.msnthrp.haine.base.BaseActivity
 import global.msnthrp.haine.dialogs.DialogsActivity
+import global.msnthrp.haine.extensions.getAsString
 import global.msnthrp.haine.extensions.setVisible
 import global.msnthrp.haine.extensions.view
 import global.msnthrp.haine.network.ApiService
@@ -44,8 +45,8 @@ class LoginActivity : BaseActivity(), LoginView {
         setContentView(R.layout.activity_login)
         btnLogin.setOnClickListener {
             hideKeyboard(this)
-            val name = etName.text.toString()
-            val password = etPassword.text.toString()
+            val name = etName.getAsString()
+            val password = etPassword.getAsString()
             if (isLogin) {
                 presenter.login(name, password)
             } else {

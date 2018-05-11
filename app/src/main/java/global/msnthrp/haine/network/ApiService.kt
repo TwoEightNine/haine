@@ -1,5 +1,6 @@
 package global.msnthrp.haine.network
 
+import com.j256.ormlite.stmt.query.In
 import global.msnthrp.haine.dialogs.DialogResponse
 import global.msnthrp.haine.model.Message
 import global.msnthrp.haine.login.LoginResponse
@@ -30,6 +31,11 @@ interface ApiService {
 
     @GET("/auth.terminate")
     fun terminateSessions(): Single<BaseResponse<Int>>
+
+    @FormUrlEncoded
+    @POST("/auth.changePassword")
+    fun changePassword(@Field("password") password: String,
+                       @Field("new_password") newPassword: String): Single<BaseResponse<Int>>
 
     @GET("/messages.getDialogs")
     fun getDialogs(): Single<BaseResponse<DialogResponse>>

@@ -10,4 +10,5 @@ interface SettingsView : BaseView {
     fun onUserLoaded(user: User)
     fun onPhotoUpdated(user: User)
     fun onTerminated()
+    fun onPasswordChanged()
 }
