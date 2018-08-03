@@ -10,6 +10,7 @@ import android.support.annotation.IdRes
 import android.support.customtabs.CustomTabsIntent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
@@ -117,6 +118,7 @@ class ChatActivity : BaseActivity(), ChatView {
         llm.stackFromEnd = true
         recyclerView.layoutManager = llm
         recyclerView.adapter = adapter
+        recyclerView.itemAnimator = null
     }
 
     fun requestSticker() {

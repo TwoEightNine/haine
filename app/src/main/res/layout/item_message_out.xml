@@ -76,6 +76,7 @@
             android:adjustViewBounds="true"
             android:maxHeight="@dimen/chat_attachment_height"
             android:maxWidth="@dimen/chat_attachment_width"
+            android:src="@drawable/ic_transparent"
             android:visibility="gone" />
 
     </RelativeLayout>

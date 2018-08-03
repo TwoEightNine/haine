@@ -101,5 +101,5 @@ fun isAllowedToBeSticker(path: String): Boolean {
     BitmapFactory.decodeFile(path, options)
     val imageHeight = options.outHeight.toFloat()
     val imageWidth = options.outWidth.toFloat()
-    return imageHeight < STICKER_SIZE_MAX && imageWidth < STICKER_SIZE_MAX
+    return imageHeight <= STICKER_SIZE_MAX && imageWidth <= STICKER_SIZE_MAX
 }

@@ -122,6 +122,7 @@
                 android:background="@color/textDarkSecondary" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/llPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -71,6 +71,7 @@ class DialogsActivity : BaseActivity(), DialogsView {
         super.onResume()
         apiUtils.updateStickers()
         presenter.loadDialogs()
+        closeNotification(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
