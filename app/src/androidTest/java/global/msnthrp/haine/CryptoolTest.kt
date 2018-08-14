@@ -1,11 +1,14 @@
 package global.msnthrp.haine
 
+import android.support.test.runner.AndroidJUnit4
 import global.msnthrp.haine.utils.Cryptool
 import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
  * Created by twoeightnine on 2/9/18.
  */
+@RunWith(AndroidJUnit4::class)
 class CryptoolTest {
 
     @Test
