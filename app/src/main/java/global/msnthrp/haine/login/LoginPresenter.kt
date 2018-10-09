@@ -14,9 +14,9 @@ class LoginPresenter(view: LoginView,
                      api: ApiService,
                      private val session: Session) : BasePresenter<LoginView>(view, api) {
 
-    fun register(name: String, password: String) {
+    fun register(name: String, password: String, email: String) {
         view.onShowLoading()
-        api.register(name, password)
+        api.register(name, password, email)
                 .subscribeSmart({
                     Lg.i("registered successfully $it")
                     login(name, password)
@@ -31,6 +31,15 @@ class LoginPresenter(view: LoginView,
                     session.userId = response.userId
                     view.onHideLoading()
                     view.onLoggedIn()
+                }, defaultError())
+    }
+
+    fun restore(email: String) {
+        view.onShowLoading()
+        api.restore(email)
+                .subscribeSmart({
+                    view.onHideLoading()
+                    view.onRestored()
                 }, defaultError())
     }
 

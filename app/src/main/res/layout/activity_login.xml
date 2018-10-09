@@ -13,12 +13,13 @@
         android:orientation="vertical">
 
         <ImageView
-            android:src="@drawable/haine_minimal"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/haine_minimal" />
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp">
@@ -36,40 +37,97 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/etPassword"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/textLight"
                 android:hint="@string/password"
+                android:inputType="textPassword"
+                android:paddingEnd="24dp"
+                android:textColor="@color/textLight"
+                android:textColorHint="@color/textLightSecondary" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilPasswordRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etPasswordRepeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/textLight"
+                android:hint="@string/password_repeat"
+                android:inputType="textPassword"
+                android:paddingEnd="24dp"
+                android:textColor="@color/textLight"
+                android:textColorHint="@color/textLightSecondary" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/textLight"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/textLight"
                 android:textColorHint="@color/textLightSecondary" />
 
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:layout_marginTop="6dp"
-            android:textSize="16sp"
-            android:text="@string/logIn"
-            android:textColor="@color/textLight"
-            android:background="@drawable/selector_button_background"
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/selector_button_background"
+            android:text="@string/logIn"
+            android:textColor="@color/textLight"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tvInputHint"
-            android:textSize="15sp"
+            android:id="@+id/tvRegisterHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="12dp"
             android:text="@string/registerHint"
-            android:layout_gravity="center"
             android:textColor="@color/textLight"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvLogInHint"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:text="@string/logInHint"
+            android:textColor="@color/textLight"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvRestoreHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:text="@string/restoreHint"
+            android:textColor="@color/textLight"
+            android:textSize="15sp" />
 
     </LinearLayout>
 

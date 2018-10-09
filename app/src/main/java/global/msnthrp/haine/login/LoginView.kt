@@ -7,4 +7,5 @@ import global.msnthrp.haine.base.BaseView
  */
 interface LoginView : BaseView {
     fun onLoggedIn()
+    fun onRestored()
 }

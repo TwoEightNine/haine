@@ -2,9 +2,13 @@
     <string name="appName">haine</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
+    <string name="password_repeat">Confirm password</string>
+    <string name="email">Email</string>
     <string name="logIn">Log in</string>
     <string name="register">Register</string>
+    <string name="restore">Restore</string>
     <string name="registerHint">Do not have an account?</string>
+    <string name="restoreHint">Forgot credentials?</string>
     <string name="logInHint">Already have an account</string>
 
     <string name="dialogs">Dialogs</string>
@@ -40,4 +44,6 @@
     <string name="new_password">New password</string>
     <string name="new_password_repeat">New password confirmation</string>
     <string name="change_password">Change password</string>
+    <string name="restored">Follow the instructions that are sent on your email</string>
+    <string name="password_changed">Your password has been successfully changed!</string>
 </resources>

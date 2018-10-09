@@ -22,7 +22,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/auth.signUp")
     fun register(@Field("name") name: String,
-                 @Field("password") password: String): Single<BaseResponse<Int>>
+                 @Field("password") password: String,
+                 @Field("email") email: String): Single<BaseResponse<Int>>
 
     @FormUrlEncoded
     @POST("/auth.logIn")
@@ -31,6 +32,10 @@ interface ApiService {
 
     @GET("/auth.terminate")
     fun terminateSessions(): Single<BaseResponse<Int>>
+
+    @FormUrlEncoded
+    @POST("/auth.restore")
+    fun restore(@Field("email") email: String): Single<BaseResponse<Int>>
 
     @FormUrlEncoded
     @POST("/auth.changePassword")

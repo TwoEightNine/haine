@@ -125,6 +125,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
         etOldPassword.clear()
         etNewPasswordRepeat.clear()
         etNewPassword.clear()
+        showToast(this, R.string.password_changed)
     }
 
     private fun chooseFile() {
