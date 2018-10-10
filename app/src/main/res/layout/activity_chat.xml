@@ -72,7 +72,7 @@
                 android:padding="10dp"
                 android:textColor="@color/textLight"
                 android:textColorHint="@color/textLightSecondary"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <RelativeLayout
                 android:id="@+id/rlExchangeHint"

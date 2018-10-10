@@ -27,11 +27,9 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/civPhoto"
-            android:fontFamily="sans-serif-condensed"
             android:singleLine="true"
             android:textColor="@color/textLight"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
             tools:text="youngAddict" />
 
         <ImageView

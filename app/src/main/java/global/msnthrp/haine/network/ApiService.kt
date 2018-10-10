@@ -68,6 +68,9 @@ interface ApiService {
     @POST("/user.uploadPhoto")
     fun uploadPhoto(@Field("avatar") photo: String): Single<BaseResponse<Int>>
 
+    @POST("/user.removePhoto")
+    fun removePhoto(): Single<BaseResponse<Int>>
+
     @GET("/stickers.get")
     fun getStickers(): Single<BaseResponse<Int>>
 

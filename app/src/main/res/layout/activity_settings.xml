@@ -52,10 +52,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
                         android:layout_toEndOf="@+id/civAvatar"
-                        android:fontFamily="sans-serif-condensed"
                         android:textColor="@color/textLight"
-                        android:textSize="19sp"
-                        android:textStyle="bold"
+                        android:textSize="22sp"
                         tools:text="mjølkdalen" />
 
                     <ImageView

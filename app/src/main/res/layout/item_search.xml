@@ -20,10 +20,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@+id/civPhoto"
-        android:fontFamily="sans-serif-condensed"
         android:textColor="@color/textLight"
-        android:textSize="15sp"
-        android:textStyle="bold"
+        android:textSize="17sp"
         android:maxLines="1"
         tools:text="eeeeloooon muuuuusk" />
 

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
@@ -81,13 +82,7 @@ class SettingsActivity : BaseActivity(), SettingsView {
         handler.postDelayed(::showWhatIs, HINT_DELAY)
         ivHaine.setOnClickListener { showLogs() }
         tvVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME, BuildConfig.BUILD_TIME)
-        civAvatar.setOnClickListener {
-            if (hasPermissions(this)) {
-                chooseFile()
-            } else {
-                requestPermissions(this, PERMISSIONS_REQUEST_CODE)
-            }
-        }
+        civAvatar.setOnClickListener { showAvatarDialog() }
         val watcher = PasswordWatcher()
         etOldPassword.addTextChangedListener(watcher)
         etNewPassword.addTextChangedListener(watcher)
@@ -185,6 +180,25 @@ class SettingsActivity : BaseActivity(), SettingsView {
 
     private fun showLogs() {
         showAlert(this, Lg.logs.joinToString(separator = "\n"))
+    }
+
+    private fun showAvatarDialog() {
+        val dialog = AlertDialog.Builder(this)
+                .setMessage(R.string.avatar_settings)
+                .setPositiveButton(R.string.choose_from_gallery) { _, _ ->
+                    if (hasPermissions(this)) {
+                        chooseFile()
+                    } else {
+                        requestPermissions(this, PERMISSIONS_REQUEST_CODE)
+                    }
+                }
+                .setNeutralButton(R.string.remove_avatar) { _, _ ->
+                    presenter.removePhoto()
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .create()
+        dialog.show()
+        paintDialog(this, dialog)
     }
 
     private fun showLogOutConfirm() {

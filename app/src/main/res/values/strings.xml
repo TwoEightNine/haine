@@ -46,4 +46,7 @@
     <string name="change_password">Change password</string>
     <string name="restored">Follow the instructions that are sent on your email</string>
     <string name="password_changed">Your password has been successfully changed!</string>
+    <string name="choose_from_gallery">Change</string>
+    <string name="remove_avatar">Remove</string>
+    <string name="avatar_settings">Avatar settings</string>
 </resources>

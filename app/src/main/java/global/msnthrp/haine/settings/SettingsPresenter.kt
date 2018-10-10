@@ -36,6 +36,15 @@ class SettingsPresenter(view: SettingsView,
                 }, defaultError())
     }
 
+    fun removePhoto() {
+        view.onShowLoading()
+        api.removePhoto()
+                .subscribeSmart({
+                    view.onHideLoading()
+                    view.onPhotoUpdated(user)
+                }, defaultError())
+    }
+
     fun changePassword(oldPassword: String, newPassword: String) {
         view.onShowLoading()
         api.changePassword(oldPassword, newPassword)

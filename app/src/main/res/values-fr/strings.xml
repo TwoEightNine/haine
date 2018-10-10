@@ -37,4 +37,17 @@
     <string name="play_ringtone">Ringtone</string>
     <string name="downloading_disclaimer">Si vous ouvrirai le fichier maintenant, il deviendra indisposible pour l\'autre. Continuer?</string>
     <string name="sticker_format_hint">Autocollant dois être pas plus large que 512x512</string>
+    <string name="password_repeat">Confirmer le mot de passe</string>
+    <string name="email">Email</string>
+    <string name="restore">Rétablir</string>
+    <string name="restoreHint">Oubliez les données du compte</string>
+    <string name="old_password">L\'ancien mote de passe</string>
+    <string name="new_password">Le nouveau mote de passe</string>
+    <string name="new_password_repeat">Le nouveau mot de passe encore</string>
+    <string name="change_password">Changer le mot de passe</string>
+    <string name="restored">Suivez les instructions quelles sont envoyées à votre email</string>
+    <string name="password_changed">Votre mot de passe a été modifié avec succès!</string>
+    <string name="choose_from_gallery">Changer</string>
+    <string name="remove_avatar">Supprimer</string>
+    <string name="avatar_settings">Paramètres d\'avatar</string>
 </resources>
